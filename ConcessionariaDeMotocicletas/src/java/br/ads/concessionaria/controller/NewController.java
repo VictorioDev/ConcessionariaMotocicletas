@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ads.concessionaria;
+package br.ads.concessionaria.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class NewController {
-
-    @RequestMapping("/olamundo")
-    public String inicio(){
+    @RequestMapping("/Usuario/atualizar/{id}")
+    public String inicio(@PathVariable("id") String id){
+        System.err.println();
         return "index";
     }
     
