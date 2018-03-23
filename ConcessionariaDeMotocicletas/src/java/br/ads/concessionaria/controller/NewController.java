@@ -21,4 +21,9 @@ public class NewController {
         return "index";
     }
     
+    @RequestMapping("/painel")
+    public String painel() {
+        return "painel";
+    }
+    
 }
