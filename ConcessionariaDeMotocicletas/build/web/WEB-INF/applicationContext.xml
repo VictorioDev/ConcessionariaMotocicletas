@@ -16,9 +16,10 @@
 <!--bean id="dataSource"
     class="org.springframework.jdbc.datasource.DriverManagerDataSource"
     p:driverClassName="${jdbc.driverClassName}"
-    p:url="${jdbc.url}"
-    p:username="${jdbc.username}"
-    p:password="${jdbc.password}" /-->
+    p:url="jdbc:mysql://localhost:3306/sistemaconcessionaria"
+    p:username="root"
+    p:password="victorio"/-->
+
 
     <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
 
