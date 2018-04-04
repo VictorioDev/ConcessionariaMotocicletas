@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -26,7 +28,7 @@ public class ProprietarioController {
     
     
     @RequestMapping("proprietarios/listar")
-    public String listarProprietarios(){
+    public ModelAndView listarProprietarios(Model m){
         ArrayList<Proprietario> listaProp = new ArrayList<>();
         try {
            listaProp = ProprietarioDAO.listarProprietarios();
@@ -38,6 +40,7 @@ public class ProprietarioController {
             System.err.println("Nome: " + listaProp.get(i).getNome());
         }
        
-        return "listarProprietarios";
+        m.addAttribute("proprietarios", listaProp);
+        return new ModelAndView("listarProprietarios");
     }
 }

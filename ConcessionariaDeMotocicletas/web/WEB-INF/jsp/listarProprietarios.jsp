@@ -4,10 +4,8 @@
     Author     : Victorio Zansavio
 --%>
 
-<%@page import="br.ads.concessionaria.domain.Proprietario"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import ="br.ads.concessionaria.dao.ProprietarioDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,8 +13,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Estes são os proprietarios Cadastrados</h1>
-        
+        <h1>Estes são os proprietarios Cadastrados ${proprietarios.size()}</h1>
+        <c:forEach items="${proprietarios}" var="item">
+            <p> <c:out value="${item.nome}"/> </p>
+        </c:forEach>
      
     </body>
 </html>
