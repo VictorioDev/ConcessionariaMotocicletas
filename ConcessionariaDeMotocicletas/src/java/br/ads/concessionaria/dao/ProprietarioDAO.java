@@ -60,7 +60,7 @@ public class ProprietarioDAO extends BaseDAO {
 
     public static ArrayList<Proprietario> listarProprietarios() throws SQLException {
         openConnection();
-    
+
         ArrayList<Proprietario> listaProprietarios = new ArrayList<>();
         String SQl = "SELECT * FROM proprietarios";
         PreparedStatement smt = connection.prepareStatement(SQl);
@@ -85,6 +85,30 @@ public class ProprietarioDAO extends BaseDAO {
         return listaProprietarios;
     }
 
+    public static Proprietario retornaProprietarioPorId(int id) throws SQLException {
+        openConnection();
+        String SQl = "SELECT * FROM proprietarios WHERE idProprietario = ?";
+        PreparedStatement smt = connection.prepareStatement(SQl);
+        smt.setInt(1, id);
+        ResultSet rs = smt.executeQuery();
+        Proprietario p = new Proprietario();
+        p.setTipo(rs.getString("tipo"));
+        p.setNome(rs.getString("nome"));
+        p.setRazaoSocial(rs.getString("razaoSocial"));
+        p.setRg(rs.getString("RG"));
+        p.setCpf(rs.getString("CPF"));
+        p.setCnpj(rs.getString("CNPJ"));
+        p.setEndereco(rs.getString("endereco"));
+        p.setTelefone(rs.getString("telefone"));
+        p.setEmail(rs.getString("email"));
+        p.setDataNascimento(rs.getDate("dataNascimento"));
+        p.setCartorio(rs.getString("cartorio"));
+        p.setIdProprietario(rs.getInt("idProprietario"));
+
+        closeConnection();
+        return p;
+    }
+
     public static void excluirProprietario(Proprietario p) throws SQLException {
         openConnection();
         ArrayList<Proprietario> listaProprietarios = new ArrayList<>();
@@ -92,6 +116,7 @@ public class ProprietarioDAO extends BaseDAO {
         PreparedStatement smt = connection.prepareStatement(SQl);
         smt.setInt(1, p.getIdProprietario());
         smt.execute();
+        closeConnection();
     }
 
     public static void main(String[] args) {
@@ -109,14 +134,10 @@ public class ProprietarioDAO extends BaseDAO {
         p.setTipo("A");
         p.setIdProprietario(1);
         try {
-            //ProprietarioDAO.incluirProprietario(p);
+
             p.setNome("Victorio");
             ProprietarioDAO.alterarProprietario(p);
 
-            for (Proprietario f : ProprietarioDAO.listarProprietarios()) {
-                System.out.println("Nome: " + f.getNome());
-            }
-            
             ProprietarioDAO.excluirProprietario(p);
         } catch (SQLException e) {
             e.printStackTrace();

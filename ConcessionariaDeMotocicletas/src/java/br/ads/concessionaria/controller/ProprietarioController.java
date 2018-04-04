@@ -25,22 +25,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ProprietarioController {
     
-    
-    
     @RequestMapping("proprietarios/listar")
     public ModelAndView listarProprietarios(Model m){
         ArrayList<Proprietario> listaProp = new ArrayList<>();
         try {
            listaProp = ProprietarioDAO.listarProprietarios();
         } catch (SQLException ex) {
-            Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-      
-        for(int i = 0; i < listaProp.size(); i++){
-            System.err.println("Nome: " + listaProp.get(i).getNome());
-        }
-       
+            return new ModelAndView("erro");
+            //Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         m.addAttribute("proprietarios", listaProp);
-        return new ModelAndView("listarProprietarios");
+        return new ModelAndView("listarproprietarios");
     }
 }
