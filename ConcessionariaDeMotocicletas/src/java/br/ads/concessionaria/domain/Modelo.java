@@ -10,16 +10,16 @@ package br.ads.concessionaria.domain;
  * @author Victorio Zansavio
  */
 public class Modelo {
-    private int idModelos;
+    private int idModelo;
     private String nome;
     private String descricao;
 
-    public int getIdModelos() {
-        return idModelos;
+    public int getIdModelo() {
+        return idModelo;
     }
 
-    public void setIdModelos(int idModelos) {
-        this.idModelos = idModelos;
+    public void setIdModelo(int idModelos) {
+        this.idModelo = idModelos;
     }
 
     public String getNome() {
