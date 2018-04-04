@@ -21,9 +21,18 @@ public class NewController {
         return "index";
     }
     
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+    
     @RequestMapping("/painel")
     public String painel() {
         return "painel";
     }
     
+    @RequestMapping("/vendas")
+    public String vendas() {
+        return "vendas/index";
+    }    
 }
