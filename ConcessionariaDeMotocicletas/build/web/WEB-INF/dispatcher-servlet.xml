@@ -15,7 +15,17 @@
 
     <mvc:resources mapping="/resources/**" location="/resources/" />
     
-    <mvc:annotation-driven />
+    <!--mvc:annotation-driven /-->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value = "text/plain;charset=UTF-8" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    
+    
+    
  <context:component-scan base-package="br.ads.concessionaria.controller"/>
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -23,8 +33,21 @@
           p:suffix=".jsp" />
     
     <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-</bean>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    </bean>
+    
+    <!--bean class = "org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <array>
+                <bean class = "org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes" value = "text/plain;charset=UTF-8" />
+                </bean>
+            </array>
+        </property>
+    </bean>
+    
+    <bean class = "br.ads.concessionaria.util.EncodingPostProcessor" /-->
+
 
   
 

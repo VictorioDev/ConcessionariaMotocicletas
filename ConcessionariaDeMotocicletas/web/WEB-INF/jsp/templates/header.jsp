@@ -76,7 +76,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<t:url value="/proprietarios/" />">
+                        <a href="<t:url value="/proprietarios/listar" />">
                             <span class="oi" data-glyph="key" title="Proprietários" aria-hidden="true"></span>Proprietários
                         </a>
                     </li>

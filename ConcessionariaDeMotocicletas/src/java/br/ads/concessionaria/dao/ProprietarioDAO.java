@@ -34,7 +34,7 @@ public class ProprietarioDAO extends BaseDAO {
         smt.setDate(10, p.getDataNascimento());
         smt.setString(11, p.getCartorio());
         smt.execute();
-        closeConnection();
+        //closeConnection();
     }
 
     public static void alterarProprietario(Proprietario p) throws SQLException {
@@ -42,6 +42,7 @@ public class ProprietarioDAO extends BaseDAO {
         String SQl = "UPDATE proprietarios SET tipo = ?, nome = ?, razaoSocial = ?, rg = ?, cpf = ?, cnpj = ?, endereco = ?,"
                 + " telefone = ?, email = ?, dataNascimento = ?, cartorio = ? WHERE idProprietario = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
+        System.err.println("Alterando proprietario id: " + p.getIdProprietario());
         smt.setString(1, p.getTipo());
         smt.setString(2, p.getNome());
         smt.setString(3, p.getRazaoSocial());
@@ -55,7 +56,7 @@ public class ProprietarioDAO extends BaseDAO {
         smt.setString(11, p.getCartorio());
         smt.setInt(12, p.getIdProprietario());
         smt.execute();
-        closeConnection();
+        //closeConnection();
     }
 
     public static ArrayList<Proprietario> listarProprietarios() throws SQLException {
@@ -81,7 +82,7 @@ public class ProprietarioDAO extends BaseDAO {
             p.setIdProprietario(rs.getInt("idProprietario"));
             listaProprietarios.add(p);
         }
-        closeConnection();
+        //closeConnection();
         return listaProprietarios;
     }
 
@@ -92,56 +93,34 @@ public class ProprietarioDAO extends BaseDAO {
         smt.setInt(1, id);
         ResultSet rs = smt.executeQuery();
         Proprietario p = new Proprietario();
-        p.setTipo(rs.getString("tipo"));
-        p.setNome(rs.getString("nome"));
-        p.setRazaoSocial(rs.getString("razaoSocial"));
-        p.setRg(rs.getString("RG"));
-        p.setCpf(rs.getString("CPF"));
-        p.setCnpj(rs.getString("CNPJ"));
-        p.setEndereco(rs.getString("endereco"));
-        p.setTelefone(rs.getString("telefone"));
-        p.setEmail(rs.getString("email"));
-        p.setDataNascimento(rs.getDate("dataNascimento"));
-        p.setCartorio(rs.getString("cartorio"));
-        p.setIdProprietario(rs.getInt("idProprietario"));
+        if (rs.first()) {
+            p.setTipo(rs.getString("tipo"));
+            p.setNome(rs.getString("nome"));
+            p.setRazaoSocial(rs.getString("razaoSocial"));
+            p.setRg(rs.getString("RG"));
+            p.setCpf(rs.getString("CPF"));
+            p.setCnpj(rs.getString("CNPJ"));
+            p.setEndereco(rs.getString("endereco"));
+            p.setTelefone(rs.getString("telefone"));
+            p.setEmail(rs.getString("email"));
+            p.setDataNascimento(rs.getDate("dataNascimento"));
+            p.setCartorio(rs.getString("cartorio"));
+            p.setIdProprietario(rs.getInt("idProprietario"));
+        }
 
-        closeConnection();
+        //closeConnection();
         return p;
     }
 
-    public static void excluirProprietario(Proprietario p) throws SQLException {
+    public static void excluirProprietario(int idProprietario) throws SQLException {
         openConnection();
         ArrayList<Proprietario> listaProprietarios = new ArrayList<>();
         String SQl = "DELETE FROM proprietarios WHERE idProprietario = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
-        smt.setInt(1, p.getIdProprietario());
+        smt.setInt(1, idProprietario);
         smt.execute();
-        closeConnection();
+        //closeConnection();
     }
 
-    public static void main(String[] args) {
-        Proprietario p = new Proprietario();
-        p.setCartorio("Cartorio teste");
-        p.setCnpj("77655009000165");
-        p.setCpf("10120916940");
-        p.setDataNascimento(new Date(1998, 03, 25));
-        p.setEmail("victorio10.0@hotmail.com");
-        p.setEndereco("Rua Ana Cirelli");
-        p.setNome("Victorio Zansavio");
-        p.setRazaoSocial("Teste");
-        p.setRg("124878918");
-        p.setTelefone("988497735");
-        p.setTipo("A");
-        p.setIdProprietario(1);
-        try {
-
-            p.setNome("Victorio");
-            ProprietarioDAO.alterarProprietario(p);
-
-            ProprietarioDAO.excluirProprietario(p);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
+    
 }

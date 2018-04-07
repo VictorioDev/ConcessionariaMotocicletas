@@ -6,7 +6,6 @@
 package br.ads.concessionaria.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,17 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Victorio Zansavio
  */
 @Controller
-public class NewController {
-    @RequestMapping("/Usuario/atualizar/{id}")
-    public String inicio(@PathVariable("id") String id){
-        System.err.println();
-        return "index";
+public class VendasController {
+    
+    @RequestMapping("vendas")
+    public String home(){
+        return "vendas/index";
     }
     
-    @RequestMapping("/painel")
-    public String painel() {
-        return "painel";
-    }
-    
-      
 }

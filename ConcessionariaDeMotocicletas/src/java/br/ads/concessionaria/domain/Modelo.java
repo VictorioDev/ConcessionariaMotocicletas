@@ -13,6 +13,16 @@ public class Modelo {
     private int idModelo;
     private String nome;
     private String descricao;
+    private Marca marca;
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+    
 
     public int getIdModelo() {
         return idModelo;

@@ -5,6 +5,8 @@
  */
 package br.ads.concessionaria.domain;
 
+import br.ads.concessionaria.util.Utils;
+import com.sun.org.apache.xalan.internal.lib.Extensions;
 import java.sql.Date;
 
 /**
@@ -24,7 +26,7 @@ public class Proprietario {
     private String email;
     private Date dataNascimento;
     private String cartorio;
-
+ 
     public int getIdProprietario() {
         return idProprietario;
     }
