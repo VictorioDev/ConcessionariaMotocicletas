@@ -23,7 +23,7 @@
     </div>
 </form>
 
-<table class="table table-responsive table-hover table-striped mt-2">
+<table class="table table-hover table-striped mt-2">
     <thead>
     <th>#</th>
     <th>Nome</th>

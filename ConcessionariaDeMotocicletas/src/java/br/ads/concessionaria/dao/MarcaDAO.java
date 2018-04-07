@@ -66,6 +66,7 @@ public class MarcaDAO {
         openConnection();
         String SQL = "SELECT * FROM marcas WHERE idMarca = ?";
         PreparedStatement smt = connection.prepareStatement(SQL);
+        smt.setInt(1, id);
         ResultSet rs = smt.executeQuery();
          Marca m = new Marca();
         if (rs.first()) {   

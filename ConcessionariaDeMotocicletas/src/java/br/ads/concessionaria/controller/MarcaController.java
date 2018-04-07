@@ -6,9 +6,9 @@
 package br.ads.concessionaria.controller;
 
 import br.ads.concessionaria.dao.MarcaDAO;
-import br.ads.concessionaria.dao.ProprietarioDAO;
+
 import br.ads.concessionaria.domain.Marca;
-import br.ads.concessionaria.domain.Proprietario;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -84,15 +83,15 @@ public class MarcaController {
         return new ModelAndView("redirect:/marcas");
     }
     
-    /*
-      @RequestMapping(value = "proprietarios/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerProprietario(@PathVariable("id") int idProprietario) {
+    
+      @RequestMapping(value = "marcas/remover/{id}", method = RequestMethod.GET)
+    public ModelAndView removerMarca(@PathVariable("id") int idMarca) {
         
         try {
-            ProprietarioDAO.excluirProprietario(idProprietario);
+            MarcaDAO.excluirMarca(idMarca);
         } catch (SQLException ex) {
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("redirect:/proprietarios");
-    }*/
+        return new ModelAndView("redirect:/marcas");
+    }
 }
