@@ -1,0 +1,17 @@
+SMAP
+listarproprietarios_jsp.java
+JSP
+*S JSP
+*F
++ 0 listarproprietarios.jsp
+WEB-INF/jsp/listarproprietarios.jsp
+*L
+5,11:57
+16:68,3
+17:71
+17:96,11
+18:107
+18:136,5
+18,2:110
+19,5:74
+*E
