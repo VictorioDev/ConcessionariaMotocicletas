@@ -5,9 +5,12 @@
  */
 package br.ads.concessionaria.dao;
 
+import static br.ads.concessionaria.dao.BaseDAO.closeConnection;
 import static br.ads.concessionaria.dao.BaseDAO.connection;
 import static br.ads.concessionaria.dao.BaseDAO.openConnection;
 import br.ads.concessionaria.domain.Modelo;
+import br.ads.concessionaria.domain.Motocicleta;
+import br.ads.concessionaria.domain.Proprietario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,7 +48,7 @@ public static void alterarModelo(Modelo m) throws SQLException {
     public static ArrayList<Modelo> listarModelos() throws SQLException {
         openConnection();
 
-        ArrayList<Modelo> listaModelos = new ArrayList<>();
+        ArrayList<Modelo> listaProprietarios = new ArrayList<>();
         String SQl = "SELECT * FROM modelos";
         PreparedStatement smt = connection.prepareStatement(SQl);
         ResultSet rs = smt.executeQuery();
@@ -53,15 +56,15 @@ public static void alterarModelo(Modelo m) throws SQLException {
             Modelo m = new Modelo();
             m.setNome(rs.getString("nome"));
             m.setDescricao(rs.getString("descricao"));
-            m.setMarca(MarcaDAO.retornarMarcaPorId(rs.getInt("idMarca")));  
-            m.setIdModelo(rs.getInt("idModelo"));
+            //m.setMarca(rs.getInt("IdMarca"));
+            
             listaModelos.add(m);
         }
         //closeConnection();
-        return listaModelos;
+        return listaProprietarios;
     }
 
-    public static Modelo retornaModeloPorId(int id) throws SQLException {
+    public static Modelo retornaModelosPorId(int id) throws SQLException {
         openConnection();
         String SQl = "SELECT * FROM modelos WHERE idModelo = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
@@ -71,7 +74,6 @@ public static void alterarModelo(Modelo m) throws SQLException {
         if (rs.first()) {
             m.setNome(rs.getString("nome"));
             m.setDescricao(rs.getString("descricao"));
-            m.setMarca(MarcaDAO.retornarMarcaPorId(rs.getInt("idMarca")));
         }
 
         //closeConnection();
@@ -80,6 +82,7 @@ public static void alterarModelo(Modelo m) throws SQLException {
 
     public static void excluirModelo(int idModelo) throws SQLException {
         openConnection();
+        ArrayList<Modelo> listaModelo = new ArrayList<>();
         String SQl = "DELETE FROM modelos WHERE idModelo = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
         smt.setInt(1, idModelo);
