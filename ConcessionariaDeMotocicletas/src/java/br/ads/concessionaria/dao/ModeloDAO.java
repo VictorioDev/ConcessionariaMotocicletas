@@ -5,12 +5,9 @@
  */
 package br.ads.concessionaria.dao;
 
-import static br.ads.concessionaria.dao.BaseDAO.closeConnection;
 import static br.ads.concessionaria.dao.BaseDAO.connection;
 import static br.ads.concessionaria.dao.BaseDAO.openConnection;
 import br.ads.concessionaria.domain.Modelo;
-import br.ads.concessionaria.domain.Motocicleta;
-import br.ads.concessionaria.domain.Proprietario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,7 +45,7 @@ public static void alterarModelo(Modelo m) throws SQLException {
     public static ArrayList<Modelo> listarModelos() throws SQLException {
         openConnection();
 
-        ArrayList<Modelo> listaProprietarios = new ArrayList<>();
+        ArrayList<Modelo> listaModelos = new ArrayList<>();
         String SQl = "SELECT * FROM modelos";
         PreparedStatement smt = connection.prepareStatement(SQl);
         ResultSet rs = smt.executeQuery();
@@ -56,12 +53,12 @@ public static void alterarModelo(Modelo m) throws SQLException {
             Modelo m = new Modelo();
             m.setNome(rs.getString("nome"));
             m.setDescricao(rs.getString("descricao"));
-            //m.setMarca(rs.getInt("IdMarca"));
-            
+            m.setMarca(MarcaDAO.retornarMarcaPorId(rs.getInt("Marca")));
+            m.setIdModelo(rs.getInt("idModelo"));
             listaModelos.add(m);
         }
         //closeConnection();
-        return listaProprietarios;
+        return listaModelos;
     }
 
     public static Modelo retornaModelosPorId(int id) throws SQLException {
@@ -74,6 +71,7 @@ public static void alterarModelo(Modelo m) throws SQLException {
         if (rs.first()) {
             m.setNome(rs.getString("nome"));
             m.setDescricao(rs.getString("descricao"));
+            m.setIdModelo(rs.getInt("idModelo"));
         }
 
         //closeConnection();
