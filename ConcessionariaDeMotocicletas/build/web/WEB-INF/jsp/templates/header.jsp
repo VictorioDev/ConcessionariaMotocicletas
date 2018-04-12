@@ -11,24 +11,9 @@
         <title>Sistema de Concessionária</title>
     </head>
     <body>
-        
-        <div class="header">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <span class="title">Sistema de Concessionária de Motocicletas</span>
-                    </div><!-- col-md-6 -->
-                    <div class="col-md-6 text-right">                       
-                        <a href="<t:url value="/logout/" />" class="btn btn-primary">
-                            Logout
-                        </a>
-                    </div><!-- col-md-6 -->
-                </div><!-- row -->
-            </div>
-        </div>
-        
         <div class="sidebar">
             <div class="sidebar-inner">
+                <div class="title">Sistema de Concessionária de Motocicletas</div>
                 <ul class="sidebar-menu">
                     <li class="selected">
                         <a href="<t:url value="/painel/" />">
@@ -76,7 +61,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<t:url value="/proprietarios/listar" />">
+                        <a href="<t:url value="/proprietarios/" />">
                             <span class="oi" data-glyph="key" title="Proprietários" aria-hidden="true"></span>Proprietários
                         </a>
                     </li>
@@ -95,4 +80,16 @@
         </div><!-- sidebar -->
         
         <div class="page-container">
+            <div class="header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 text-right">                       
+                            <a href="<t:url value="/logout/" />" class="btn btn-sm btn-primary">
+                                Logout <span class="oi" data-glyph="account-login" title="Logout" aria-hidden="true"></span>
+                            </a>
+                        </div><!-- col-md-6 -->
+                    </div><!-- row -->
+                </div>
+            </div>
+            
             <div class="page-body">

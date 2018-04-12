@@ -1,23 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ads.concessionaria.controller;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.portlet.bind.annotation.RenderMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- *
- * @author Victorio Zansavio
+ * Controller padrão do sistema
+ * @author Luciano Carvalho
  */
 @Controller
 public class PainelController {
+        
+    @RequestMapping( value = { "/index", "/painel" } )
+    public String painel( Model m ) {
+        
+        m.addAttribute("nome", "Usuário");
+        m.addAttribute("qtdMotocicletas", 0 );
+        m.addAttribute("qtdProprietarios", 0 );
+        m.addAttribute("qtdUsuarios", 0 );
+        m.addAttribute("qtdClientes", 0 );
+        m.addAttribute("qtdVendas", 0 );
+        m.addAttribute("qtdFaturas", 0 );
+        
+        return "IndexView";
+    }
     
-    @RenderMapping("/")
-    public ModelAndView home(){
-        return new ModelAndView("redirect:/painel");
+    @RequestMapping("/login")
+    public String login() {
+        return "LoginView";
     }
 }
