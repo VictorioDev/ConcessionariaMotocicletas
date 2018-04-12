@@ -8,17 +8,10 @@ body {
 }
 
 .header {
-    position: fixed;
-    z-index: 9999;
     width: 100%;
     padding: 15px;
     background-color: #fff;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.10);
-    box-shadow: 1px 1px 1px #ececec;
-}
-
-.header .title {
-    font-size:22px;
+    border-bottom: 1px solid rgb(224, 224, 224);
 }
 
 .page-body {
@@ -26,62 +19,97 @@ body {
 }
 
 .sidebar {
-    background-color: #fff;
+    background-color: #2c323e;
     bottom: 0;
     overflow: hidden;
     position: fixed;
     top: 0;
-    padding-top:70px;
     width: 230px;
     z-index: 1000;
-    border-right: 1px solid rgba(0, 0, 0, 0.10);
-    box-shadow: 1px 1px 1px #ececec;
 }
 
 .sidebar-inner {
     position: relative;
     height: 100%;
+    overflow: auto;
+}
+
+.sidebar-inner .title {
+    line-height: normal;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 13px;
+    margin: 20px 35px;
+    text-align: center;
 }
 
 .page-container {
     padding-left: 230px;
-    padding-top: 70px;
 }
 
 .sidebar-menu {
     list-style-type: none;
     padding:0;
+    border-top: 1px solid #333a48;
 }
 
-.sidebar-menu li {
-    font-weight: 500;
-    padding: 15px 30px;
-    border-left:4px solid transparent;
-    border-bottom: 1px solid #f7f7f7;
-    font-size:14px;
+.sidebar-menu li a {
+    display: block;
+    border-left: 4px solid transparent;
+    border-bottom: 1px solid #333a48;
+    font-size: 14px;
+    line-height: 40px;
+    padding: 0 25px;
 }
 
-.sidebar-menu li.selected {
-    border-left:4px solid #0b42fd;
+.sidebar-menu li.selected a {
+    background-color: #252c36;
+    border-left: 4px solid #04affd;
 }
 
 .sidebar-menu li.selected a,
 .sidebar-menu li.selected span {
-    color:#047afd
+    color: #04affd;
 }
 
 .sidebar-menu li span {
     margin-right: 20px;
     font-size: 18px;
     vertical-align: middle;
-    color: #d0d0d0;
+    color: #4a515f;
 }
 
 .sidebar-menu li a {
-    color:#848484;
+    color:#fff;
 }
 
-.sidebar-menu li:hover {
-    background-color: #f7f7f7;
-    border-left-color: #047afd;
+.sidebar-menu li a:hover {
+    background-color: #252c36;
+    border-left-color: #51c0f3;
+    text-decoration: none;
+}
+
+.sidebar-menu li a:hover span.oi {
+    color:#a5a3a3;
+}
+
+.btn.btn-red {
+    background-color:#ff3939;
+    color:#fff;
+}
+
+.btn span.oi {
+    font-size: 11px;
+    vertical-align: top;
+}
+
+table.table {
+    background: #fff;
+    border: 1px solid #e4e4e4;
+    font-size:14px;
+}
+
+table.table td {
+    vertical-align:middle;
 }
