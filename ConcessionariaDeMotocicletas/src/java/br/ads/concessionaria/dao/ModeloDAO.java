@@ -61,7 +61,7 @@ public static void alterarModelo(Modelo m) throws SQLException {
         return listaModelos;
     }
 
-    public static Modelo retornaModelosPorId(int id) throws SQLException {
+    public static Modelo retornaModeloPorId(int id) throws SQLException {
         openConnection();
         String SQl = "SELECT * FROM modelos WHERE idModelo = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
