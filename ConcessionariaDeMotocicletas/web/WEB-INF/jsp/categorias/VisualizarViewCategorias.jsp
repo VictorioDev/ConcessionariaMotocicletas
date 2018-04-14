@@ -29,7 +29,5 @@
             
         </tbody>
     </table>
-    
-    
 
 <t:import url="../templates/footer.jsp"/>

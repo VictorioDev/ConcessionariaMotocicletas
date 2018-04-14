@@ -15,7 +15,6 @@
 <h3>Categorias</h3>
 
 <a href="<t:url value="/categorias/cadastrar"/>" class="btn btn-primary">Nova Categoria</a>
-
 <form method="GET">
     <div class="container-fluid mt-2">
         <div class="row">
@@ -29,30 +28,28 @@
     </div>
 </form>
 
-<table class="table table-hover">
+<table class="table table-hover mt-2">
     <thead>
-    <th>#</th>
-    <th>Nome</th>
-    <th>Descrição</th>
-    <th>Ações</th>
-</thead>
-<tbody>
-    <t:forEach items="${categorias}" var="categ">
-        <tr>
-            <td><t:out value="${categ.idCategoria}"/></td>
-            <td><t:out value="${categ.nome}"/></td>
-            <td><t:out value="${categ.descricao}"/></td>
-            <td>
-                <a href="<t:url value="categorias/visualizar/${categ.idCategoria}"/>"S class="btn btn-sm btn-primary">Visualizar</a>
-                <a href="<t:url value="categorias/editar/${categ.idCategoria}"/>"S class="btn btn-sm btn-primary">Editar</a>
-                <a href="<t:url value="categorias/remover/${categ.idCategoria}"/>"S class="btn btn-sm btn-primary">Remover</a>
-            </td>
-        </tr>
-    </t:forEach>
-</tbody>
+        <th>#</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Ações</th>
+    </thead>
+    <tbody>
+        <t:forEach items="${categorias}" var="categ">
+            <tr>
+                <td><t:out value="${categ.idCategoria}"/></td>
+                <td><t:out value="${categ.nome}"/></td>
+                <td><t:out value="${categ.descricao}"/></td>
+                <td>
+                    <a href="<t:url value="/categorias/visualizar/${categ.idCategoria}"/>"S class="btn btn-sm btn-primary">Visualizar</a>
+                    <a href="<t:url value="/categorias/editar/${categ.idCategoria}"/>"S class="btn btn-sm btn-primary">Editar</a>
+                    <a href="<t:url value="/categorias/remover/${categ.idCategoria}"/>"S class="btn btn-sm btn-primary">Remover</a>
+                </td>
+            </tr>
+        </t:forEach>
+    </tbody>
 </table>
 <p><b>Total:</b> ${categorias.size()} registros.</p>
-
-
 
 <t:import url="../templates/footer.jsp"/>
