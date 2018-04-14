@@ -37,5 +37,14 @@
     <welcome-file-list>
         <welcome-file>redirect.jsp</welcome-file>
     </welcome-file-list>
+    
+    <!-- 
+        Colar no Spring-contect.xml, caso e encontre-o :S
+        <mvc:interceptors>
+    <bean class=
+        "br.com.caelum.tarefas.interceptor.AutorizadorInterceptor" />
+</mvc:interceptors>
+    
+    -->
 
 </web-app>

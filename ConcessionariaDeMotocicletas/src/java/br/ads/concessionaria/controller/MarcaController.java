@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,7 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class MarcaController {
 
     @RequestMapping(value = "marcas", method = RequestMethod.GET)
-    public ModelAndView listarProprietarios(Model m) {
+    public ModelAndView listarMarcas(Model m) {
+        
         ArrayList<Marca> listaMarcas = new ArrayList<>();
         try {
             listaMarcas = MarcaDAO.listarMarcas();

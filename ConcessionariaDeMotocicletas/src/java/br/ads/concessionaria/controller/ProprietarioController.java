@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +30,7 @@ public class ProprietarioController {
 
     @RequestMapping(value = "proprietarios", method = RequestMethod.GET)
     public ModelAndView listarProprietarios(Model m) {
+        
         ArrayList<Proprietario> listaProp = new ArrayList<>();
         try {
             listaProp = ProprietarioDAO.listarProprietarios();
