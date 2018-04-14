@@ -148,4 +148,45 @@ public class UsuarioDAO extends BaseDAO {
         
         stm.execute();
     }
+    
+    /**
+     * Método para verificar um usuário.
+     * @param u
+     * @return
+     * @throws SQLException 
+     */    
+    public static Usuario retornarUsuarioPorLogin( String login, String senha ) throws SQLException {
+        openConnection();
+        
+        String SQL = "SELECT * FROM usuarios "
+                   + "WHERE login = ? AND senha = ?";
+        
+        PreparedStatement stm = connection.prepareStatement( SQL );
+        
+        stm.setString( 1, login );
+        stm.setString( 2, senha );
+        
+        ResultSet rs = stm.executeQuery();
+        
+        System.out.println( login );
+        System.out.println( senha );
+        
+        if( rs.first() ) {
+            Usuario u = new Usuario();
+            
+            u.setIdUsuario( rs.getInt("idUsuario") );
+            u.setNome( rs.getString("nome") );
+            u.setLogin( rs.getString("login") );
+            u.setSenha( rs.getString("senha") );
+            u.setCpf( rs.getString("cpf") );
+            u.setEndereco( rs.getString("endereco") );
+            u.setTelefone( rs.getString("telefone") );
+            u.setEmail( rs.getString("email") );
+            u.setTipo( rs.getString("tipo") );
+            
+            return u;
+        }
+        
+        return null;
+    }
 }

@@ -53,7 +53,7 @@ public static void alterarModelo(Modelo m) throws SQLException {
             Modelo m = new Modelo();
             m.setNome(rs.getString("nome"));
             m.setDescricao(rs.getString("descricao"));
-            m.setMarca(MarcaDAO.retornarMarcaPorId(rs.getInt("Marca")));
+            m.setMarca(MarcaDAO.retornarMarcaPorId(rs.getInt("idMarca")));
             m.setIdModelo(rs.getInt("idModelo"));
             listaModelos.add(m);
         }
@@ -61,7 +61,7 @@ public static void alterarModelo(Modelo m) throws SQLException {
         return listaModelos;
     }
 
-    public static Modelo retornaModelosPorId(int id) throws SQLException {
+    public static Modelo retornaModeloPorId(int id) throws SQLException {
         openConnection();
         String SQl = "SELECT * FROM modelos WHERE idModelo = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
