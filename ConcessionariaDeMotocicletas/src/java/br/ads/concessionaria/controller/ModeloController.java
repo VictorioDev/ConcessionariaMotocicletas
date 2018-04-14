@@ -38,8 +38,9 @@ public class ModeloController {
             //return new ModelAndView("erro");
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        m.addAttribute("Modelos", listaModel);
-        return new ModelAndView("Modelos/indexView");
+        System.err.println("Tamanho Lista: " + listaModel.size());
+        m.addAttribute("modelos", listaModel);
+        return new ModelAndView("modelos/indexView");
     }
 
     @RequestMapping(value = "modelos/cadastrar", method = RequestMethod.GET)
