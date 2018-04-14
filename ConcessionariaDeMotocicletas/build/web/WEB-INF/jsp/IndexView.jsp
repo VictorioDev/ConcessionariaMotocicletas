@@ -6,7 +6,7 @@
 
 <t:import url="templates/header.jsp"/>
 
-<h3>Bem-vindo, ${nome}!</h3>
+<h3>Bem-vindo, ${usuarioSession.nome}!</h3>
 <p>Aqui você consegue ter uma visão geral de como está o andamento da concessionária.</p>
 
 <div class="row mb-4">

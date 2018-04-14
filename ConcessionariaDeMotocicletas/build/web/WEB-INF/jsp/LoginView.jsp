@@ -17,9 +17,9 @@
                     <h4>Login:</h4>
                     <p>Informe seu e-mail e sua senha para acessar o painel.</p>
                     
-                    <form action="auth" class="form-login" method="POST" accept-charset="utf-8">
-                        <p><input type="text" name="username" class="form-control" value="" placeholder="Digite aqui o usuário..."></p>
-                        <p><input type="password" name="password" class="form-control" value="" placeholder="Digite aqui a senha..."></p>
+                    <form class="form-login" method="POST" accept-charset="utf-8">
+                        <p><input type="text" name="login" class="form-control" value="" placeholder="Digite aqui o usuário..."></p>
+                        <p><input type="password" name="senha" class="form-control" value="" placeholder="Digite aqui a senha..."></p>
                         <p><button type="submit" class="btn btn-primary">Acessar <i class="fa fa-sign-in" aria-hidden="true"></i></button></p>
                     </form>
                 </div>                

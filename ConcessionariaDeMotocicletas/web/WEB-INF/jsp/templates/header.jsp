@@ -83,8 +83,12 @@
             <div class="header">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-12 text-right">                       
-                            <a href="<t:url value="/logout/" />" class="btn btn-sm btn-primary">
+                        <div class="col-lg-10 text-right">
+                            <p class="mb-0"><b>${usuarioSession.nome}</b></p>
+                            <p class="mb-0"><small>${usuarioSession.email}</small></p>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <a href="<t:url value="/logout/" />" class="btn btn-secondary">
                                 Logout <span class="oi" data-glyph="account-login" title="Logout" aria-hidden="true"></span>
                             </a>
                         </div><!-- col-md-6 -->
