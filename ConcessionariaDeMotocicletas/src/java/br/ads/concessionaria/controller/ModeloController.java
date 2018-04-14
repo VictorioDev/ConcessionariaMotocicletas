@@ -5,7 +5,9 @@
  */
 package br.ads.concessionaria.controller;
 
+import br.ads.concessionaria.dao.MarcaDAO;
 import br.ads.concessionaria.dao.ModeloDAO;
+import br.ads.concessionaria.domain.Marca;
 import br.ads.concessionaria.domain.Modelo;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,6 +43,8 @@ public class ModeloController {
 
     @RequestMapping(value = "modelos/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar() {
+        ArrayList<Marca> listaMarcas = new ArrayList<>();
+        listaMarcas = MarcaDAO.listarMarcas();
         return new ModelAndView("modelos/cadastrarView", "modelo", new Modelo());
     }
 

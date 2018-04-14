@@ -36,7 +36,9 @@
             </div>
 
             <div class="col-10">
-            <form:input path="marca" cssClass="form-control" placeholder="Digite a marca..."/>
+            <form:select path="marca" cssClass="form-control" placeholder="Digite a marca...">
+                
+            </form:select>
         </div>
     </div>
         
