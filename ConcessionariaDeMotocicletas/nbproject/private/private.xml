@@ -2,12 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Vitor%20Manoel/Desenvolvimento/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/categorias/IndexViewCategorias.jsp</file>
-            <file>file:/C:/Users/Vitor%20Manoel/Desenvolvimento/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/categorias/EditarViewCategorias.jsp</file>
-            <file>file:/C:/Users/Vitor%20Manoel/Desenvolvimento/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/categorias/VisualizarViewCategorias.jsp</file>
-            <file>file:/C:/Users/Vitor%20Manoel/Desenvolvimento/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/src/java/br/ads/concessionaria/controller/CategoriaController.java</file>
-            <file>file:/C:/Users/Vitor%20Manoel/Desenvolvimento/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/categorias/CadastrarViewCategorias.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

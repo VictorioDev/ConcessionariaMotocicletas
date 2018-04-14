@@ -78,7 +78,7 @@ public class MotocicletaDAO extends BaseDAO {
 
     public static Motocicleta retornaMotocicletaPorId(int id) throws SQLException {
         openConnection();
-        String SQL = "SELECY * FROM motocicletas WHERE idMotocicleta = ?";
+        String SQL = "SELECT * FROM motocicletas WHERE idMotocicleta = ?";
         ArrayList<Motocicleta> motocicletas = new ArrayList<>();
         PreparedStatement stm = connection.prepareCall(SQL);
         stm.setInt(1, id);
@@ -100,6 +100,7 @@ public class MotocicletaDAO extends BaseDAO {
             m.setValorIPVA(rs.getDouble("valorIPVA"));
             m.setSituacaoIPVA(rs.getString("situacaoIPVA"));
             m.setProprietario(ProprietarioDAO.retornaProprietarioPorId(rs.getInt("idProprietario")));
+            m.setModelo(ModeloDAO.retornaModeloPorId(rs.getInt("idModelo")));
         }
         return m;
     }
