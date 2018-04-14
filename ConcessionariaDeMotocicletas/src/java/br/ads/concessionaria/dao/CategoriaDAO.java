@@ -18,7 +18,6 @@ public class CategoriaDAO extends BaseDAO {
         PreparedStatement stm = connection.prepareStatement(SQL);
         stm.setString(1, c.getNome());
         stm.setString(2, c.getDescricao());
-
         stm.execute();
     }
 
@@ -32,12 +31,14 @@ public class CategoriaDAO extends BaseDAO {
         stm.execute();
     }
 
-    public static void removerCategoria(Categoria c) throws SQLException {
+    public static void removerCategoria(int idCategoria) throws SQLException {
         openConnection();
-        String SQL = "DELETE FROM categorias where idCategoria = ?";
-        PreparedStatement stm = connection.prepareCall(SQL);
-        stm.setInt(1, c.getIdCategoria());
-        stm.execute();
+        ArrayList<Categoria> listarCategorias = new ArrayList<>();
+        String SQl = "DELETE FROM categorias WHERE idCategoria = ?";
+        PreparedStatement smt = connection.prepareStatement(SQl);
+        smt.setInt(1, idCategoria);
+        smt.execute();
+        //closeConnection();
     }
 
     public static Categoria retornarCategoriaPorId(int id) throws SQLException {
