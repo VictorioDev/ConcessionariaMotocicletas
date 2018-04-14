@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package br.ads.concessionaria.controller;
-
+    
 import br.ads.concessionaria.dao.ClienteDAO;
 
 import br.ads.concessionaria.domain.Cliente;
@@ -22,76 +22,55 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * Controller responsável pelos clientes.
  * @author Smania
  */
+@Controller
 public class ClienteController {
-    
-    @RequestMapping(value = "clientes", method = RequestMethod.GET)
+        
+    @RequestMapping(value = "/clientes", method = RequestMethod.GET)
     public ModelAndView listarClientes(Model m) {
         ArrayList<Cliente> listaCliente = new ArrayList<>();
         try {
             listaCliente = ClienteDAO.listarCliente();
         } catch (SQLException ex) {
-            //return new ModelAndView("erro");
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
+                
         m.addAttribute("clientes", listaCliente);
-        return new ModelAndView("cliente/indexView");
+        return new ModelAndView("clientes/indexView");
     }
-    @RequestMapping(value = "cliente/cadastrar", method = RequestMethod.GET)
+    
+    @RequestMapping(value = "/clientes/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar() {
-        return new ModelAndView("cliente/cadastrarView", "cliente", new Cliente());
+        return new ModelAndView("clientes/cadastrarView", "cliente", new Cliente());
     }
 
-    
- 
-    @RequestMapping(value = "cliente/cadastrar", method = RequestMethod.POST)
-    public String adicionarProprietario(@ModelAttribute("cliente") Cliente c) {
+    @RequestMapping(value = "clientes/cadastrar", method = RequestMethod.POST)
+    public String adicionarCliente(@ModelAttribute("cliente") Cliente c) {
         try {
             ClienteDAO.incluirCliente(c);
         } catch (SQLException ex) {
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "redirect:/cliente";
-    }
-
-     
-    /*@RequestMapping(value = "marcas/alterar/{id}", method = RequestMethod.GET)
-    public ModelAndView alterar( @PathVariable("id") int idMarca ) {
-        Marca m = new Marca();
-        System.err.println("Chegou o id " + idMarca);
-        try {
-            m = MarcaDAO.retornarMarcaPorId(idMarca);
-        } catch (SQLException ex) {
-            Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ModelAndView("marcas/alterarView", "marca", m);
-    }
-    
-      
-    
-      @RequestMapping(value = "marcas/alterar", method = RequestMethod.POST)
-    public ModelAndView alterarProprietario(@ModelAttribute("marca") Marca m) {
-        System.out.println("Marca id " + m.getIdMarca());
-        try {
-            MarcaDAO.alterarMarca(m);
-        } catch (SQLException ex) {
-            Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ModelAndView("redirect:/marcas");
-    }
-    
-    
-      @RequestMapping(value = "marcas/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerMarca(@PathVariable("id") int idMarca) {
+        return "redirect:/clientes";
+    }  
+        
+    @RequestMapping( value = "clientes/remover/{id}", method = RequestMethod.GET )
+    public String remover( @PathVariable("id") int id ) {
+        
+        Cliente c = new Cliente();
+        c.setIdCliente( id );
         
         try {
-            MarcaDAO.excluirMarca(idMarca);
-        } catch (SQLException ex) {
-            Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
+            ClienteDAO.removerCliente (c );
+        } catch( SQLException ex ) {
+            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("redirect:/marcas");
-    }*/
+        
+        return "redirect:/clientes";
+    }
+        
+ 
     
 }

@@ -5,10 +5,10 @@
  */
 package br.ads.concessionaria.dao;
 
-import static br.ads.concessionaria.dao.BaseDAO.closeConnection;
 import static br.ads.concessionaria.dao.BaseDAO.connection;
 import static br.ads.concessionaria.dao.BaseDAO.openConnection;
 import br.ads.concessionaria.domain.Cliente;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +23,8 @@ public class ClienteDAO {
     public static void incluirCliente(Cliente c) throws SQLException {
         openConnection();
         String SQl = "INSERT INTO clientes (tipo,nome,razaoSocial,CPF,CNPJ,endereco,telefone,email,RG,dataNascimento,dataCadastro,status) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-        PreparedStatement stm = connection.prepareStatement(SQl);
+        PreparedStatement stm = connection.prepareStatement(SQl);        
+        
         stm.setString(1, c.getTipo());
         stm.setString(2, c.getNome());
         stm.setString(3, c.getRazaoSocial());
@@ -33,9 +34,9 @@ public class ClienteDAO {
         stm.setString(7, c.getTelefone());
         stm.setString(8, c.getEmail());
         stm.setString(9, c.getRG());
-        stm.setDate(10, c.getDataNascimento());
-        stm.setDate(11, c.getDataCadastro());
-        stm.setString(12, c.getStatus());
+        stm.setDate( 10, c.getDataNascimento() );
+        stm.setString( 11, "2018-03-01" );
+        stm.setString( 12, "1");
   
         stm.execute();
     }
@@ -69,6 +70,7 @@ public class ClienteDAO {
         while (rs.next()) {   
             Cliente c = new Cliente();
             c.setIdCliente(rs.getInt("idCliente"));
+            c.setNome( rs.getString("nome") );
             c.setTipo(rs.getString("tipo"));
             c.setRazaoSocial(rs.getString("razaoSocial"));
             c.setCPF(rs.getString("CPF"));
@@ -81,7 +83,7 @@ public class ClienteDAO {
             c.setDataCadastro(rs.getDate("dataCadastro"));
             c.setStatus(rs.getString("status"));
             
-            listarCliente().add(c);
+            listaCliente.add(c);
         }
         //closeConnection();
         return listaCliente;
@@ -104,14 +106,15 @@ public class ClienteDAO {
         return c;
     }
     
-    public static void excluirCliente(int idCliente) throws SQLException {
+    public static void removerCliente (Cliente c ) throws SQLException {
         openConnection();
-        ArrayList<Cliente> listaClientes = new ArrayList<>();
-        String SQl = "DELETE FROM clientes WHERE iCliente = ?";
-        PreparedStatement smt = connection.prepareStatement(SQl);
-        smt.setInt(1, idCliente);
-        smt.execute();
-        //closeConnection();
+        
+        String SQL = "DELETE FROM clientes WHERE idCliente = ?";
+        PreparedStatement stm = connection.prepareStatement( SQL );
+        stm.setInt( 1, c.getIdCliente());
+                
+        stm.execute();
     }
+
     
 }
