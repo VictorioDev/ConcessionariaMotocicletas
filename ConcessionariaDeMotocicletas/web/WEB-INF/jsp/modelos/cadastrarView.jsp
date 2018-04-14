@@ -36,9 +36,11 @@
             </div>
 
             <div class="col-10">
-            <form:select path="marca" cssClass="form-control" placeholder="Digite a marca...">
-                
-            </form:select>
+            <select  class="form-control" placeholder="Digite a marca...">
+            <t:forEach items="${marcas}" var="marca">
+                <option label="${marca.nome}" value="${marca.idMarca}"/>
+            </t:forEach>
+            </select>
         </div>
     </div>
         

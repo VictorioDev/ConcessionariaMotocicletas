@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,15 +43,24 @@ public class ModeloController {
     }
 
     @RequestMapping(value = "modelos/cadastrar", method = RequestMethod.GET)
-    public ModelAndView cadastrar() {
+    public ModelAndView cadastrar(Model m) {
         ArrayList<Marca> listaMarcas = new ArrayList<>();
-        listaMarcas = MarcaDAO.listarMarcas();
+        try {
+            listaMarcas = MarcaDAO.listarMarcas();
+            m.addAttribute("marcas", listaMarcas);
+        } catch (SQLException ex) {
+            Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return new ModelAndView("modelos/cadastrarView", "modelo", new Modelo());
     }
 
     @RequestMapping(value = "modelos/cadastrar", method = RequestMethod.POST)
-    public String adicionarModelo(@ModelAttribute("modelo") Modelo m) {
+    public String adicionarModelo(@ModelAttribute("modelo") Modelo m, HttpServletRequest request) {
+        int idMarca = Integer.parseInt(request.getParameter("idMarca"));
+        Marca marca = new Marca();
         try {
+            marca = MarcaDAO.retornarMarcaPorId(idMarca);
+            m.setMarca(marca);
             ModeloDAO.incluirModelo(m);
         } catch (SQLException ex) {
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
