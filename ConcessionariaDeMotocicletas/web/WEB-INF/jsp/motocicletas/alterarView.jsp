@@ -27,7 +27,7 @@
     private Proprietario proprietario;
     private Modelo modelo;
 -->
-<form:form method="POST" modelAttribute="motocicleta" acceptCharset="UTF-8">
+<form:form  method="POST" modelAttribute="motocicleta" acceptCharset="UTF-8">
     <div class="form-group row">
         <div class="col-2">
             <form:label path="ano" cssClass="scol-sm-2 col-form-label">Ano</form:label>
@@ -193,10 +193,16 @@
             </select> 
         </div>
     </div>
-        
+    
+    <div class="form-row">
+        <div class="col-12">
+            <form:input path="idMotocicleta" type="hidden"/>
+        </div>
+    </div>
+    
     <div class="form-group row">
         <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-primary">Alterar</button>
          </div>
     </div>
 </form:form>

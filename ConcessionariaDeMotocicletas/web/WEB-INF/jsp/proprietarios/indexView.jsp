@@ -8,7 +8,7 @@
 
 <h3>Proprietário</h3>
 
-<a href="<t:url value="proprietarios/cadastrar"/>" class="btn btn-primary">Novo Proprietário</a>
+<a href="<t:url value="/proprietarios/cadastrar"/>" class="btn btn-primary">Novo Proprietário</a>
 
 <form method="GET">
     <div class="container-fluid mt-2">

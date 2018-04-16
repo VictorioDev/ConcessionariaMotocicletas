@@ -42,6 +42,7 @@ public class MotocicletaController {
         ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
         try {
             listaMotocicletas = MotocicletaDAO.listarMotocicletas();
+           
             System.err.println("Size(): " + listaMotocicletas.size());
         } catch (SQLException ex) {
             //return new ModelAndView("erro");
@@ -74,7 +75,7 @@ public class MotocicletaController {
     
   
     @RequestMapping(value = "motocicletas/cadastrar", method = RequestMethod.POST)
-    public String adicionarProprietario(@ModelAttribute("motocicleta") Motocicleta m, HttpServletRequest request) {
+    public String adicionarMotocicleta(@ModelAttribute("motocicleta") Motocicleta m, HttpServletRequest request) {
         int idProprietario = Integer.parseInt(request.getParameter("idProprietario"));
         int idModelo = Integer.parseInt(request.getParameter("idModelo"));
         Proprietario proprietario = new Proprietario();
@@ -99,42 +100,47 @@ public class MotocicletaController {
         try {
             listaModelos = ModeloDAO.listarModelos();
             listaProprietarios = ProprietarioDAO.listarProprietarios();
-            for(Modelo modelo: listaModelos){
-                System.err.println("Modelo Id:" + modelo.getIdModelo());
-            }
             motocicleta = MotocicletaDAO.retornaMotocicletaPorId(idMototicleta);
             model.addAttribute("modelos", listaModelos);
             model.addAttribute("proprietarios", listaProprietarios);
-            System.err.println("Modelo motocicleta: " + motocicleta.getModelo().getIdModelo());
         } catch (SQLException ex) {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ModelAndView("motocicletas/alterarView", "motocicleta", motocicleta);
     }
     
-     /*
-      @RequestMapping(value = "proprietarios/alterar", method = RequestMethod.POST)
-    public ModelAndView alterarProprietario(@ModelAttribute("proprietario") Proprietario p) {
-        System.out.println("Proprietario id " + p.getIdProprietario());
+    
+      @RequestMapping(value = "motocicletas/alterar/{id}", method = RequestMethod.POST)
+    public ModelAndView alterarMotocicleta(@ModelAttribute("motocicleta") Motocicleta motocicleta, HttpServletRequest request) {
+        int idProprietario = Integer.parseInt(request.getParameter("idProprietario"));
+        int idModelo = Integer.parseInt(request.getParameter("idModelo"));
+        System.err.println("Id modelo alterar: " + idModelo);        
+        System.err.println("Id proprietario alterar: " + idProprietario);
+        Proprietario proprietario = new Proprietario();
+        Modelo modelo = new Modelo();
         try {
-            ProprietarioDAO.alterarProprietario(p);
+            proprietario = ProprietarioDAO.retornaProprietarioPorId(idProprietario);
+            modelo = ModeloDAO.retornaModeloPorId(idModelo);
+            System.err.println("Novo Prop: " + proprietario.getNome());
+            motocicleta.setProprietario(proprietario);
+            motocicleta.setModelo(modelo);
+            MotocicletaDAO.alterarMotocicleta(motocicleta);
         } catch (SQLException ex) {
-            Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MotocicletaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("redirect:/proprietarios");
+        return new ModelAndView("redirect:/motocicletas");
     }
     
-    
-      @RequestMapping(value = "proprietarios/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerProprietario(@PathVariable("id") int idProprietario) {
+      @RequestMapping(value = "motocicletas/remover/{id}", method = RequestMethod.GET)
+    public ModelAndView removerProprietario(@PathVariable("id") int idMotocicleta) {
         
         try {
-            ProprietarioDAO.excluirProprietario(idProprietario);
+            MotocicletaDAO.removerMotocicleta(idMotocicleta);
         } catch (SQLException ex) {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("redirect:/proprietarios");
-    }*/
+        return new ModelAndView("redirect:/motocicletas");
+    }
     
   
 }

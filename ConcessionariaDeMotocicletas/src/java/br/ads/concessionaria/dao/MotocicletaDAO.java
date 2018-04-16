@@ -44,7 +44,7 @@ public class MotocicletaDAO extends BaseDAO {
         PreparedStatement stm = connection.prepareCall(SQL);
         stm.setInt(1, idMotocicleta);
         stm.execute();
-        closeConnection();
+        
     }
 
     public static ArrayList<Motocicleta> listarMotocicletas() throws SQLException {
@@ -70,6 +70,7 @@ public class MotocicletaDAO extends BaseDAO {
             m.setValorIPVA(rs.getDouble("valorIPVA"));
             m.setSituacaoIPVA(rs.getString("situacaoIPVA"));
             m.setProprietario(ProprietarioDAO.retornaProprietarioPorId(rs.getInt("idProprietario")));
+            m.setModelo(ModeloDAO.retornaModeloPorId(rs.getInt("idModelo")));
             motocicletas.add(m);
         }
 
@@ -107,9 +108,9 @@ public class MotocicletaDAO extends BaseDAO {
 
     public static void alterarMotocicleta(Motocicleta m) throws SQLException {
         openConnection();
-        String SQL = "UPDATE motocicletas set ano = ?, chassi = ?, cor = ?, tipoCombustivel = ?, valorCompra = ?, "
-                +"valorVenda = ?, situacaoMotocicleta = ?, renavam = ?, placa = ?, motor = ?, dataVistoria = ?," 
-                +" valorIPVA = ?,situacaoIPVA = ?, idProprietario = ? WHERE idMotocicleta = ?";
+        String SQL = "UPDATE motocicletas set ano = ?, chassi = ?, cor = ?, tipoCombustivel = ?, valorCompra = ?,"
+                +" valorVenda = ?, situacaoMotocicleta = ?, renavam = ?, placa = ?, motor = ?, dataVistoria = ?," 
+                +" valorIPVA = ?, situacaoIPVA = ?, idProprietario = ?, idModelo = ? WHERE idMotocicleta = ?";
         PreparedStatement stm = connection.prepareCall(SQL);
         stm.setInt(1, m.getAno());
         stm.setString(2, m.getChassi());
@@ -124,7 +125,12 @@ public class MotocicletaDAO extends BaseDAO {
         stm.setDate(11, m.getDataVistoria());
         stm.setDouble(12, m.getValorIPVA());
         stm.setString(13, m.getSituacaoIPVA());
+        System.err.println("Prop Moto Dao: " + m.getProprietario().getIdProprietario());
+        System.err.println("Modelo Moto Dao: " + m.getModelo().getIdModelo());
+        System.err.println("Moto : " + m.getIdMotocicleta());
         stm.setInt(14, m.getProprietario().getIdProprietario());
+        stm.setInt(15, m.getModelo().getIdModelo());
+        stm.setInt(16, m.getIdMotocicleta());
         stm.execute();
     }
 }
