@@ -11,8 +11,8 @@ package br.ads.concessionaria.domain;
  */
 public class Acessorio {
     private int idAcessorio;
-    private String nome;
     private String descricao;
+
 
     public String getDescricao() {
         return descricao;
@@ -22,7 +22,6 @@ public class Acessorio {
         this.descricao = descricao;
     }
     
-
     public int getIdAcessorio() {
         return idAcessorio;
     }
@@ -30,15 +29,5 @@ public class Acessorio {
     public void setIdAcessorio(int idAcessorio) {
         this.idAcessorio = idAcessorio;
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
- 
     
 }
