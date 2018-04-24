@@ -70,21 +70,28 @@ public class ModeloController {
     }
 
     @RequestMapping(value = "modelos/alterar/{id}", method = RequestMethod.GET)
-    public ModelAndView alterar( @PathVariable("id") int idModelo ) {
+    public ModelAndView alterar( @PathVariable("id") int idModelo, Model model ) {
         Modelo m = new Modelo();
         System.err.println("Chegou o id " + idModelo);
+        ArrayList<Marca> listaMarcas = new ArrayList<>();
         try {
             m = ModeloDAO.retornaModeloPorId(idModelo);
+            listaMarcas = MarcaDAO.listarMarcas();
         } catch (SQLException ex) {
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        model.addAttribute("marcas", listaMarcas);
         return new ModelAndView("modelos/alterarView", "modelo", m);
     }
     
       @RequestMapping(value = "modelos/alterar", method = RequestMethod.POST)
-    public ModelAndView alterarModelo(@ModelAttribute("modelo") Modelo m) {
+    public ModelAndView alterarModelo(@ModelAttribute("modelo") Modelo m, HttpServletRequest request) {
+        int idMarca = Integer.parseInt(request.getParameter("idMarca"));
+        Marca marca = new Marca();
         System.out.println("Modelo id " + m.getIdModelo());
         try {
+            marca = MarcaDAO.retornarMarcaPorId(idMarca);
+            m.setMarca(marca);
             ModeloDAO.alterarModelo(m);
         } catch (SQLException ex) {
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
@@ -102,5 +109,17 @@ public class ModeloController {
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ModelAndView("redirect:/modelos");
+    }
+    
+    
+    @RequestMapping(value = "modelos/visualizar/{id}", method = RequestMethod.GET)
+    public ModelAndView visualizarModelo(@PathVariable("id") int idModelo) {
+        Modelo modelo = new Modelo();
+        try {
+            modelo = ModeloDAO.retornaModeloPorId(idModelo);
+        } catch (SQLException ex) {
+            Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ModelAndView("modelos/VisualizarView", "modelo", modelo);
     }
 }

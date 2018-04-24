@@ -72,6 +72,7 @@ public static void alterarModelo(Modelo m) throws SQLException {
             m.setNome(rs.getString("nome"));
             m.setDescricao(rs.getString("descricao"));
             m.setIdModelo(rs.getInt("idModelo"));
+            m.setMarca(MarcaDAO.retornarMarcaPorId(rs.getInt("idMarca")));
         }
 
         //closeConnection();

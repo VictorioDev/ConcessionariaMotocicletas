@@ -27,18 +27,19 @@
     <thead>
     <th>#</th>
     <th>Nome</th>
-    <th>Descricao</th>
+    <th>Descrição</th>
     <th>Marca</th>
 </thead>
 <tbody>
     <t:forEach items="${modelos}" var="modelo">
         <tr>
+            <td><t:out value="${modelo.idModelo}"/></td>
             <td><t:out value="${modelo.nome}"/></td>
             <td><t:out value="${modelo.descricao}"/></td>
             <td><t:out value="${modelo.marca.nome}"/></td>
-            <td><a href="#" class="btn btn-sm btn-primary mb-2">Visualizar</a>
-                <a href="modelos/alterar/${modelo.idModelo}" class="btn btn-sm btn-primary mb-2">Editar</a>
-                <a href="modelos/remover/${modelo.idModelo}" class="btn btn-sm btn-primary mb-2">Remover</a></td>
+            <td><a href="<t:url value="/modelos/visualizar/${modelo.idModelo}"/>" class="btn btn-sm btn-primary mb-2">Visualizar</a>
+                <a href="<t:url value="/modelos/alterar/${modelo.idModelo}"/>" class="btn btn-sm btn-primary mb-2">Editar</a>
+                <a href="<t:url value="/modelos/remover/${modelo.idModelo}"/>" class="btn btn-sm btn-primary mb-2">Remover</a></td>
         </tr>
     </t:forEach>
 </tbody>
