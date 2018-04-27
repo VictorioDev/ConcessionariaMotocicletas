@@ -43,9 +43,10 @@ public class ClienteDAO {
 
     public static void alterarCliente(Cliente c) throws SQLException {
         openConnection();
-        String SQl = "UPDATE clientes SET nome = ?, razaoSocial= ?, CPF=?,CNPJ=?,endereco=?,telefone=?,email=?,RG=?,dataNascimento=?,dataCadastro=?,status=? WHERE idCliente = ?";
+        String SQl = "UPDATE clientes SET tipo=?, nome = ?, razaoSocial= ?, CPF=?,CNPJ=?,endereco=?,telefone=?,email=?,RG=?,dataNascimento=? WHERE idCliente = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
-        smt.setString(1, c.getNome());
+        smt.setString(1, c.getTipo());
+        smt.setString(2, c.getNome());
         smt.setString(3, c.getRazaoSocial());
         smt.setString(4, c.getCPF());
         smt.setString(5, c.getCNPJ());
@@ -54,10 +55,35 @@ public class ClienteDAO {
         smt.setString(8, c.getEmail());
         smt.setString(9, c.getRG());
         smt.setDate(10, c.getDataNascimento());
-        smt.setDate(11, c.getDataCadastro());
-        smt.setString(12, c.getStatus());
+        smt.setInt( 11, c.getIdCliente() );
+        //smt.setString(11, c.getStatus());
         smt.execute();
         //closeConnection();
+    }
+    
+    public static Cliente retornarClientePorId(int id) throws SQLException {
+        openConnection();
+        String SQL = "SELECT * FROM clientes WHERE idCliente = ?";
+        PreparedStatement smt = connection.prepareStatement(SQL);
+        smt.setInt(1, id);
+        ResultSet rs = smt.executeQuery();
+         Cliente c = new Cliente();
+        if (rs.first()) {   
+            c.setIdCliente(rs.getInt("idCliente"));
+            c.setNome( rs.getString("nome") );
+            c.setTipo(rs.getString("tipo"));
+            c.setRazaoSocial(rs.getString("razaoSocial"));
+            c.setCPF(rs.getString("CPF"));
+            c.setCNPJ(rs.getString("CNPJ"));
+            c.setEndereco(rs.getString("endereco"));
+            c.setTelefone(rs.getString("telefone"));
+            c.setEmail(rs.getString("email"));
+            c.setRG(rs.getString("RG"));
+            c.setDataNascimento(rs.getDate("dataNascimento"));
+            //c.setStatus(rs.getString("status"));
+        }
+        //closeConnection();
+        return c;
     }
 
     public static ArrayList<Cliente> listarCliente() throws SQLException {
@@ -90,22 +116,6 @@ public class ClienteDAO {
     }
     
     
-     public static Cliente retornarClienteporid(int id) throws SQLException {
-        openConnection();
-        String SQL = "SELECT * FROM clientes WHERE idCliente = ?";
-        PreparedStatement smt = connection.prepareStatement(SQL);
-        smt.setInt(1, id);
-        ResultSet rs = smt.executeQuery();
-         Cliente c = new Cliente();
-        if (rs.first()) {   
-            c.setIdCliente(rs.getInt("idCliente"));
-            c.setNome(rs.getString("nome"));
-            c.setTipo(rs.getString("tipo"));
-        }
-        //closeConnection();
-        return c;
-    }
-    
     public static void removerCliente (Cliente c ) throws SQLException {
         openConnection();
         
@@ -115,6 +125,8 @@ public class ClienteDAO {
                 
         stm.execute();
     }
+    
+
 
     
 }
