@@ -1,3 +1,4 @@
+<%@page import="br.ads.concessionaria.util.Utils"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -9,6 +10,7 @@
 <h3>Proprietário</h3>
 
 <a href="<t:url value="/proprietarios/cadastrar"/>" class="btn btn-primary">Novo Proprietário</a>
+
 
 <form method="GET">
     <div class="container-fluid mt-2">
@@ -46,9 +48,9 @@
                 <td><t:out value="${proprietario.email}"/></td>
         
                 <td><t:out value="${proprietario.cartorio}"/></td>
-                <td><a href="#" class="btn btn-sm btn-primary mb-2">Visualizar</a>
-                <a href="proprietarios/alterar/${proprietario.idProprietario}" class="btn btn-sm btn-primary mb-2">Editar</a>
-                <a href="proprietarios/remover/${proprietario.idProprietario}" class="btn btn-sm btn-primary mb-2">Remover</a></td>
+                <td><a href="<t:url value="/proprietarios/visualizar/${proprietario.idProprietario}"/>" class="btn btn-sm btn-primary mb-2">Visualizar</a>
+                    <a href="<t:url value="/proprietarios/alterar/${proprietario.idProprietario}"/>" class="btn btn-sm btn-primary mb-2">Editar</a>
+                <a href="<t:url value="/proprietarios/remover/${proprietario.idProprietario}"/>" class="btn btn-sm btn-primary mb-2">Remover</a></td>
             </tr>
         </t:forEach>
     </tbody>

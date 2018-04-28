@@ -18,13 +18,16 @@ public class Interceptor extends HandlerInterceptorAdapter{
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        /*System.err.println("Passou interceptor");
+        System.err.println("Passou interceptor");
         HttpSession s = request.getSession();
-        System.err.println("URL:" + request.getRequestURI());
+        
+        /*System.err.println("URL:" + request.getRequestURI());
         if(s.getAttribute("usuarioSession") == null && !request.getRequestURI().endsWith("login")){
             response.sendRedirect("/ConcessionariaDeMotocicletas/login");
             return false;
-        }*/
+        }
+        
+        response.addHeader("currentValue", "Victorio");*/
         return true;
         
 //To change body of generated methods, choose Tools | Templates.

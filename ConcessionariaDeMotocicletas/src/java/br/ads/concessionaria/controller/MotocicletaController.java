@@ -131,8 +131,8 @@ public class MotocicletaController {
         return new ModelAndView("redirect:/motocicletas");
     }
     
-      @RequestMapping(value = "motocicletas/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerProprietario(@PathVariable("id") int idMotocicleta) {
+    @RequestMapping(value = "motocicletas/remover/{id}", method = RequestMethod.GET)
+    public ModelAndView removerMotocicleta(@PathVariable("id") int idMotocicleta) {
         
         try {
             MotocicletaDAO.removerMotocicleta(idMotocicleta);
@@ -142,5 +142,15 @@ public class MotocicletaController {
         return new ModelAndView("redirect:/motocicletas");
     }
     
+    @RequestMapping(value = "motocicletas/visualizar/{id}", method = RequestMethod.GET)
+    public ModelAndView vidualizarMotocicleta(@PathVariable("id") int idMotocicleta) {
+        Motocicleta motocicleta = new Motocicleta();
+        try {
+            motocicleta = MotocicletaDAO.retornaMotocicletaPorId(idMotocicleta);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ModelAndView("motocicletas/VisualizarView", "motocicleta", motocicleta);
+    }
   
 }

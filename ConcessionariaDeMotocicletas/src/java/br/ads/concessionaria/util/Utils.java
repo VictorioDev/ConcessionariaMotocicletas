@@ -8,6 +8,7 @@ package br.ads.concessionaria.util;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -21,5 +22,14 @@ public class Utils {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
     return null;
+    }
+    
+    public static String activeMenu(String module, String url){
+        String parts[] = url.split("/");
+        for(int i = 0; i < parts.length; i++){
+            System.out.println(parts[i]);
+            if(parts[i].trim().equalsIgnoreCase(module)) return "selected";
+        }
+        return "";
     }
 }

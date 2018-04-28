@@ -11,6 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,6 +38,37 @@ public class ProprietarioDAO extends BaseDAO {
         smt.setString(11, p.getCartorio());
         smt.execute();
         //closeConnection();
+    }
+
+    public static ArrayList<Proprietario> retornaProprietarioPorNome(String busca) {
+        openConnection();
+        ArrayList<Proprietario> listaProprietarios = new ArrayList<>();
+        String SQL = "SELECT * FROM proprietarios where nome like '" + busca + "%' ";
+        System.out.println(SQL);
+        try {
+            PreparedStatement stmt = connection.prepareStatement(SQL);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Proprietario p = new Proprietario();
+                p.setTipo(rs.getString("tipo"));
+                p.setNome(rs.getString("nome"));
+                p.setRazaoSocial(rs.getString("razaoSocial"));
+                p.setRg(rs.getString("RG"));
+                p.setCpf(rs.getString("CPF"));
+                p.setCnpj(rs.getString("CNPJ"));
+                p.setEndereco(rs.getString("endereco"));
+                p.setTelefone(rs.getString("telefone"));
+                p.setEmail(rs.getString("email"));
+                p.setDataNascimento(rs.getDate("dataNascimento"));
+                p.setCartorio(rs.getString("cartorio"));
+                p.setIdProprietario(rs.getInt("idProprietario"));
+                listaProprietarios.add(p);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProprietarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaProprietarios;
     }
 
     public static void alterarProprietario(Proprietario p) throws SQLException {
@@ -122,5 +156,10 @@ public class ProprietarioDAO extends BaseDAO {
         //closeConnection();
     }
 
-    
+    public static void main(String[] args) {
+        ArrayList<Proprietario> listaProp = ProprietarioDAO.retornaProprietarioPorNome("V");
+        for(Proprietario p: listaProp){
+            System.err.println(p.getNome());
+        }
+    }
 }

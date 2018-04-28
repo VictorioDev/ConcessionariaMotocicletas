@@ -35,9 +35,9 @@
             <td><t:out value="${marca.idMarca}"/></td>
             <td><t:out value="${marca.nome}"/></td>
             <td><t:out value="${marca.descricao}"/></td>
-            <td><a href="#" class="btn btn-sm btn-primary mb-2">Visualizar</a>
-                <a href="marcas/alterar/${marca.idMarca}" class="btn btn-sm btn-primary mb-2">Editar</a>
-                <a href="marcas/remover/${marca.idMarca}" class="btn btn-sm btn-primary mb-2">Remover</a></td>
+            <td><a href="<t:url value="/marcas/visualizar/${marca.idMarca}"/>" class="btn btn-sm btn-primary mb-2">Visualizar</a>
+                <a href="<t:url value="/marcas/alterar/${marca.idMarca}"/>" class="btn btn-sm btn-primary mb-2">Editar</a>
+                <a href="<t:url value="marcas/remover/${marca.idMarca}"/>" class="btn btn-sm btn-primary mb-2">Remover</a></td>
         </tr>
     </t:forEach>
 </tbody>

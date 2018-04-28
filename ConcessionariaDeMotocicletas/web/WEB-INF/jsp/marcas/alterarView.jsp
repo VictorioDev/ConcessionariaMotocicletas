@@ -8,7 +8,7 @@
 <t:import url="../templates/header.jsp"/>
  
 <h3>Cadastrar Proprietário</h3>
-<form:form action="/Concessionaria/marcas/alterar" method="POST" modelAttribute="marca" acceptCharset="UTF-8">
+<form:form action="/ConcessionariaDeMotocicletas/marcas/alterar" method="POST" modelAttribute="marca" acceptCharset="UTF-8">
     <div class="form-group row">
         <div class="col-2">
             <form:label path="nome" cssClass="scol-sm-2 col-form-label">Nome</form:label>

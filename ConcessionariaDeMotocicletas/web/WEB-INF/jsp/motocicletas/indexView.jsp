@@ -54,7 +54,7 @@
                 <td><t:out value="${motocicleta.situacaoMotocicleta}"/></td>
                 <td><t:out value="${motocicleta.proprietario.nome}"/></td>
                 <td><t:out value="${motocicleta.modelo.nome}"/></td>
-                <td><a href="#" class="btn btn-sm btn-primary mb-2">Visualizar</a>
+                <td><a href="<t:url value="/motocicletas/visualizar/${motocicleta.idMotocicleta}"/>" class="btn btn-sm btn-primary mb-2">Visualizar</a>
                     <a href="<t:url value="/motocicletas/alterar/${motocicleta.idMotocicleta}"/>" class="btn btn-sm btn-primary mb-2">Editar</a>
                 <a href="<t:url value="/motocicletas/remover/${motocicleta.idMotocicleta}"/>" class="btn btn-sm btn-primary mb-2">Remover</a></td>
             </tr>

@@ -81,7 +81,7 @@ public class ProprietarioController {
     }
     
     
-      @RequestMapping(value = "proprietarios/remover/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "proprietarios/remover/{id}", method = RequestMethod.GET)
     public ModelAndView removerProprietario(@PathVariable("id") int idProprietario) {
         
         try {
@@ -90,5 +90,16 @@ public class ProprietarioController {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ModelAndView("redirect:/proprietarios");
+    }
+    
+     @RequestMapping(value = "proprietarios/visualizar/{id}", method = RequestMethod.GET)
+    public ModelAndView visualizarProprietario(@PathVariable("id") int idProprietario) {
+        Proprietario p = new Proprietario();
+        try {
+            p = ProprietarioDAO.retornaProprietarioPorId(idProprietario);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ModelAndView("proprietarios/VisualizarView", "proprietario", p);
     }
 }

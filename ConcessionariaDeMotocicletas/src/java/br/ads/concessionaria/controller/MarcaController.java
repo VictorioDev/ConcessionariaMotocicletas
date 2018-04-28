@@ -86,7 +86,7 @@ public class MarcaController {
     }
     
     
-      @RequestMapping(value = "marcas/remover/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "marcas/remover/{id}", method = RequestMethod.GET)
     public ModelAndView removerMarca(@PathVariable("id") int idMarca) {
         
         try {
@@ -95,5 +95,17 @@ public class MarcaController {
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ModelAndView("redirect:/marcas");
+    }
+    
+    
+    @RequestMapping(value = "marcas/visualizar/{id}", method = RequestMethod.GET)
+    public ModelAndView visualizarMarca(@PathVariable("id") int idMarca, Model m) {
+        Marca marca = new Marca();
+        try {
+            marca = MarcaDAO.retornarMarcaPorId(idMarca);
+        } catch (SQLException ex) {
+            Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ModelAndView("marcas/VisualizarView", "marca", marca);
     }
 }
