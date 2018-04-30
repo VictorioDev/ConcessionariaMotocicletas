@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,11 +31,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class MarcaController {
 
     @RequestMapping(value = "marcas", method = RequestMethod.GET)
-    public ModelAndView listarMarcas(Model m) {
+    public ModelAndView listarMarcas(Model m, HttpServletRequest request) {
+        String query = request.getParameter("search");
         
         ArrayList<Marca> listaMarcas = new ArrayList<>();
         try {
-            listaMarcas = MarcaDAO.listarMarcas();
+            listaMarcas = MarcaDAO.listarMarcas(query);
         } catch (SQLException ex) {
             //return new ModelAndView("erro");
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,6 +44,7 @@ public class MarcaController {
         m.addAttribute("marcas", listaMarcas);
         return new ModelAndView("marcas/indexView");
     }
+    
     @RequestMapping(value = "marcas/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar() {
         return new ModelAndView("marcas/cadastrarView", "marca", new Marca());

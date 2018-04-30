@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
-<t:import url="templates/header.jsp"/>
+<t:import url="../templates/header.jsp"/>
 
 <h3>Bem-vindo, ${usuarioSession.nome}!</h3>
 <p>Aqui você consegue ter uma visão geral de como está o andamento da concessionária.</p>
@@ -73,4 +73,4 @@
     </div><!-- col-sm-4 -->
 </div><!-- row -->
 
-<t:import url="templates/footer.jsp"/>
+<t:import url="../templates/footer.jsp"/>

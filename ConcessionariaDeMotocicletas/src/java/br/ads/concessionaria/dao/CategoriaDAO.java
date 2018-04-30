@@ -59,11 +59,26 @@ public class CategoriaDAO extends BaseDAO {
         return c;
     }
 
-    public static ArrayList<Categoria> listarCategorias() throws SQLException {
+    public static ArrayList<Categoria> listarCategorias(String busca) throws SQLException {
         openConnection();
-        String SQL = "SELECT * FROM categorias";
+        String SQL;
         ArrayList<Categoria> categorias = new ArrayList<>();
-        PreparedStatement stm = connection.prepareCall(SQL);
+        PreparedStatement stm;
+        
+        if(busca != null){
+            if(busca.isEmpty()){
+                SQL = "SELECT * FROM categorias";
+                stm = connection.prepareCall(SQL);
+            }else {
+                SQL = "SELECT * FROM categorias WHERE nome like '%" + busca + "%' OR descricao LIKE '%" + busca + "%'";
+                stm = connection.prepareCall(SQL);
+            }
+        }else{
+            SQL = "SELECT * FROM categorias";
+            stm = connection.prepareCall(SQL);
+        }
+        
+        
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             Categoria c = new Categoria();
@@ -73,6 +88,18 @@ public class CategoriaDAO extends BaseDAO {
             categorias.add(c);
         }
         return categorias;
+    }
+    
+    public static int contarCategorias() throws SQLException{
+        int total = 0;
+        String SQL = "SELECT COUNT(*) as total FROM CATEGORIAS";
+        PreparedStatement stm = connection.prepareCall(SQL);
+        ResultSet rs = stm.executeQuery();
+        if(rs.first()){
+            total = rs.getInt("total");
+        }
+        
+        return total;
     }
 
     public static void main(String[] args) {
@@ -84,7 +111,7 @@ public class CategoriaDAO extends BaseDAO {
         try {
             CategoriaDAO.alterarCategoria(c);
             ArrayList<Categoria> categorias = new ArrayList();
-            categorias = CategoriaDAO.listarCategorias();
+            categorias = CategoriaDAO.listarCategorias("");
             for (Categoria cat : categorias) {
                 System.out.println("ID da categoria: " + cat.getIdCategoria());
                 System.out.println("Nome: " + cat.getNome());
@@ -94,5 +121,7 @@ public class CategoriaDAO extends BaseDAO {
             Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+
 
 }//fim da classe

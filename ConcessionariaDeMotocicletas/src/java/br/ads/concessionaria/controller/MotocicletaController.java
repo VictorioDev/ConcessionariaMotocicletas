@@ -37,11 +37,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MotocicletaController {
     @RequestMapping(value = "motocicletas", method = RequestMethod.GET)
-     public ModelAndView listarMotocicletas(Model m) {
-        
+     public ModelAndView listarMotocicletas(Model m, HttpServletRequest request) {
+        String query = request.getParameter("search");
         ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
         try {
-            listaMotocicletas = MotocicletaDAO.listarMotocicletas();
+            listaMotocicletas = MotocicletaDAO.listarMotocicletas(query);
            
             System.err.println("Size(): " + listaMotocicletas.size());
         } catch (SQLException ex) {
@@ -61,8 +61,8 @@ public class MotocicletaController {
         ArrayList<Modelo> listaModelos = new ArrayList<>();
         
         try {
-            listaProprietarios = ProprietarioDAO.listarProprietarios();
-            listaModelos = ModeloDAO.listarModelos();
+            listaProprietarios = ProprietarioDAO.listarProprietarios("");
+            listaModelos = ModeloDAO.listarModelos("");
         } catch (SQLException ex) {
             Logger.getLogger(MotocicletaController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,8 +98,8 @@ public class MotocicletaController {
         ArrayList<Modelo> listaModelos = new ArrayList<>();
         ArrayList<Proprietario> listaProprietarios = new ArrayList<>();
         try {
-            listaModelos = ModeloDAO.listarModelos();
-            listaProprietarios = ProprietarioDAO.listarProprietarios();
+            listaModelos = ModeloDAO.listarModelos("");
+            listaProprietarios = ProprietarioDAO.listarProprietarios("");
             motocicleta = MotocicletaDAO.retornaMotocicletaPorId(idMototicleta);
             model.addAttribute("modelos", listaModelos);
             model.addAttribute("proprietarios", listaProprietarios);

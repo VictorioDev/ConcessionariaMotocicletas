@@ -52,11 +52,24 @@ public class AcessorioDAO extends BaseDAO {
         return a;
     }
 
-    public static ArrayList<Acessorio> listarAcessorios() throws SQLException {
+    public static ArrayList<Acessorio> listarAcessorios(String busca) throws SQLException {
         openConnection();
-        String SQL = "SELECT * FROM acessorios";
+        String SQL;
         ArrayList<Acessorio> acessorios = new ArrayList<>();
-        PreparedStatement stm = connection.prepareCall(SQL);
+        PreparedStatement stm;
+        if(busca != null){
+            if(busca.isEmpty()){
+                SQL = "SELECT * FROM acessorios";
+                stm = connection.prepareCall(SQL);
+            }else {
+                SQL = "SELECT * FROM acessorios WHERE descricao LIKE '%" + busca + "%'";
+                stm = connection.prepareCall(SQL);
+            }
+        }else {
+            SQL = "SELECT * FROM acessorios";
+            stm = connection.prepareCall(SQL);
+        }
+        
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             Acessorio a = new Acessorio();
@@ -67,6 +80,18 @@ public class AcessorioDAO extends BaseDAO {
         return acessorios;
     }
 
+    
+    public static int contarAcessorios() throws SQLException{
+        openConnection();
+        int total = 0;
+        String SQL = "SELECT COUNT(*) as total from acessorios";
+        PreparedStatement stm = connection.prepareStatement(SQL);
+        ResultSet rs = stm.executeQuery();
+        if(rs.first()){
+            total = rs.getInt("total");
+        }
+        return total;
+    }
 //    public static void main(String[] args) {
 //        Acessorio a = new Acessorio();
 //        c.setNome("Esportiva");

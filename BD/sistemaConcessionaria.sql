@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS `categoriasmotocicletas` (
   PRIMARY KEY (`idMotocicleta`,`idCategoria`),
   KEY `fk_Motocicletas_has_Categorias_Categorias1_idx` (`idCategoria`),
   KEY `fk_Motocicletas_has_Categorias_Motocicletas1_idx` (`idMotocicleta`),
-  CONSTRAINT `fk_Motocicletas_has_Categorias_Categorias1` FOREIGN KEY (`idCategoria`) REFERENCES `mydb`.`categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Motocicletas_has_Categorias_Motocicletas1` FOREIGN KEY (`idMotocicleta`) REFERENCES `mydb`.`motocicletas` (`idMotocicleta`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Motocicletas_has_Categorias_Categorias1` FOREIGN KEY (`idCategoria`) REFERENCES `sistemaconcessionaria`.`categorias` (`idCategoria`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Motocicletas_has_Categorias_Motocicletas1` FOREIGN KEY (`idMotocicleta`) REFERENCES `sistemaconcessionaria`.`motocicletas` (`idMotocicleta`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Exportação de dados foi desmarcado.
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `faturas` (
   PRIMARY KEY (`idFatura`),
   UNIQUE KEY `idFatura_UNIQUE` (`idFatura`),
   KEY `fk_Faturas_Vendas1_idx` (`idVenda`),
-  CONSTRAINT `fk_Faturas_Vendas1` FOREIGN KEY (`idVenda`) REFERENCES `mydb`.`vendas` (`idVenda`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Faturas_Vendas1` FOREIGN KEY (`idVenda`) REFERENCES `sistemaconcessionaria`.`vendas` (`idVenda`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Exportação de dados foi desmarcado.
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `idUsuario` int(10) unsigned NOT NULL,
   PRIMARY KEY (`idLog`),
   KEY `fk_Logs_Usuarios1_idx` (`idUsuario`),
-  CONSTRAINT `fk_Logs_Usuarios1` FOREIGN KEY (`idUsuario`) REFERENCES `mydb`.`usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Logs_Usuarios1` FOREIGN KEY (`idUsuario`) REFERENCES `sistemaconcessionaria`.`usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Exportação de dados foi desmarcado.
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `modelos` (
   PRIMARY KEY (`idModelo`),
   UNIQUE KEY `idModelos_UNIQUE` (`idModelo`),
   KEY `fk_Modelos_Marcas_idx` (`idMarca`),
-  CONSTRAINT `fk_Modelos_Marcas` FOREIGN KEY (`idMarca`) REFERENCES `mydb`.`marcas` (`idMarca`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Modelos_Marcas` FOREIGN KEY (`idMarca`) REFERENCES `sistemaconcessionaria`.`marcas` (`idMarca`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Exportação de dados foi desmarcado.
@@ -140,8 +140,8 @@ CREATE TABLE IF NOT EXISTS `motocicletas` (
   PRIMARY KEY (`idMotocicleta`),
   KEY `fk_Motocicletas_Proprietarios1_idx` (`idProprietario`),
   KEY `fk_Motocicletas_Modelos1_idx` (`idModelo`),
-  CONSTRAINT `fk_Motocicletas_Modelos1` FOREIGN KEY (`idModelo`) REFERENCES `mydb`.`modelos` (`idModelo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Motocicletas_Proprietarios1` FOREIGN KEY (`idProprietario`) REFERENCES `mydb`.`proprietarios` (`idProprietario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Motocicletas_Modelos1` FOREIGN KEY (`idModelo`) REFERENCES `sistemaconcessionaria`.`modelos` (`idModelo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Motocicletas_Proprietarios1` FOREIGN KEY (`idProprietario`) REFERENCES `sistemaconcessionaria`.`proprietarios` (`idProprietario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Exportação de dados foi desmarcado.
@@ -152,8 +152,8 @@ CREATE TABLE IF NOT EXISTS `motocicletasacessorios` (
   PRIMARY KEY (`idMotocicleta`,`idAcessorio`),
   KEY `fk_Motocicletas_has_Acessorios_Acessorios1_idx` (`idAcessorio`),
   KEY `fk_Motocicletas_has_Acessorios_Motocicletas1_idx` (`idMotocicleta`),
-  CONSTRAINT `fk_Motocicletas_has_Acessorios_Acessorios1` FOREIGN KEY (`idAcessorio`) REFERENCES `mydb`.`acessorios` (`idAcessorio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Motocicletas_has_Acessorios_Motocicletas1` FOREIGN KEY (`idMotocicleta`) REFERENCES `mydb`.`motocicletas` (`idMotocicleta`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Motocicletas_has_Acessorios_Acessorios1` FOREIGN KEY (`idAcessorio`) REFERENCES `sistemaconcessionaria`.`acessorios` (`idAcessorio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Motocicletas_has_Acessorios_Motocicletas1` FOREIGN KEY (`idMotocicleta`) REFERENCES `sistemaconcessionaria`.`motocicletas` (`idMotocicleta`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Exportação de dados foi desmarcado.
@@ -207,9 +207,9 @@ CREATE TABLE IF NOT EXISTS `vendas` (
   KEY `fk_Vendas_Clientes1_idx` (`idCliente`),
   KEY `fk_Vendas_Usuarios1_idx` (`idUsuario`),
   KEY `fk_Vendas_Motocicletas1_idx` (`idMotocicleta`),
-  CONSTRAINT `fk_Vendas_Clientes1` FOREIGN KEY (`idCliente`) REFERENCES `mydb`.`clientes` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Vendas_Motocicletas1` FOREIGN KEY (`idMotocicleta`) REFERENCES `mydb`.`motocicletas` (`idMotocicleta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Vendas_Usuarios1` FOREIGN KEY (`idUsuario`) REFERENCES `mydb`.`usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Vendas_Clientes1` FOREIGN KEY (`idCliente`) REFERENCES `sistemaconcessionaria`.`clientes` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Vendas_Motocicletas1` FOREIGN KEY (`idMotocicleta`) REFERENCES `sistemaconcessionaria`.`motocicletas` (`idMotocicleta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Vendas_Usuarios1` FOREIGN KEY (`idUsuario`) REFERENCES `sistemaconcessionaria`.`usuarios` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- Exportação de dados foi desmarcado.

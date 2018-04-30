@@ -19,7 +19,7 @@ public class MotocicletaDAO extends BaseDAO {
 
     public static void incluirMotocicleta(Motocicleta m) throws SQLException {
         openConnection();
-        String SQl = "INSERT INTO motocicletas (ano,chassi,cor,tipoCombustivel,valorCompra,valorVenda,situacaoMotocicleta,renavam,placa,motor,dataVistoria,valorIPVA,situacaoIPVA,idProprietario) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String SQl = "INSERT INTO motocicletas (ano,chassi,cor,tipoCombustivel,valorCompra,valorVenda,situacaoMotocicleta,renavam,placa,motor,dataVistoria,valorIPVA,situacaoIPVA,idProprietario, idModelo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement stm = connection.prepareStatement(SQl);
         stm.setInt(1, m.getAno());
         stm.setString(2, m.getChassi());
@@ -35,6 +35,7 @@ public class MotocicletaDAO extends BaseDAO {
         stm.setDouble(12, m.getValorIPVA());
         stm.setString(13, m.getSituacaoIPVA());
         stm.setInt(14, m.getProprietario().getIdProprietario());
+        stm.setInt(15, m.getModelo().getIdModelo());
         stm.execute();
     }
 
@@ -44,14 +45,53 @@ public class MotocicletaDAO extends BaseDAO {
         PreparedStatement stm = connection.prepareCall(SQL);
         stm.setInt(1, idMotocicleta);
         stm.execute();
-        
+
     }
 
-    public static ArrayList<Motocicleta> listarMotocicletas() throws SQLException {
+    public static int contarMotocicletas() throws SQLException {
+        int total = 0;
         openConnection();
-        String SQL = "SELECT * FROM motocicletas";
-        ArrayList<Motocicleta> motocicletas = new ArrayList<>();
+        String SQL = "SELECT COUNT(*) as total FROM motocicletas";
         PreparedStatement stm = connection.prepareCall(SQL);
+        ResultSet rs = stm.executeQuery();
+        if (rs.first()) {
+            total = rs.getInt("total");
+        }
+        return total;
+    }
+
+    public static ArrayList<Motocicleta> listarMotocicletas(String busca) throws SQLException {
+        openConnection();
+        String SQL;
+        PreparedStatement stm;
+        ArrayList<Motocicleta> motocicletas = new ArrayList<>();
+
+        if (busca != null) {
+            if (busca.isEmpty()) {
+                SQL = "SELECT * FROM motocicletas";
+                stm = connection.prepareCall(SQL);
+            } else {
+                SQL = "SELECT * FROM motocicletas WHERE ano LIKE '%" + busca + "%' "
+                        + "OR chassi LIKE '%" + busca + "%' "
+                        + "OR cor LIKE '%" + busca + "%' "
+                        + "OR tipoCombustivel LIKE '%" + busca + "%' "
+                        + "OR valorCompra LIKE '%" + busca + "%' "
+                        + "OR valorVenda LIKE '%" + busca + "%' "
+                        + "OR situacaoMotocicleta LIKE '%" + busca + "%' "
+                        + "OR renavam LIKE '%" + busca + "%' "
+                        + "OR placa LIKE '%" + busca + "%' "
+                        + "OR motor LIKE '%" + busca + "%' "
+                        + "OR dataVistoria LIKE '%" + busca + "%' "
+                        + "OR valorIPVA LIKE '%" + busca + "%' "
+                        + "OR situacaoIPVA LIKE '%" + busca + "% ' "
+                        + "OR idProprietario LIKE '%" + busca + "%' ";
+                stm = connection.prepareCall(SQL);
+            }
+        } else {
+            SQL = "SELECT * FROM motocicletas";
+            stm = connection.prepareCall(SQL);
+        }
+
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             Motocicleta m = new Motocicleta();
@@ -109,8 +149,8 @@ public class MotocicletaDAO extends BaseDAO {
     public static void alterarMotocicleta(Motocicleta m) throws SQLException {
         openConnection();
         String SQL = "UPDATE motocicletas set ano = ?, chassi = ?, cor = ?, tipoCombustivel = ?, valorCompra = ?,"
-                +" valorVenda = ?, situacaoMotocicleta = ?, renavam = ?, placa = ?, motor = ?, dataVistoria = ?," 
-                +" valorIPVA = ?, situacaoIPVA = ?, idProprietario = ?, idModelo = ? WHERE idMotocicleta = ?";
+                + " valorVenda = ?, situacaoMotocicleta = ?, renavam = ?, placa = ?, motor = ?, dataVistoria = ?,"
+                + " valorIPVA = ?, situacaoIPVA = ?, idProprietario = ?, idModelo = ? WHERE idMotocicleta = ?";
         PreparedStatement stm = connection.prepareCall(SQL);
         stm.setInt(1, m.getAno());
         stm.setString(2, m.getChassi());

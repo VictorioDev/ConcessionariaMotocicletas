@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +30,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProprietarioController {
 
     @RequestMapping(value = "proprietarios", method = RequestMethod.GET)
-    public ModelAndView listarProprietarios(Model m) {
-        
+    public ModelAndView listarProprietarios(Model m, HttpServletRequest request) {
+        String query = request.getParameter("search");
         ArrayList<Proprietario> listaProp = new ArrayList<>();
         try {
-            listaProp = ProprietarioDAO.listarProprietarios();
+            listaProp = ProprietarioDAO.listarProprietarios(query);
         } catch (SQLException ex) {
             //return new ModelAndView("erro");
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);

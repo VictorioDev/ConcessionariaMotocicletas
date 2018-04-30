@@ -43,11 +43,28 @@ public class MarcaDAO {
         //closeConnection();
     }
 
-    public static ArrayList<Marca> listarMarcas() throws SQLException {
+    public static ArrayList<Marca> listarMarcas(String busca) throws SQLException {
         openConnection();
         ArrayList<Marca> listaMarcas = new ArrayList<>();
-        String SQL = "SELECT * FROM marcas";
-        PreparedStatement smt = connection.prepareStatement(SQL);
+        String SQL;
+        PreparedStatement smt;
+        if (busca != null){
+            if(busca.isEmpty()){
+                SQL = "SELECT * FROM marcas";
+                smt = connection.prepareStatement(SQL);
+                System.err.println("Busca empty");
+            }else {
+                SQL = "SELECT * FROM marcas WHERE nome LIKE '%" + busca + "%'";
+                smt = connection.prepareStatement(SQL);
+                System.err.println("Busca: " + busca);
+            }        
+
+        }else {
+            SQL = "SELECT * FROM marcas";
+            smt = connection.prepareStatement(SQL);
+            System.err.println("Busca Null");
+        }
+       
         ResultSet rs = smt.executeQuery();
          
         while (rs.next()) {   
@@ -87,5 +104,19 @@ public class MarcaDAO {
         smt.execute();
         //closeConnection();
     }
+    
+    public static int contarMarcas() throws SQLException{
+        int total = 0;
+        openConnection();
+        String SQL = "SELECT COUNT(*) as total FROM marcas";
+        PreparedStatement stm = connection.prepareCall(SQL);
+        ResultSet rs = stm.executeQuery();
+        if(rs.first()){
+            total = rs.getInt("total");
+        }
+        return total;
+    }
 
+
+    
 }

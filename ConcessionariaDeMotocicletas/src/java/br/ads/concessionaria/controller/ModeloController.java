@@ -30,10 +30,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ModeloController {
         
     @RequestMapping(value = "modelos", method = RequestMethod.GET)
-    public ModelAndView listarModelos(Model m) {
+    public ModelAndView listarModelos(Model m, HttpServletRequest request) {
+        String query = request.getParameter("search");
         ArrayList<Modelo> listaModel = new ArrayList<>();
         try {
-            listaModel = ModeloDAO.listarModelos();
+            listaModel = ModeloDAO.listarModelos(query);
         } catch (SQLException ex) {
             //return new ModelAndView("erro");
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,7 +48,7 @@ public class ModeloController {
     public ModelAndView cadastrar(Model m) {
         ArrayList<Marca> listaMarcas = new ArrayList<>();
         try {
-            listaMarcas = MarcaDAO.listarMarcas();
+            listaMarcas = MarcaDAO.listarMarcas("");
             m.addAttribute("marcas", listaMarcas);
         } catch (SQLException ex) {
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,7 +77,7 @@ public class ModeloController {
         ArrayList<Marca> listaMarcas = new ArrayList<>();
         try {
             m = ModeloDAO.retornaModeloPorId(idModelo);
-            listaMarcas = MarcaDAO.listarMarcas();
+            listaMarcas = MarcaDAO.listarMarcas("");
         } catch (SQLException ex) {
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
         }

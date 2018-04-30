@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,10 +34,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class ClienteController {
         
     @RequestMapping(value = "/clientes", method = RequestMethod.GET)
-    public ModelAndView listarClientes(Model m) {
+    public ModelAndView listarClientes(Model m, HttpServletRequest request) {
+        String query = request.getParameter("search");
         ArrayList<Cliente> listaCliente = new ArrayList<>();
         try {
-            listaCliente = ClienteDAO.listarCliente();
+            listaCliente = ClienteDAO.listarCliente(query);
         } catch (SQLException ex) {
             Logger.getLogger(ClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }

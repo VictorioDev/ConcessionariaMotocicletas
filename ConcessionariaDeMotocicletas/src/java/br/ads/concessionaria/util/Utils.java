@@ -27,7 +27,6 @@ public class Utils {
     public static String activeMenu(String module, String url){
         String parts[] = url.split("/");
         for(int i = 0; i < parts.length; i++){
-            System.out.println(parts[i]);
             if(parts[i].trim().equalsIgnoreCase(module)) return "selected";
         }
         return "";

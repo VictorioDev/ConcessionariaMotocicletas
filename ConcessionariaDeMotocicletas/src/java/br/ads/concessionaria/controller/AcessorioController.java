@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,10 +26,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class AcessorioController {
     
     @RequestMapping("acessorios")
-    public ModelAndView listarAcessorios(Model m){
+    public ModelAndView listarAcessorios(Model m, HttpServletRequest request){
+        String query = request.getParameter("search");
         ArrayList<Acessorio> listarAcessorios = new ArrayList<>();
         try {
-           listarAcessorios = AcessorioDAO.listarAcessorios();
+           listarAcessorios = AcessorioDAO.listarAcessorios(query);
         } catch (SQLException ex) {
             //return ...
             Logger.getLogger(CategoriaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,5 +100,7 @@ public class AcessorioController {
         }
         return new ModelAndView("redirect:/acessorios");
     }
+    
+    
     
 }

@@ -42,12 +42,30 @@ public static void alterarModelo(Modelo m) throws SQLException {
         //closeConnection();
     }
 
-    public static ArrayList<Modelo> listarModelos() throws SQLException {
+    public static ArrayList<Modelo> listarModelos(String busca) throws SQLException {
         openConnection();
 
         ArrayList<Modelo> listaModelos = new ArrayList<>();
-        String SQl = "SELECT * FROM modelos";
-        PreparedStatement smt = connection.prepareStatement(SQl);
+        PreparedStatement smt;
+        String SQL;
+        
+        if (busca != null){
+            if(busca.isEmpty()){
+                SQL = "SELECT * FROM modelos";
+                smt = connection.prepareStatement(SQL);
+                System.err.println("Busca empty");
+            }else {
+                SQL = "SELECT * FROM modelos WHERE nome LIKE '%" + busca + "%'";
+                smt = connection.prepareStatement(SQL);
+                System.err.println("Busca: " + busca);
+            }        
+
+        }else {
+            SQL = "SELECT * FROM modelos";
+            smt = connection.prepareStatement(SQL);
+            System.err.println("Busca Null");
+        }
+       
         ResultSet rs = smt.executeQuery();
         while (rs.next()) {
             Modelo m = new Modelo();
@@ -79,6 +97,18 @@ public static void alterarModelo(Modelo m) throws SQLException {
         return m;
     }
 
+     public static int contarModelos() throws SQLException{
+        int total = 0;
+        openConnection();
+        String SQL = "SELECT COUNT(*) as total FROM modelos";
+        PreparedStatement stm = connection.prepareCall(SQL);
+        ResultSet rs = stm.executeQuery();
+        if(rs.first()){
+            total = rs.getInt("total");
+        }
+        return total;
+    }
+    
     public static void excluirModelo(int idModelo) throws SQLException {
         openConnection();
         ArrayList<Modelo> listaModelo = new ArrayList<>();

@@ -12,7 +12,7 @@
 
 <t:import url="../templates/header.jsp"/>
 
-<h3>Categorias</h3>
+<h3>Acessórios</h3>
 
 <a href="<t:url value="/acessorios/cadastrar"/>" class="btn btn-primary">Novo Acessório</a>
 <form method="GET">
