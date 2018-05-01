@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -58,6 +60,15 @@ public class MotocicletaDAO extends BaseDAO {
             total = rs.getInt("total");
         }
         return total;
+    }
+    
+    public static void alterarSituacaoMotocicleta(String situacao, int idMotocicleta) throws SQLException{
+        openConnection();
+        String SQL = "UPDATE motocicletas SET situacaoMotocicleta = ? where idMotocicleta = ?";
+        PreparedStatement stm = connection.prepareCall(SQL);
+        stm.setString(1, situacao);
+        stm.setInt(2, idMotocicleta);
+        stm.execute();
     }
 
     public static ArrayList<Motocicleta> listarMotocicletas(String busca) throws SQLException {
@@ -172,5 +183,13 @@ public class MotocicletaDAO extends BaseDAO {
         stm.setInt(15, m.getModelo().getIdModelo());
         stm.setInt(16, m.getIdMotocicleta());
         stm.execute();
+    }
+    
+    public static void main(String[] args) {
+        try {
+            MotocicletaDAO.alterarSituacaoMotocicleta("Vendida", 1);
+        } catch (SQLException ex) {
+            Logger.getLogger(MotocicletaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
