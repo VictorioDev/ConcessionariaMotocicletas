@@ -12,7 +12,7 @@
     <span class="oi" data-glyph="key" title="Proprietários" aria-hidden="true"></span> Visualizar Proprietário
 </h3>
 
-<a href="<t:url value="/proprietarios/alterar/${proprietario.idProprietario}" />" class="btn btn-primary btn-sm mb-3">
+<a href="<t:url value="/proprietarios/editar/${proprietario.idProprietario}" />" class="btn btn-primary btn-sm mb-3">
     <span class="oi" data-glyph="pencil" title="Editar" aria-hidden="true"></span> Editar proprietário
 </a>
 
