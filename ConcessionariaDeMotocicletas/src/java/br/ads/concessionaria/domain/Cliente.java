@@ -6,6 +6,8 @@
 package br.ads.concessionaria.domain;
 
 import java.sql.Date;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -13,17 +15,35 @@ import java.sql.Date;
  */
 public class Cliente {
      private int idCliente;
+    
+    @NotBlank 
     private String tipo;
+    
+    @NotBlank
     private String nome;
+    
+    @NotBlank
     private String razaoSocial;
     private String CPF;
     private String CNPJ;
+    
+    @NotBlank
     private String endereco;
+    
+    @NotBlank
     private String telefone;
+    
+    
+    @Email
     private String email;
+    
     private String RG;
+    
     private Date dataNascimento;
+    
     private Date dataCadastro;
+    
+    
     private String status; 
 
     public int getIdCliente() {

@@ -5,12 +5,16 @@
  */
 package br.ads.concessionaria.domain;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  *
  * @author Victorio Zansavio
  */
 public class Acessorio {
     private int idAcessorio;
+    
+    @NotBlank
     private String descricao;
 
 

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Victorio Zansavio
  */
 public class Utils {
+    
+    
     public static String changeCharset(String s){
         try {
             return new String(s.getBytes("UTF-8"), "UTF-8");

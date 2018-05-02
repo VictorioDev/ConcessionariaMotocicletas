@@ -16,7 +16,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="descricao" cssClass="form-control" placeholder="Digite a descrição do acessório..."/>
+            <form:input path="descricao" cssClass="form-control ${descricao}" placeholder="Digite a descrição do acessório..."/>
+            <div class="invalid-feedback">Preencha a descrição</div>
         </div>
     </div>        
         

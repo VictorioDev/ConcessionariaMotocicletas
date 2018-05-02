@@ -5,17 +5,34 @@
  */
 package br.ads.concessionaria.domain;
 
+import java.lang.annotation.Native;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 /**
  *
  * @author Victorio Zansavio
  */
 public class Venda {
     private int idVenda;
+    
+   
     private String dataVenda;
+   
+    @Min(value = 1)
     private int quantidadeParcelas;
+    
+    
     private double valor;
+    
+    @Min(value = 1)
+    @Max(value = 31)
     private int diaPreferencial;
+    
+   
     private String status;
+    
     private Cliente cliente;
     private Usuario usuario;
     private Motocicleta motocicleta;

@@ -15,17 +15,20 @@
         </div>
 
         <div class="col-10">
-            <form:input path="nome" cssClass="form-control" placeholder="Digite o tipo..."/>
+            <form:input path="nome" cssClass="form-control ${nome}" placeholder="Digite o tipo..."/>
+            <div class="invalid-feedback">Preencha o nome</div>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-2">
             <form:label path="descricao" cssClass="scol-sm-2 col-form-label">Descrição</form:label>
+            
             </div>
 
             <div class="col-10">
-            <form:input path="descricao" cssClass="form-control" placeholder="Digite a descrição..."/>
+            <form:input path="descricao" cssClass="form-control ${descricao}" placeholder="Digite a descrição..."/>
+            <div class="invalid-feedback">Preencha a descrição</div>
         </div>
     </div>
     

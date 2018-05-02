@@ -16,49 +16,56 @@
     <div class="form-group row">
         <form:label path="nome" class="col-sm-2 col-form-label">Nome</form:label>
         <div class="col-sm-10">
-            <form:input path="nome" class="form-control" placeholder="Digite o nome..."/>
+            <form:input path="nome" class="form-control ${nome}" placeholder="Digite o nome..."/>
+            <div class="invalid-feedback">Preencha o nome</div>
         </div>
     </div>
     
     <div class="form-group row">
         <form:label path="login" class="col-sm-2 col-form-label">Login</form:label>
         <div class="col-sm-10">
-            <form:input path="login" class="form-control" placeholder="Digite o login..."/>
-        </div>
+            <form:input path="login" class="form-control ${login}" placeholder="Digite o login..."/>
+            <div class="invalid-feedback">Preencha o login</div>
+         </div>
     </div>
         
     <div class="form-group row">
         <form:label path="senha" class="col-sm-2 col-form-label">Senha</form:label>
         <div class="col-sm-10">
-            <form:input path="senha" type="password" class="form-control" placeholder="Digite a senha..."/>
+            <form:input path="senha" type="password" class="form-control ${senha}" placeholder="Digite a senha..."/>
+            <div class="invalid-feedback">Preencha a senha</div>
         </div>
     </div>
         
     <div class="form-group row">
         <form:label path="cpf" class="col-sm-2 col-form-label">CPF</form:label>
         <div class="col-sm-10">
-            <form:input path="cpf" class="form-control" placeholder="Digite o CPF..."/>
+            <form:input path="cpf" class="form-control ${cpf}" placeholder="Digite o CPF..."/>
+            <div class="invalid-feedback">Preencha o cpf</div>
         </div>
     </div>
     
     <div class="form-group row">
         <form:label path="endereco" class="col-sm-2 col-form-label">Endereço</form:label>
         <div class="col-sm-10">
-            <form:input path="endereco" class="form-control" placeholder="Digite o endereço..."/>
+            <form:input path="endereco" class="form-control ${endereco}" placeholder="Digite o endereço..."/>
+            <div class="invalid-feedback">Preencha o endereço</div>
         </div>
     </div>
         
     <div class="form-group row">
         <form:label path="telefone" class="col-sm-2 col-form-label">Telefone</form:label>
         <div class="col-sm-10">
-            <form:input path="telefone" class="form-control" placeholder="Digite o telefone..."/>
+            <form:input path="telefone" class="form-control ${telefone}" placeholder="Digite o telefone..."/>
+            <div class="invalid-feedback">Preencha o telefone</div>
         </div>
     </div>
 
     <div class="form-group row">
         <form:label path="email" class="col-sm-2 col-form-label">E-mail</form:label>
         <div class="col-sm-10">
-            <form:input path="email" class="form-control" placeholder="Digite o e-mail..."/>
+            <form:input path="email" class="form-control ${email}" placeholder="Digite o e-mail..."/>
+            <div class="invalid-feedback">Preencha o email</div>
         </div>
     </div>
         

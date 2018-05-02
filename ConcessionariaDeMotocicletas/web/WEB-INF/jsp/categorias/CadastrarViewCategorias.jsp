@@ -13,10 +13,12 @@
     <div class="form-group row">
         <div class="col-2">
             <form:label path="nome" cssClass="scol-sm-2 col-form-label">Nome</form:label>
+            
         </div>
 
         <div class="col-10">
-            <form:input path="nome" cssClass="form-control" placeholder="Digite o nome da categoria..."/>
+            <form:input path="nome" cssClass="form-control ${nome}" placeholder="Digite o nome da categoria..."/>
+            <div class="invalid-feedback">Preencha o nome</div>
         </div>
     </div>
         
@@ -26,7 +28,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="descricao" cssClass="form-control" placeholder="Digite a descrição da categoria..."/>
+            <form:input path="descricao" cssClass="form-control ${descricao}" placeholder="Digite a descrição da categoria..."/>
+            <div class="invalid-feedback">Preencha a descrição</div>
         </div>
     </div>
         

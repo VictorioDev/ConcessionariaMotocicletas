@@ -7,7 +7,7 @@
 
 <t:import url="../templates/header.jsp"/>
  
-<h3>Cadastrar Motoicleta</h3>
+<h3>Cadastrar Motocicleta</h3>
 
 <!-- 
      private int idMotocicleta;

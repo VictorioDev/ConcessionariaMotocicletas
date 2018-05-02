@@ -26,14 +26,16 @@
     <div class="form-group row">
         <form:label path="nome" class="col-sm-2 col-form-label">Nome</form:label>
         <div class="col-sm-10">
-            <form:input path="nome" class="form-control" placeholder="Digite o nome..."/>
+            <form:input path="nome" class="form-control ${nome}" placeholder="Digite o nome..."/>
+            <div class="invalid-feedback">Preencha o nome</div>
         </div>
     </div>
     
    <div class="form-group row">
         <form:label path="razaoSocial" class="col-sm-2 col-form-label">Razão Social</form:label>
         <div class="col-sm-10">
-            <form:input path="razaoSocial" class="form-control" placeholder="Digite a razão social..."/>
+            <form:input path="razaoSocial" class="form-control ${razaoSocial}" placeholder="Digite a razão social..."/>
+            <div class="invalid-feedback">Preencha a razao social</div>
         </div>
     </div>
     
@@ -55,21 +57,24 @@
     <div class="form-group row">
         <form:label path="endereco" class="col-sm-2 col-form-label">Endereço</form:label>
         <div class="col-sm-10">
-            <form:input path="endereco" class="form-control" placeholder="Digite o endereço..."/>
+            <form:input path="endereco" class="form-control ${endereco}" placeholder="Digite o endereço..."/>
+            <div class="invalid-feedback">Preencha o endereço</div>
         </div>
     </div>
         
     <div class="form-group row">
         <form:label path="telefone" class="col-sm-2 col-form-label">Telefone</form:label>
         <div class="col-sm-10">
-            <form:input path="telefone" class="form-control" placeholder="Digite o telefone..."/>
+            <form:input path="telefone" class="form-control ${telefone}" placeholder="Digite o telefone..."/>
+            <div class="invalid-feedback">Preencha o telefone</div>
         </div>
     </div>
 
     <div class="form-group row">
         <form:label path="email" class="col-sm-2 col-form-label">E-mail</form:label>
         <div class="col-sm-10">
-            <form:input path="email" class="form-control" placeholder="Digite o e-mail..."/>
+            <form:input path="email" class="form-control ${email}" placeholder="Digite o e-mail..."/>
+            <div class="invalid-feedback">Preencha o email</div>
         </div>
     </div>
         

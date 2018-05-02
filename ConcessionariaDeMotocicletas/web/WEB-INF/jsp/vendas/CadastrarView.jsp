@@ -32,6 +32,7 @@
         <div class="col-sm-10">
             <label><input type="checkbox" name="personalizarValor"> Personalizar valor de venda</label>
             <form:input type="text" path="valor" class="form-control" disabled="true"/>
+            
         </div>
     </div>
         
@@ -54,14 +55,16 @@
     <div class="form-group row">
         <form:label path="quantidadeParcelas" class="col-sm-2 col-form-label">Quantidade de Parcelas:</form:label>
         <div class="col-sm-10">
-            <form:input type="number" path="quantidadeParcelas" class="form-control"/>
+            <form:input type="number" path="quantidadeParcelas" class="form-control ${quantidadeParcelas}"/>
+            <div class="invalid-feedback">Preencha a quantidade de parcelas</div>
         </div>
     </div>
     
     <div class="form-group row">
         <form:label path="diaPreferencial" class="col-sm-2 col-form-label">Dia preferencial para pagamento:</form:label>
         <div class="col-sm-10">
-            <form:input type="number" path="diaPreferencial" class="form-control"/>
+            <form:input type="number" path="diaPreferencial" class="form-control ${diaPreferencial}"/>
+            <div class="invalid-feedback">Preencha o dia preferencial</div>
         </div>
     </div>
     

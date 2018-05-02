@@ -5,19 +5,38 @@
  */
 package br.ads.concessionaria.domain;
 
+import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
+
 /**
  *
  * @author Victorio Zansavio
  */
 public class Usuario {
     private int idUsuario;
+    
+    @NotBlank
     private String nome;
+    
+    @NotBlank
     private String login;
+    
+    @NotBlank
     private String senha;
+    
+    @CPF
     private String cpf;
+    
+    @NotBlank
     private String endereco;
+    
+    @NotBlank
     private String telefone;
+    
+    @NotBlank
     private String email;
+    
+    @NotBlank
     private String tipo;
 
     public int getIdUsuario() {

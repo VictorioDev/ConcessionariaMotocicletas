@@ -5,13 +5,22 @@
  */
 package br.ads.concessionaria.domain;
 
+import javax.validation.constraints.NotBlank;
+
+
 /**
  *
  * @author Victorio Zansavio
  */
 public class Marca {
+    
     private int idMarca;
+    
+    
+    @NotBlank
     private String nome;
+   
+    @NotBlank
     private String descricao;
 
     public int getIdMarca() {
