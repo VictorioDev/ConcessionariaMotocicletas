@@ -26,8 +26,8 @@ public class Interceptor extends HandlerInterceptorAdapter{
             response.sendRedirect("/ConcessionariaDeMotocicletas/login");
             return false;
         }
+        */
         
-        response.addHeader("currentValue", "Victorio");*/
         return true;
         
 //To change body of generated methods, choose Tools | Templates.

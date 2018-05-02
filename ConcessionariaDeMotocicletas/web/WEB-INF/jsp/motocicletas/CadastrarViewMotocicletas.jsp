@@ -18,7 +18,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="ano" type="number" cssClass="form-control" placeholder="Digite o ano..."/>
+            <form:input path="ano" type="number" cssClass="form-control ${ano}" placeholder="Digite o ano..."/>
+            <div class="invalid-feedback">Preencha o ano</div>
         </div>
     </div>
         
@@ -28,7 +29,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="chassi" cssClass="form-control" placeholder="Digite o chassi..."/>
+            <form:input path="chassi" cssClass="form-control ${chassi}" placeholder="Digite o chassi..."/>
+            <div class="invalid-feedback">Preencha o chassi</div>
         </div>
     </div>
         
@@ -38,7 +40,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="cor" cssClass="form-control" placeholder="Digite a cor..."/>
+            <form:input path="cor" cssClass="form-control ${cor}" placeholder="Digite a cor..."/>
+            <div class="invalid-feedback">Preencha a cor</div>
         </div>
     </div>
     
@@ -48,7 +51,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="tipoCombustivel" cssClass="form-control" placeholder="Digite o tipo do combustível..."/>
+            <form:input path="tipoCombustivel" cssClass="form-control ${tipoCombustivel}" placeholder="Digite o tipo do combustível..."/>
+            <div class="invalid-feedback">Preencha o tipo do combustível</div>
         </div>
     </div>
 
@@ -58,7 +62,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="valorCompra" cssClass="form-control" placeholder="Digite o valor de compra..."/>
+            <form:input path="valorCompra" cssClass="form-control ${valorCompra}" placeholder="Digite o valor de compra..."/>
+            <div class="invalid-feedback">Preencha o valor da compra</div>
         </div>
     </div>
         
@@ -68,7 +73,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="valorVenda" cssClass="form-control" placeholder="Digite o valor da venda..."/>
+            <form:input path="valorVenda" cssClass="form-control ${valorVenda}" placeholder="Digite o valor da venda..."/>
+            <div class="invalid-feedback">Preencha o valor da venda</div>
         </div>
     </div>
 
@@ -84,7 +90,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="renavam" type="number" cssClass="form-control" placeholder="Digite o renavam..."/>
+            <form:input path="renavam" type="number" cssClass="form-control ${renavam}" placeholder="Digite o renavam..."/>
+            <div class="invalid-feedback">Preencha o renavam </div>
         </div>
     </div>
         
@@ -94,7 +101,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="placa" cssClass="form-control" placeholder="Digite a placa..."/>
+            <form:input path="placa" cssClass="form-control ${placa}" placeholder="Digite a placa..."/>
+            <div class="invalid-feedback">Preencha a placa</div>
         </div>
     </div>
         
@@ -104,7 +112,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="motor" cssClass="form-control" placeholder="Digite o modelo motor..."/>
+            <form:input path="motor" cssClass="form-control ${motor}" placeholder="Digite o modelo motor..."/>
+            <div class="invalid-feedback">Preencha o motor</div>
         </div>
     </div>
         
@@ -124,7 +133,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="valorIPVA" cssClass="form-control" placeholder="Digite o valor do IPVA..."/>
+            <form:input path="valorIPVA" cssClass="form-control ${valorIPVA}" placeholder="Digite o valor do IPVA..."/>
+            <div class="invalid-feedback">Preencha o valor do IPVA</div>
         </div>
     </div>
         
@@ -138,6 +148,7 @@
                 <form:option value="Em dia"/>
                 <form:option value="Atrasado"/>
             </form:select>
+          
         </div>
     </div>
         

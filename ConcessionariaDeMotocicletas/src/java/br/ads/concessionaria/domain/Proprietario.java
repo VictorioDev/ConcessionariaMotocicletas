@@ -8,6 +8,9 @@ package br.ads.concessionaria.domain;
 import br.ads.concessionaria.util.Utils;
 import com.sun.org.apache.xalan.internal.lib.Extensions;
 import java.sql.Date;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -15,16 +18,35 @@ import java.sql.Date;
  */
 public class Proprietario {
     private int idProprietario;
+    
     private String tipo;
+    
+    @NotBlank
     private String nome;
+    
+    @NotBlank
     private String razaoSocial;
+    
     private String rg;
+    
     private String cpf;
+    
+    
     private String cnpj;
+    
+    @NotBlank
     private String endereco;
+    
+    @NotBlank
     private String telefone;
+    
+    @Email
     private String email;
+    
+    
     private Date dataNascimento;
+    
+    @NotBlank
     private String cartorio;
  
     public int getIdProprietario() {

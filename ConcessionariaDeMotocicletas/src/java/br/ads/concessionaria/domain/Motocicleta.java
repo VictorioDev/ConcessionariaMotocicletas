@@ -8,6 +8,8 @@
 package br.ads.concessionaria.domain;
 
 import java.sql.Date;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -15,19 +17,44 @@ import java.sql.Date;
  */
 public class Motocicleta {
     private int idMotocicleta;
+    
+    @Min(value = 1)
     private int ano;
+    
+    @NotBlank
     private String chassi;
+    
+    @NotBlank
     private String cor;
+    
+    @NotBlank
     private String tipoCombustivel;
+    
+    @Min(value = 1)
     private double valorCompra;
+    
+    @Min(value = 1)
     private double valorVenda;
+    
+    
     private String situacaoMotocicleta;
+    
+    @Min(value = 0)
     private int renavam;
+    
+    @NotBlank
     private String placa;
+    
+    @NotBlank
     private String motor;
     private Date dataVistoria;
+    
+    @Min(value = 1)
     private double valorIPVA;
+    
+    
     private String situacaoIPVA;
+    
     private Proprietario proprietario;
     private Modelo modelo;
 

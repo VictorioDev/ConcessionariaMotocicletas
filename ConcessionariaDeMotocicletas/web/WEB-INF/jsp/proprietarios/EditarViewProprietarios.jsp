@@ -11,7 +11,7 @@
     <span class="oi" data-glyph="key" title="Proprietários" aria-hidden="true"></span> Editar Proprietário
 </h3>
 
-<form:form action="/Concessionaria/proprietarios/editar" method="POST" modelAttribute="proprietario" acceptCharset="UTF-8">
+<form:form action="/ConcessionariaDeMotocicletas/proprietarios/editar" method="POST" modelAttribute="proprietario" acceptCharset="UTF-8">
     <div class="form-group row">
         <div class="col-2">
             <form:label path="tipo" cssClass="scol-sm-2 col-form-label bold">Tipo:</form:label>
@@ -31,7 +31,8 @@
             </div>
 
             <div class="col-10">
-            <form:input path="nome" cssClass="form-control" placeholder="Digite o nome..."/>
+            <form:input path="nome" cssClass="form-control ${nome}" placeholder="Digite o nome..."/>
+            <div class="invalid-feedback">Preencha o nome</div>
         </div>
     </div>
         
@@ -41,8 +42,9 @@
         </div>
 
         <div class="col-10">
-            <form:input path="razaoSocial" cssClass="form-control" placeholder="Digite a razão social..."/>
-         </div>
+            <form:input path="razaoSocial" cssClass="form-control ${razaoSocial}" placeholder="Digite a razão social..."/>
+            <div class="invalid-feedback">Preencha a razão social</div>
+        </div>
     </div>
 
     <div class="form-group row">
@@ -71,7 +73,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="endereco" cssClass="form-control" placeholder="Digite o endereço..."/>
+            <form:input path="endereco" cssClass="form-control ${endereco}" placeholder="Digite o endereço..."/>
+            <div class="invalid-feedback">Preencha o endereço</div>
         </div>
     </div>
     
@@ -81,7 +84,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="telefone" cssClass="form-control" placeholder="Digite o telefone..."/>
+            <form:input path="telefone" cssClass="form-control ${telefone}" placeholder="Digite o telefone..."/>
+            <div class="invalid-feedback">Preencha o telefone</div>
         </div>
     </div>
 
@@ -101,7 +105,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="cartorio" type="text" cssClass="form-control" placeholder="Digite o cartório..."/>
+            <form:input path="cartorio" type="text" cssClass="form-control ${cartorio}" placeholder="Digite o cartório..."/>
+            <div class="invalid-feedback">Preencha o cartorio</div>
         </div>
     </div>   
 
@@ -121,7 +126,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="email" type="text" cssClass="form-control" placeholder="Digite o email..."/>
+            <form:input path="email" type="text" cssClass="form-control ${email}" placeholder="Digite o email..."/>
+            <div class="invalid-feedback">Preencha o email</div>
         </div>
     </div>
         

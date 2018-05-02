@@ -30,8 +30,9 @@
             <form:label path="nome" cssClass="scol-sm-2 col-form-label bold">Nome:</form:label>
             </div>
 
-            <div class="col-10">
-            <form:input path="nome" cssClass="form-control" placeholder="Digite o nome..."/>
+        <div class="col-10">
+            <form:input path="nome" cssClass="form-control ${nome}" placeholder="Digite o nome..."/>
+            <div class="invalid-feedback">Preencha o nome</div>
         </div>
     </div>
         
@@ -41,8 +42,9 @@
         </div>
 
         <div class="col-10">
-            <form:input path="razaoSocial" cssClass="form-control" placeholder="Digite a razão social..."/>
-         </div>
+            <form:input path="razaoSocial" cssClass="form-control ${razaoSocial}" placeholder="Digite a razão social..."/>
+            <div class="invalid-feedback">Preencha a razão social</div>
+        </div>
     </div>
 
     <div class="form-group row">
@@ -71,7 +73,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="endereco" cssClass="form-control" placeholder="Digite o endereço..."/>
+            <form:input path="endereco" cssClass="form-control ${endereco}" placeholder="Digite o endereço..."/>
+            <div class="invalid-feedback">Preencha o endereco</div>
         </div>
     </div>
     
@@ -81,7 +84,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="telefone" cssClass="form-control" placeholder="Digite o telefone..."/>
+            <form:input path="telefone" cssClass="form-control ${telefone}" placeholder="Digite o telefone..."/>
+            <div class="invalid-feedback">Preencha o telefone</div>
         </div>
     </div>
         
@@ -102,7 +106,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="cartorio" type="text" cssClass="form-control" placeholder="Digite o cartório..."/>
+            <form:input path="cartorio" type="text" cssClass="form-control ${cartorio}" placeholder="Digite o cartório..."/>
+            <div class="invalid-feedback">Preencha o cartório</div>
         </div>
     </div>   
         
@@ -123,7 +128,8 @@
         </div>
 
         <div class="col-10">
-            <form:input path="email" type="text" cssClass="form-control" placeholder="Digite o email..."/>
+            <form:input path="email" type="text" cssClass="form-control ${email}" placeholder="Digite o email..."/>
+            <div class="invalid-feedback">Preencha o e-mail</div>
         </div>
     </div>
         
