@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Luciano Carvalho
  */
 @Controller
-public class VendasController {
+public class VendaController {
     
     @RequestMapping("vendas")
     public ModelAndView vendas( Model m ){
