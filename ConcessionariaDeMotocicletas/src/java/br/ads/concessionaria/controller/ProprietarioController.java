@@ -40,12 +40,12 @@ public class ProprietarioController {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
         m.addAttribute("proprietarios", listaProp);
-        return new ModelAndView("proprietarios/indexView");
+        return new ModelAndView("proprietarios/IndexViewProprietarios");
     }
 
     @RequestMapping(value = "proprietarios/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar() {
-        return new ModelAndView("proprietarios/cadastrarView", "proprietario", new Proprietario());
+        return new ModelAndView("proprietarios/CadastrarViewProprietarios", "proprietario", new Proprietario());
     }
 
     @RequestMapping(value = "proprietarios/cadastrar", method = RequestMethod.POST)
@@ -58,7 +58,7 @@ public class ProprietarioController {
         return "redirect:/proprietarios";
     }
 
-    @RequestMapping(value = "proprietarios/alterar/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "proprietarios/editar/{id}", method = RequestMethod.GET)
     public ModelAndView alterar( @PathVariable("id") int idProprietario ) {
         Proprietario p = new Proprietario();
         System.err.println("Chegou o id " + idProprietario);
@@ -67,10 +67,10 @@ public class ProprietarioController {
         } catch (SQLException ex) {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("proprietarios/alterarView", "proprietario", p);
+        return new ModelAndView("proprietarios/EditarViewProprietarios", "proprietario", p);
     }
     
-      @RequestMapping(value = "proprietarios/alterar", method = RequestMethod.POST)
+      @RequestMapping(value = "proprietarios/editar", method = RequestMethod.POST)
     public ModelAndView alterarProprietario(@ModelAttribute("proprietario") Proprietario p) {
         System.out.println("Proprietario id " + p.getIdProprietario());
         try {
@@ -101,6 +101,6 @@ public class ProprietarioController {
         } catch (SQLException ex) {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("proprietarios/VisualizarView", "proprietario", p);
+        return new ModelAndView("proprietarios/VisualizarViewProprietarios", "proprietario", p);
     }
 }

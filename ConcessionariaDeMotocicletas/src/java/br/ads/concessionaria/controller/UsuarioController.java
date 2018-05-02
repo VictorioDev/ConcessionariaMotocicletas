@@ -45,7 +45,7 @@ public class UsuarioController {
 
         m.addAttribute("usuarios", listaUsuarios);
 
-        return new ModelAndView("usuarios/IndexView");
+        return new ModelAndView("usuarios/IndexViewUsuarios");
     }
 
     /**
@@ -65,7 +65,7 @@ public class UsuarioController {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return new ModelAndView("usuarios/VisualizarView", "usuario", u);
+        return new ModelAndView("usuarios/VisualizarViewUsuarios", "usuario", u);
     }
 
     /**
@@ -75,7 +75,7 @@ public class UsuarioController {
      */
     @RequestMapping(value = "/usuarios/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar(Usuario u) {
-        return new ModelAndView("usuarios/CadastrarView", "usuario", u);
+        return new ModelAndView("usuarios/CadastrarViewUsuarios", "usuario", u);
     }
 
     /**
@@ -89,6 +89,7 @@ public class UsuarioController {
             BindingResult bindingResult,
             RedirectAttributes attrs) {
         if (bindingResult.hasErrors()) {
+            
             if (bindingResult.hasFieldErrors("nome")) {
                 attrs.addFlashAttribute("nome", "is-invalid");
             } else {
@@ -149,7 +150,6 @@ public class UsuarioController {
 
             return "redirect:/usuarios";
         }
-
     }
 
     /**
@@ -169,7 +169,7 @@ public class UsuarioController {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return new ModelAndView("usuarios/EditarView", "usuario", u);
+        return new ModelAndView("usuarios/EditarViewUsuarios", "usuario", u);
     }
 
     /**

@@ -1,9 +1,11 @@
 package br.ads.concessionaria.controller;
 
 import br.ads.concessionaria.dao.ClienteDAO;
+import br.ads.concessionaria.dao.FaturaDAO;
 import br.ads.concessionaria.dao.MotocicletaDAO;
 import br.ads.concessionaria.dao.ProprietarioDAO;
 import br.ads.concessionaria.dao.UsuarioDAO;
+import br.ads.concessionaria.dao.VendaDAO;
 import br.ads.concessionaria.domain.Usuario;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -24,20 +26,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class PainelController {
 
     @RequestMapping(value = {"/index", "/painel"})
-    public String painel(Model m) {
-
+    public String painel( Model m ) {
+       
         try {
-            m.addAttribute("qtdUsuarios", UsuarioDAO.contarUsuarios());
-            m.addAttribute("qtdMotocicletas", MotocicletaDAO.contarMotocicletas());
-            m.addAttribute("qtdClientes", ClienteDAO.contarClientes());
-            m.addAttribute("qtdProprietarios", ProprietarioDAO.contarProprietarios());
+            m.addAttribute("qtdUsuarios", UsuarioDAO.contarUsuarios() );
+            m.addAttribute("qtdMotocicletas", MotocicletaDAO.contarMotocicletas() );
+            m.addAttribute("qtdClientes", ClienteDAO.contarClientes() );
+            m.addAttribute("qtdProprietarios", ProprietarioDAO.contarProprietarios() );
+            m.addAttribute("qtdVendas", VendaDAO.contarVendas() );
+            m.addAttribute("qtdFaturas", FaturaDAO.contarFaturas() );
         } catch (SQLException ex) {
             Logger.getLogger(PainelController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        m.addAttribute("qtdVendas", 0);
-        m.addAttribute("qtdFaturas", 0);
 
-        return "painel/IndexView";
+        return "painel/IndexViewPainel";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

@@ -7,17 +7,21 @@
 
 <t:import url="../templates/header.jsp"/>
  
-<h3>Cadastrar Acessório</h3>
+<h3 class="title">
+    <span class="oi" data-glyph="badge" title="Acessórios" aria-hidden="true"></span> Cadastrar Acessório
+</h3>
+
+
 <form:form method="POST" modelAttribute="acessorio" acceptCharset="UTF-8">
 
     <div class="form-group row">
         <div class="col-2">
-            <form:label path="descricao" cssClass="scol-sm-2 col-form-label">Descrição</form:label>
+            <form:label path="descricao" cssClass="scol-sm-2 col-form-label bold">Descrição:</form:label>
         </div>
 
         <div class="col-10">
             <form:input path="descricao" cssClass="form-control ${descricao}" placeholder="Digite a descrição do acessório..."/>
-            <div class="invalid-feedback">Preencha a descrição</div>
+            <div class="invalid-feedback">Preencha a descrição.</div>
         </div>
     </div>        
         
@@ -28,7 +32,5 @@
     </div>
  
 </form:form>
-
-<p>Listando 1 de 1 registros.</p>
 
 <t:import url="../templates/footer.jsp"/>

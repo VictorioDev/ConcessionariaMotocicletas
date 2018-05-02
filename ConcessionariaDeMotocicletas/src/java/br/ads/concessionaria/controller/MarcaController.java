@@ -46,12 +46,12 @@ public class MarcaController {
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         m.addAttribute("marcas", listaMarcas);
-        return new ModelAndView("marcas/indexView");
+        return new ModelAndView("marcas/IndexViewMarcas");
     }
 
     @RequestMapping(value = "marcas/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar(Marca m) {
-        return new ModelAndView("marcas/cadastrarView", "marca", m);
+        return new ModelAndView("marcas/CadastrarViewMarcas", "marca", m);
     }
 
     @RequestMapping(value = "marcas/cadastrar", method = RequestMethod.POST)
@@ -88,7 +88,7 @@ public class MarcaController {
 
     }
 
-    @RequestMapping(value = "marcas/alterar/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "marcas/editar/{id}", method = RequestMethod.GET)
     public ModelAndView alterar(@PathVariable("id") int idMarca) {
         Marca m = new Marca();
         System.err.println("Chegou o id " + idMarca);
@@ -97,10 +97,10 @@ public class MarcaController {
         } catch (SQLException ex) {
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("marcas/alterarView", "marca", m);
+        return new ModelAndView("marcas/EditarViewMarcas", "marca", m);
     }
 
-    @RequestMapping(value = "marcas/alterar", method = RequestMethod.POST)
+    @RequestMapping(value = "marcas/editar", method = RequestMethod.POST)
     public ModelAndView alterarProprietario(@ModelAttribute("marca") @Valid Marca m,
             BindingResult bindingResult,
             RedirectAttributes attrs) {
@@ -153,6 +153,6 @@ public class MarcaController {
         } catch (SQLException ex) {
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("marcas/VisualizarView", "marca", marca);
+        return new ModelAndView("marcas/VisualizarViewMarcas", "marca", marca);
     }
 }

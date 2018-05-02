@@ -73,36 +73,28 @@ public class MotocicletaDAO extends BaseDAO {
 
     public static ArrayList<Motocicleta> listarMotocicletas(String busca) throws SQLException {
         openConnection();
-        String SQL;
         PreparedStatement stm;
+        
         ArrayList<Motocicleta> motocicletas = new ArrayList<>();
 
-        if (busca != null) {
-            if (busca.isEmpty()) {
-                SQL = "SELECT * FROM motocicletas";
-                stm = connection.prepareCall(SQL);
-            } else {
-                SQL = "SELECT * FROM motocicletas WHERE ano LIKE '%" + busca + "%' "
-                        + "OR chassi LIKE '%" + busca + "%' "
-                        + "OR cor LIKE '%" + busca + "%' "
-                        + "OR tipoCombustivel LIKE '%" + busca + "%' "
-                        + "OR valorCompra LIKE '%" + busca + "%' "
-                        + "OR valorVenda LIKE '%" + busca + "%' "
-                        + "OR situacaoMotocicleta LIKE '%" + busca + "%' "
-                        + "OR renavam LIKE '%" + busca + "%' "
-                        + "OR placa LIKE '%" + busca + "%' "
-                        + "OR motor LIKE '%" + busca + "%' "
-                        + "OR dataVistoria LIKE '%" + busca + "%' "
-                        + "OR valorIPVA LIKE '%" + busca + "%' "
-                        + "OR situacaoIPVA LIKE '%" + busca + "% ' "
-                        + "OR idProprietario LIKE '%" + busca + "%' ";
-                stm = connection.prepareCall(SQL);
-            }
-        } else {
-            SQL = "SELECT * FROM motocicletas";
-            stm = connection.prepareCall(SQL);
-        }
+        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
+  
+        String SQL = "SELECT * FROM motocicletas WHERE ano LIKE '%" + busca + "%' "
+                + "OR chassi LIKE '%" + busca + "%' "
+                + "OR cor LIKE '%" + busca + "%' "
+                + "OR tipoCombustivel LIKE '%" + busca + "%' "
+                + "OR valorCompra LIKE '%" + busca + "%' "
+                + "OR valorVenda LIKE '%" + busca + "%' "
+                + "OR situacaoMotocicleta LIKE '%" + busca + "%' "
+                + "OR renavam LIKE '%" + busca + "%' "
+                + "OR placa LIKE '%" + busca + "%' "
+                + "OR motor LIKE '%" + busca + "%' "
+                + "OR dataVistoria LIKE '%" + busca + "%' "
+                + "OR valorIPVA LIKE '%" + busca + "%' "
+                + "OR situacaoIPVA LIKE '%" + busca + "% ' "
+                + "OR idProprietario LIKE '%" + busca + "%' ";
 
+        stm = connection.prepareCall(SQL);
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {
             Motocicleta m = new Motocicleta();

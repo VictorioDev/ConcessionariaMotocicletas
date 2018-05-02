@@ -31,14 +31,18 @@ public class FaturaDAO extends BaseDAO {
     
     /**
      * Método para listar todas as faturas.
+     * @param busca
      * @return
      * @throws SQLException 
      */
-    public static ArrayList<Fatura> listarFatura() throws SQLException {
+    public static ArrayList<Fatura> listarFatura( String busca ) throws SQLException {
         openConnection();
 
         ArrayList<Fatura> listaFaturas = new ArrayList<>();
-        String SQL = "SELECT * FROM faturas";
+        
+        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
+        String SQL = "SELECT * FROM faturas WHERE idFatura LIKE '%" + busca +"%' OR status LIKE '%" + busca + "%'";
+        
         PreparedStatement smt = connection.prepareStatement( SQL );
         
         ResultSet rs = smt.executeQuery();

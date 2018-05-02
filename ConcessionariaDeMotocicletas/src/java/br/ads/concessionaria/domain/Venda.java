@@ -22,8 +22,7 @@ public class Venda {
    
     @Min(value = 1)
     private int quantidadeParcelas;
-    
-    
+        
     private double valor;
     
     @Min(value = 1)

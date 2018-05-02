@@ -44,7 +44,7 @@ public class ModeloController {
         }
         System.err.println("Tamanho Lista: " + listaModel.size());
         m.addAttribute("modelos", listaModel);
-        return new ModelAndView("modelos/indexView");
+        return new ModelAndView("modelos/IndexViewModelos");
     }
 
     @RequestMapping(value = "modelos/cadastrar", method = RequestMethod.GET)
@@ -56,7 +56,7 @@ public class ModeloController {
         } catch (SQLException ex) {
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("modelos/cadastrarView", "modelo", modelo);
+        return new ModelAndView("modelos/CadastrarViewModelos", "modelo", modelo);
     }
 
     @RequestMapping(value = "modelos/cadastrar", method = RequestMethod.POST)
@@ -95,7 +95,7 @@ public class ModeloController {
 
     }
 
-    @RequestMapping(value = "modelos/alterar/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "modelos/editar/{id}", method = RequestMethod.GET)
     public ModelAndView alterar(@PathVariable("id") int idModelo, Model model) {
         Modelo m = new Modelo();
         System.err.println("Chegou o id " + idModelo);
@@ -107,10 +107,10 @@ public class ModeloController {
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
         }
         model.addAttribute("marcas", listaMarcas);
-        return new ModelAndView("modelos/alterarView", "modelo", m);
+        return new ModelAndView("modelos/EditarViewModelos", "modelo", m);
     }
 
-    @RequestMapping(value = "modelos/alterar", method = RequestMethod.POST)
+    @RequestMapping(value = "modelos/editar", method = RequestMethod.POST)
     public ModelAndView alterarModelo(@ModelAttribute("modelo") @Valid Modelo m,
             BindingResult bindingResult,
             HttpServletRequest request,
@@ -166,6 +166,6 @@ public class ModeloController {
         } catch (SQLException ex) {
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("modelos/VisualizarView", "modelo", modelo);
+        return new ModelAndView("modelos/VisualizarViewModelos", "modelo", modelo);
     }
 }

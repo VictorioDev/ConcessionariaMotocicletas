@@ -48,12 +48,12 @@ public class ClienteController {
         }
 
         m.addAttribute("clientes", listaCliente);
-        return new ModelAndView("clientes/indexView");
+        return new ModelAndView("clientes/IndexViewClientes");
     }
 
     @RequestMapping(value = "/clientes/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar(Cliente c) {
-        return new ModelAndView("clientes/cadastrarView", "cliente", c);
+        return new ModelAndView("clientes/CadastrarViewClientes", "cliente", c);
     }
 
     @RequestMapping(value = "clientes/cadastrar", method = RequestMethod.POST)
@@ -131,13 +131,13 @@ public class ClienteController {
     @RequestMapping(value = "clientes/editar/{id}", method = RequestMethod.GET)
     public ModelAndView alterarCliente(@PathVariable("id") int idCliente) {
         Cliente c = new Cliente();
-        System.out.println("Chegou o id " + idCliente);
+
         try {
             c = ClienteDAO.retornarClientePorId(idCliente);
         } catch (SQLException ex) {
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("clientes/editarView", "cliente", c);
+        return new ModelAndView("clientes/EditarViewClientes", "cliente", c);
     }
 
     //metodo para alterar cliente
@@ -207,7 +207,7 @@ public class ClienteController {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return new ModelAndView("clientes/VisualizarView", "cliente", c);
+        return new ModelAndView("clientes/VisualizarViewClientes", "cliente", c);
     }
 
 }

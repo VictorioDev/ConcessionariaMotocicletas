@@ -56,30 +56,20 @@ public class UsuarioDAO extends BaseDAO {
         openConnection();
 
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-        String SQL;
+        
+        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
+        
         PreparedStatement smt;
 
-        if (busca != null) {
-            if (busca.isEmpty()) {
-                SQL = "SELECT * FROM usuarios";
-                smt = connection.prepareStatement(SQL);
-            } else {
-                SQL = "SELECT * FROM usuarios WHERE nome LIKE '%" + busca + "%' "
-                        + "OR login LIKE '%" + busca + "%' "
-                        + "OR cpf LIKE '%" + busca + "%' "
-                        + "OR endereco LIKE '%" + busca + "%' "
-                        + "OR telefone LIKE '%" + busca + "%' "
-                        + "OR email LIKE '%" + busca + "%' "
-                        + "OR tipo LIKE '%" + busca + "%' ";
-                System.err.println("SQL: " + SQL);
-                smt = connection.prepareStatement(SQL);
-            }
+        String SQL = "SELECT * FROM usuarios WHERE nome LIKE '%" + busca + "%' "
+                + "OR login LIKE '%" + busca + "%' "
+                + "OR cpf LIKE '%" + busca + "%' "
+                + "OR endereco LIKE '%" + busca + "%' "
+                + "OR telefone LIKE '%" + busca + "%' "
+                + "OR email LIKE '%" + busca + "%' "
+                + "OR tipo LIKE '%" + busca + "%' ";
 
-        } else {
-            SQL = "SELECT * FROM usuarios";
-            smt = connection.prepareStatement(SQL);
-        }
-
+        smt = connection.prepareStatement(SQL);
         ResultSet rs = smt.executeQuery();
 
         while (rs.next()) {
@@ -207,9 +197,6 @@ public class UsuarioDAO extends BaseDAO {
         stm.setString(2, senha);
 
         ResultSet rs = stm.executeQuery();
-
-        System.out.println(login);
-        System.out.println(senha);
 
         if (rs.first()) {
             Usuario u = new Usuario();

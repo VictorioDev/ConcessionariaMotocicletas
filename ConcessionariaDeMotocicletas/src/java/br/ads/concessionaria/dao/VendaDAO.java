@@ -1,5 +1,4 @@
 package br.ads.concessionaria.dao;
-import br.ads.concessionaria.domain.Usuario;
 import br.ads.concessionaria.domain.Venda;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,11 +53,14 @@ public class VendaDAO extends BaseDAO {
      * @return
      * @throws SQLException 
      */
-    public static ArrayList<Venda> listarVenda() throws SQLException {
+    public static ArrayList<Venda> listarVenda( String busca ) throws SQLException {
         openConnection();
 
         ArrayList<Venda> listaVendas = new ArrayList<>();
-        String SQL = "SELECT * FROM vendas";
+        
+        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
+        
+        String SQL = "SELECT * FROM vendas WHERE idVenda LIKE '%" + busca + "%' OR valor LIKE '%" + busca + "%' OR diaPreferencial LIKE '%" + busca + "%' OR status LIKE '%" + busca + "%'";
         PreparedStatement smt = connection.prepareStatement( SQL );
         
         ResultSet rs = smt.executeQuery();

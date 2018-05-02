@@ -64,7 +64,7 @@ public class AcessorioController {
             BindingResult bindingResult,
             RedirectAttributes attrs) {
 
-        if (bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("descricao")) {
                 attrs.addFlashAttribute("descricao", "is-invalid");
             } else {

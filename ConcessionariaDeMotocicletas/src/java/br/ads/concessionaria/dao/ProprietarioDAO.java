@@ -6,12 +6,10 @@
 package br.ads.concessionaria.dao;
 
 import br.ads.concessionaria.domain.Proprietario;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -110,34 +108,25 @@ public class ProprietarioDAO extends BaseDAO {
         openConnection();
 
         ArrayList<Proprietario> listaProprietarios = new ArrayList<>();
-        String SQL;
+        
+        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
+        
         PreparedStatement smt;
         
-        if (busca != null) {
-            if (busca.isEmpty()) {
-                SQL = "SELECT * FROM proprietarios";
-                smt = connection.prepareStatement(SQL);  
-            }else {
-                SQL = "SELECT * FROM proprietarios WHERE tipo like '%" + busca + "%' "
-                + "or nome like '%" + busca + "%' "
-                + "or razaoSocial like '%" + busca + "%' "
-                + "or rg like '%" + busca + "%' "
-                + "or cpf like '%" + busca + "%' "
-                + "or cnpj like '%" + busca + "%' "
-                + "or endereco like '%" + busca + "%' "
-                + "or telefone like '%" + busca + "%' "
-                + "or email like '%" + busca + "%' "
-                + "or dataNascimento like '%" + busca + "%' "
-                + "or cartorio like '%" + busca + "%' "
-                + "or idProprietario like '%" + busca + "%'";
-                smt = connection.prepareStatement(SQL);
-            }
-        } else {
-            SQL = "SELECT * FROM proprietarios";
-            smt = connection.prepareStatement(SQL);
-        }
-        
-        System.err.println("SQL: \n" + SQL);
+        String SQL = "SELECT * FROM proprietarios WHERE tipo like '%" + busca + "%' "
+            + "or nome like '%" + busca + "%' "
+            + "or razaoSocial like '%" + busca + "%' "
+            + "or rg like '%" + busca + "%' "
+            + "or cpf like '%" + busca + "%' "
+            + "or cnpj like '%" + busca + "%' "
+            + "or endereco like '%" + busca + "%' "
+            + "or telefone like '%" + busca + "%' "
+            + "or email like '%" + busca + "%' "
+            + "or dataNascimento like '%" + busca + "%' "
+            + "or cartorio like '%" + busca + "%' "
+            + "or idProprietario like '%" + busca + "%'";
+
+        smt = connection.prepareStatement(SQL);
         ResultSet rs = smt.executeQuery();
 
         while (rs.next()) {
@@ -188,18 +177,11 @@ public class ProprietarioDAO extends BaseDAO {
 
     public static void excluirProprietario(int idProprietario) throws SQLException {
         openConnection();
-        ArrayList<Proprietario> listaProprietarios = new ArrayList<>();
+
         String SQl = "DELETE FROM proprietarios WHERE idProprietario = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
         smt.setInt(1, idProprietario);
         smt.execute();
         //closeConnection();
-    }
-
-    public static void main(String[] args) {
-        ArrayList<Proprietario> listaProp = ProprietarioDAO.retornaProprietarioPorNome("V");
-        for (Proprietario p : listaProp) {
-            System.err.println(p.getNome());
-        }
     }
 }

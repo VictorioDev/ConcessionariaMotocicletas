@@ -40,19 +40,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class VendaController {
 
     @RequestMapping("vendas")
-    public ModelAndView vendas(Model m) {
+    public ModelAndView vendas(Model m, HttpServletRequest request ) {
 
+        String query = request.getParameter("search");
+        
         ArrayList<Venda> listaVendas = new ArrayList<>();
 
         try {
-            listaVendas = VendaDAO.listarVenda();
+            listaVendas = VendaDAO.listarVenda( query );
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         m.addAttribute("vendas", listaVendas);
 
-        return new ModelAndView("vendas/IndexView");
+        return new ModelAndView("vendas/IndexViewVendas");
     }
 
     /**
@@ -72,7 +74,7 @@ public class VendaController {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return new ModelAndView("vendas/VisualizarView", "venda", v);
+        return new ModelAndView("vendas/VisualizarViewVendas", "venda", v);
     }
 
     /**
@@ -96,7 +98,7 @@ public class VendaController {
         m.addAttribute("motocicletas", listaMotocicletas);
         m.addAttribute("clientes", listaClientes);
 
-        return new ModelAndView("vendas/CadastrarView", "venda", venda);
+        return new ModelAndView("vendas/CadastrarViewVendas", "venda", venda);
     }
 
     /**

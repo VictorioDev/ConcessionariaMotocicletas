@@ -20,7 +20,7 @@ public class AcessorioDAO extends BaseDAO {
 
     public static void alterarAcessorio(Acessorio a) throws SQLException {
         openConnection();
-        String SQL = "UPDATE acessorios set descricao = ? WHERE idAcessorio = ?";
+        String SQL = "UPDATE acessorios SET descricao = ? WHERE idAcessorio = ?";
         PreparedStatement stm = connection.prepareCall(SQL);
         stm.setString(1, a.getDescricao());
         stm.setInt(2, a.getIdAcessorio());
@@ -29,7 +29,6 @@ public class AcessorioDAO extends BaseDAO {
 
     public static void removerAcessorio(int idAcessorio) throws SQLException {
         openConnection();
-        ArrayList<Acessorio> listarAcessorios = new ArrayList<>();
         String SQl = "DELETE FROM acessorios WHERE idAcessorio = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
         smt.setInt(1, idAcessorio);
@@ -57,26 +56,21 @@ public class AcessorioDAO extends BaseDAO {
         String SQL;
         ArrayList<Acessorio> acessorios = new ArrayList<>();
         PreparedStatement stm;
-        if(busca != null){
-            if(busca.isEmpty()){
-                SQL = "SELECT * FROM acessorios";
-                stm = connection.prepareCall(SQL);
-            }else {
-                SQL = "SELECT * FROM acessorios WHERE descricao LIKE '%" + busca + "%'";
-                stm = connection.prepareCall(SQL);
-            }
-        }else {
-            SQL = "SELECT * FROM acessorios";
-            stm = connection.prepareCall(SQL);
-        }
         
+        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
+        
+        SQL = "SELECT * FROM acessorios WHERE descricao LIKE '%" + busca + "%'";
+        
+        stm = connection.prepareCall(SQL);
         ResultSet rs = stm.executeQuery();
+        
         while (rs.next()) {
             Acessorio a = new Acessorio();
             a.setIdAcessorio(rs.getInt("idAcessorio"));
             a.setDescricao(rs.getString("descricao"));
             acessorios.add(a);
         }
+        
         return acessorios;
     }
 

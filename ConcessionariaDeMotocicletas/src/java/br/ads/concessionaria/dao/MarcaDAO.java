@@ -45,26 +45,14 @@ public class MarcaDAO {
 
     public static ArrayList<Marca> listarMarcas(String busca) throws SQLException {
         openConnection();
+        
         ArrayList<Marca> listaMarcas = new ArrayList<>();
-        String SQL;
         PreparedStatement smt;
-        if (busca != null){
-            if(busca.isEmpty()){
-                SQL = "SELECT * FROM marcas";
-                smt = connection.prepareStatement(SQL);
-                System.err.println("Busca empty");
-            }else {
-                SQL = "SELECT * FROM marcas WHERE nome LIKE '%" + busca + "%'";
-                smt = connection.prepareStatement(SQL);
-                System.err.println("Busca: " + busca);
-            }        
-
-        }else {
-            SQL = "SELECT * FROM marcas";
-            smt = connection.prepareStatement(SQL);
-            System.err.println("Busca Null");
-        }
-       
+        
+        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
+                
+        String SQL = "SELECT * FROM marcas WHERE nome LIKE '%" + busca + "%'";
+        smt = connection.prepareStatement( SQL );
         ResultSet rs = smt.executeQuery();
          
         while (rs.next()) {   
@@ -97,7 +85,6 @@ public class MarcaDAO {
     
     public static void excluirMarca(int idMarca) throws SQLException {
         openConnection();
-        ArrayList<Proprietario> listaProprietarios = new ArrayList<>();
         String SQl = "DELETE FROM marcas WHERE idMarca = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
         smt.setInt(1, idMarca);
@@ -115,8 +102,5 @@ public class MarcaDAO {
             total = rs.getInt("total");
         }
         return total;
-    }
-
-
-    
+    }   
 }

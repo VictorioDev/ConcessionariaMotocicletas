@@ -11,16 +11,19 @@
 
 <t:import url="../templates/header.jsp"/>
  
-<h3>Alterar Acessório</h3>
+<h3 class="title">
+    <span class="oi" data-glyph="badge" title="Acessórios" aria-hidden="true"></span> Alterar Acessório
+</h3>
+
 <form:form action="/ConcessionariaDeMotocicletas/acessorios/editar" method="POST" modelAttribute="acessorio" acceptCharset="UTF-8">
     <div class="form-group row">
-        <div class="col-2">
-            <form:label path="descricao" cssClass="scol-sm-2 col-form-label">Descrição</form:label>
+        <div class="col-2 bold">
+            <form:label path="descricao" cssClass="scol-sm-2 col-form-label">Descrição:</form:label>
         </div>
 
         <div class="col-10">
             <form:input path="descricao" cssClass="form-control ${descricao}" placeholder="Digite a descrição do acessorio..."/>
-            <div class="invalid-feedback">Preencha a descrição</div>
+            <div class="invalid-feedback">Preencha a descrição.</div>
         </div>
     </div>
     
@@ -32,12 +35,10 @@
          
     <div class="form-group row">
         <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Alterar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
          </div>
     </div>
  
 </form:form>
-
-<p>Listando 1 de 1 registros.</p>
 
 <t:import url="../templates/footer.jsp"/>

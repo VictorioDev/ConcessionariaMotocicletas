@@ -48,12 +48,10 @@ public class MotocicletaController {
             //return new ModelAndView("erro");
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        m.addAttribute("mototicletas", listaMotocicletas);
-        return new ModelAndView("motocicletas/indexView");
+        m.addAttribute("motocicletas", listaMotocicletas);
+        return new ModelAndView("motocicletas/IndexViewMotocicletas");
     }
      
-  
-    
 
     @RequestMapping(value = "motocicletas/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar(Model m) {
@@ -69,12 +67,13 @@ public class MotocicletaController {
         
         m.addAttribute("proprietarios", listaProprietarios);
         m.addAttribute("modelos",listaModelos);
-        return new ModelAndView("motocicletas/cadastrarView", "motocicleta", new Motocicleta());
+        return new ModelAndView("motocicletas/CadastrarViewMotocicletas", "motocicleta", new Motocicleta());
     }
     
     
   
     @RequestMapping(value = "motocicletas/cadastrar", method = RequestMethod.POST)
+    
     public String adicionarMotocicleta(@ModelAttribute("motocicleta") Motocicleta m, HttpServletRequest request) {
         int idProprietario = Integer.parseInt(request.getParameter("idProprietario"));
         int idModelo = Integer.parseInt(request.getParameter("idModelo"));
@@ -92,7 +91,7 @@ public class MotocicletaController {
         return "redirect:/motocicletas";
     }
 
-    @RequestMapping(value = "motocicletas/alterar/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "motocicletas/editar/{id}", method = RequestMethod.GET)
     public ModelAndView alterar( @PathVariable("id") int idMototicleta, Model model ) {
         Motocicleta motocicleta = new Motocicleta();
         ArrayList<Modelo> listaModelos = new ArrayList<>();
@@ -106,11 +105,11 @@ public class MotocicletaController {
         } catch (SQLException ex) {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("motocicletas/alterarView", "motocicleta", motocicleta);
+        return new ModelAndView("motocicletas/EditarViewMotocicletas", "motocicleta", motocicleta);
     }
     
     
-      @RequestMapping(value = "motocicletas/alterar/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "motocicletas/editar/{id}", method = RequestMethod.POST)
     public ModelAndView alterarMotocicleta(@ModelAttribute("motocicleta") Motocicleta motocicleta, HttpServletRequest request) {
         int idProprietario = Integer.parseInt(request.getParameter("idProprietario"));
         int idModelo = Integer.parseInt(request.getParameter("idModelo"));
@@ -150,7 +149,6 @@ public class MotocicletaController {
         } catch (SQLException ex) {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ModelAndView("motocicletas/VisualizarView", "motocicleta", motocicleta);
-    }
-  
+        return new ModelAndView("motocicletas/VisualizarViewMotocicletas", "motocicleta", motocicleta);
+    }  
 }

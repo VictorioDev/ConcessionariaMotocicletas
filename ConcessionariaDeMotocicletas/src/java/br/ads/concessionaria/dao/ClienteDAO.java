@@ -92,29 +92,21 @@ public class ClienteDAO {
         String SQL;
         PreparedStatement smt;
 
-        if (busca != null) {
-            if (busca.isEmpty()) {
-                SQL = "SELECT * FROM clientes";
-                smt = connection.prepareStatement(SQL);
-            }else {
-                SQL = "SELECT * FROM clientes clientes WHERE tipo LIKE '%" + busca + "%' "
-                        + "OR nome LIKE '%" + busca + "%' "
-                        + "OR razaoSocial LIKE '%" + busca + "%' " 
-                        + "OR CPF LIKE '%" + busca + "%'"
-                        + "OR CNPJ LIKE '%" + busca + "%' "
-                        + "OR endereco LIKE '%" + busca + "%' "
-                        + "OR telefone LIKE '%" + busca + "%' "
-                        + "OR email LIKE '%" + busca + "%' "
-                        + "OR RG LIKE '%" + busca + "%' "
-                        + "OR dataNascimento LIKE '%" + busca + "%' "
-                        + "OR idCliente LIKE '%" + busca + "%' ";
-                smt = connection.prepareStatement(SQL);
-            }
-        } else {
-            SQL = "SELECT * FROM clientes";
-            smt = connection.prepareStatement(SQL);
-        }
-
+        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
+         
+        SQL = "SELECT * FROM clientes clientes WHERE tipo LIKE '%" + busca + "%' "
+                + "OR nome LIKE '%" + busca + "%' "
+                + "OR razaoSocial LIKE '%" + busca + "%' " 
+                + "OR CPF LIKE '%" + busca + "%'"
+                + "OR CNPJ LIKE '%" + busca + "%' "
+                + "OR endereco LIKE '%" + busca + "%' "
+                + "OR telefone LIKE '%" + busca + "%' "
+                + "OR email LIKE '%" + busca + "%' "
+                + "OR RG LIKE '%" + busca + "%' "
+                + "OR dataNascimento LIKE '%" + busca + "%' "
+                + "OR idCliente LIKE '%" + busca + "%' ";               
+               
+        smt = connection.prepareStatement(SQL);
         ResultSet rs = smt.executeQuery();
 
         while (rs.next()) {

@@ -29,7 +29,7 @@ public class ModeloDAO extends BaseDAO  {
         //closeConnection();
     }
     
-public static void alterarModelo(Modelo m) throws SQLException {
+    public static void alterarModelo(Modelo m) throws SQLException {
         openConnection();
         String SQl = "UPDATE modelos SET nome = ?, descricao = ?, IdMarca = ? WHERE idModelo = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
@@ -47,24 +47,11 @@ public static void alterarModelo(Modelo m) throws SQLException {
 
         ArrayList<Modelo> listaModelos = new ArrayList<>();
         PreparedStatement smt;
-        String SQL;
         
-        if (busca != null){
-            if(busca.isEmpty()){
-                SQL = "SELECT * FROM modelos";
-                smt = connection.prepareStatement(SQL);
-                System.err.println("Busca empty");
-            }else {
-                SQL = "SELECT * FROM modelos WHERE nome LIKE '%" + busca + "%'";
-                smt = connection.prepareStatement(SQL);
-                System.err.println("Busca: " + busca);
-            }        
-
-        }else {
-            SQL = "SELECT * FROM modelos";
-            smt = connection.prepareStatement(SQL);
-            System.err.println("Busca Null");
-        }
+        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
+        
+        String SQL = "SELECT * FROM modelos WHERE nome LIKE '%" + busca + "%'";
+        smt = connection.prepareStatement(SQL);
        
         ResultSet rs = smt.executeQuery();
         while (rs.next()) {
@@ -111,7 +98,6 @@ public static void alterarModelo(Modelo m) throws SQLException {
     
     public static void excluirModelo(int idModelo) throws SQLException {
         openConnection();
-        ArrayList<Modelo> listaModelo = new ArrayList<>();
         String SQl = "DELETE FROM modelos WHERE idModelo = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
         smt.setInt(1, idModelo);
