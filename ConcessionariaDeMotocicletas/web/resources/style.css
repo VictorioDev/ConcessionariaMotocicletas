@@ -113,3 +113,7 @@ table.table {
 table.table td {
     vertical-align:middle;
 }
+
+.bold {
+    font-weight: bold;
+}

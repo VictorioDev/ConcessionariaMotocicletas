@@ -15,7 +15,7 @@ public class Fatura {
     private int idFatura;
     private int numeroParcela;
     private Date dataEmissao;
-    private Date dateVencimento;
+    private Date dataVencimento;
     private double valorParcela;
     private String status;
     private String tipoPagamento;
@@ -45,12 +45,12 @@ public class Fatura {
         this.dataEmissao = dataEmissao;
     }
 
-    public Date getDateVencimento() {
-        return dateVencimento;
+    public Date getDataVencimento() {
+        return dataVencimento;
     }
 
-    public void setDateVencimento(Date dateVencimento) {
-        this.dateVencimento = dateVencimento;
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 
     public double getValorParcela() {

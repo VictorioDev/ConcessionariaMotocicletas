@@ -6,6 +6,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="<t:url value="/resources/jquery-3.3.1.min.js"/>" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="<t:url value="/resources/bootstrap.min.css" />" />
         <link rel="stylesheet" type="text/css" href="<t:url value="/resources/open-iconic/font/css/open-iconic.css" />" />
         <link rel="stylesheet" type="text/css" href="<t:url value="/resources/style.css" />" />
