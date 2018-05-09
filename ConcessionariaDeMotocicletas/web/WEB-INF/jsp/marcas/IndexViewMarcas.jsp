@@ -46,7 +46,7 @@
                 <a href="<t:url value="/marcas/visualizar/${marca.idMarca}"/>" class="btn btn-sm btn-primary">
                     <span class="oi" data-glyph="eye" title="Visualizar" aria-hidden="true"></span> Visualizar
                 </a>
-                <a href="<t:url value="/marcas/alterar/${marca.idMarca}"/>" class="btn btn-sm btn-secondary">
+                <a href="<t:url value="/marcas/editar/${marca.idMarca}"/>" class="btn btn-sm btn-secondary">
                     <span class="oi" data-glyph="pencil" title="Editar" aria-hidden="true"></span> Editar
                 </a>
                 <a href="<t:url value="/marcas/remover/${marca.idMarca}"/>" class="btn btn-sm btn-red">

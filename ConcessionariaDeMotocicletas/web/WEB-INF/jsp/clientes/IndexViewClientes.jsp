@@ -33,8 +33,8 @@
 <table class="table table-hover table-striped mt-2">
     <thead>
         <th>#</th>
-        <th>Nome</th>
-        <th>CPF</th>
+        <th>Nome/Razão Social</th>
+        <th>CPF/CNPJ</th>
         <th>Endereço</th>
         <th>Telefone</th>
         <th>Data de Nascimento</th>
@@ -44,8 +44,8 @@
     <t:forEach items="${clientes}" var="cliente">
         <tr>
             <td><t:out value="${cliente.idCliente}"/></td>
-            <td><t:out value="${cliente.nome}"/></td>
-            <td><t:out value="${cliente.CPF}"/></td>
+            <td><t:out value="${cliente.nome} ${cliente.razaoSocial}"/></td>
+            <td><t:out value="${cliente.CPF} ${cliente.CNPJ}"/></td>
             <td><t:out value="${cliente.endereco}"/></td>
             <td><t:out value="${cliente.telefone}"/></td>
             <td>

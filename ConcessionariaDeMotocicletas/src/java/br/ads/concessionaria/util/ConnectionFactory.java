@@ -18,7 +18,7 @@ public class ConnectionFactory {
     public static Connection getConection(){
       try {
             return DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/sistemaconcessionaria", "root", "victorio");
+                    "jdbc:mysql://localhost:3306/sistemaconcessionaria", "root", "");
         } catch (SQLException e) {
             System.err.println("Deu pau");
             throw new RuntimeException(e);

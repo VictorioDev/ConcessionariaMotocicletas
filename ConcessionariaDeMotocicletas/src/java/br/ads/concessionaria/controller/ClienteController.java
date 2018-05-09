@@ -53,13 +53,23 @@ public class ClienteController {
 
     @RequestMapping(value = "/clientes/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar(Cliente c) {
+        
+        if( c.getTipo() == null ) {
+            c.setTipo("Pessoa Física");
+        }
+        
         return new ModelAndView("clientes/CadastrarViewClientes", "cliente", c);
     }
 
     @RequestMapping(value = "clientes/cadastrar", method = RequestMethod.POST)
     public String adicionarCliente(@ModelAttribute("cliente") @Valid Cliente c,
             BindingResult bindingResult,
-            RedirectAttributes attrs) {
+            RedirectAttributes attrs,
+            HttpServletRequest request ) {
+        
+        bindingResult.getFieldErrors().forEach((t) -> {
+            System.out.println( t.getField() );
+        });
 
         if (bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("tipo")) {

@@ -19,10 +19,8 @@ public class Cliente {
     @NotBlank 
     private String tipo;
     
-    @NotBlank
     private String nome;
     
-    @NotBlank
     private String razaoSocial;
     private String CPF;
     private String CNPJ;

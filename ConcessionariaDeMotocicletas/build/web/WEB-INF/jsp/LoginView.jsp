@@ -18,8 +18,14 @@
                     <p>Informe seu e-mail e sua senha para acessar o painel.</p>
                     
                     <form class="form-login" method="POST" accept-charset="utf-8">
-                        <p><input type="text" name="login" class="form-control" value="" placeholder="Digite aqui o usuário..."></p>
-                        <p><input type="password" name="senha" class="form-control" value="" placeholder="Digite aqui a senha..."></p>
+                        <div>
+                            <input type="text" name="login" class="form-control ${login}" placeholder="Digite aqui o usuário...">
+                            <div class="invalid-feedback">O login está incorreto.</div>
+                        </div>
+                        <div class="mt-2 mb-2">
+                            <input type="password" name="senha" class="form-control ${senha}" placeholder="Digite aqui a senha...">
+                            <div class="invalid-feedback">A senha está incorreta.</div>
+                        </div>
                         <p><button type="submit" class="btn btn-primary">Acessar <i class="fa fa-sign-in" aria-hidden="true"></i></button></p>
                     </form>
                 </div>                

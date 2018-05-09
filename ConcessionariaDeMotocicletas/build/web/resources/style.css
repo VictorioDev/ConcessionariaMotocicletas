@@ -133,3 +133,7 @@ h3.title span {
     font-size:20px;
     color:#ccc;
 }
+
+.none {
+    display:none;
+}

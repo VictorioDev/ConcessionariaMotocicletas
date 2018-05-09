@@ -119,7 +119,7 @@ public class MarcaController {
             
             
             attrs.addFlashAttribute("marca", m);
-            return new ModelAndView("redirect:/marcas/alterar/"+ m.getIdMarca());
+            return new ModelAndView("redirect:/marcas/editar/"+ m.getIdMarca());
             
         } else {
 

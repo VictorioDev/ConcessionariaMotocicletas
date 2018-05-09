@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Controller padrão do sistema
@@ -48,7 +49,7 @@ public class PainelController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(HttpServletRequest request, HttpSession session) {
+    public String login(HttpServletRequest request, HttpSession session, Model m ) {
 
         Usuario u = new Usuario();
 
@@ -61,6 +62,9 @@ public class PainelController {
 
             if (u != null) {
                 session.setAttribute("usuarioSession", u);
+            } else {
+                m.addAttribute("login", "is-invalid");
+                m.addAttribute("senha", "is-invalid");
             }
 
         } catch (SQLException ex) {
