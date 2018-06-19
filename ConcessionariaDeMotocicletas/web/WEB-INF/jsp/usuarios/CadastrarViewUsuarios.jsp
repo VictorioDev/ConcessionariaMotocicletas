@@ -74,6 +74,7 @@
             <select class="form-control" id="tipo" name="tipo">
                 <option value="Gerente">Gerente</option>
                 <option value="Vendedor">Vendedor</option>
+                <option value="Administrador">Administrador</option>
             </select>
         </div>
     </div>

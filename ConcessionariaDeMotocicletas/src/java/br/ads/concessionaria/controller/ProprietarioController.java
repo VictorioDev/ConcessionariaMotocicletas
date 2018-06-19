@@ -5,7 +5,9 @@
  */
 package br.ads.concessionaria.controller;
 
+import br.ads.concessionaria.dao.MotocicletaDAO;
 import br.ads.concessionaria.dao.ProprietarioDAO;
+import br.ads.concessionaria.dao.UsuarioDAO;
 import br.ads.concessionaria.domain.Proprietario;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -118,9 +120,20 @@ public class ProprietarioController {
     }
 
     @RequestMapping(value = "proprietarios/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerProprietario(@PathVariable("id") int idProprietario) {
+    public ModelAndView removerProprietario(@PathVariable("id") int idProprietario,
+                                            RedirectAttributes attrs) {
 
         try {
+            int totalMotocicletas = MotocicletaDAO.contaMotocicletasPorProprietario(idProprietario);
+            System.err.println("Total Motocicletas: " + totalMotocicletas);
+            if (totalMotocicletas == 0){
+                 ProprietarioDAO.excluirProprietario(idProprietario);
+            }else {
+                Proprietario p = ProprietarioDAO.retornaProprietarioPorId(idProprietario);
+                attrs.addFlashAttribute("hasMsg", true);
+                attrs.addFlashAttribute("msg", "O usuário " + p.getNome() + " possui mototicletas vinculadas a ele e não poderá ser excluído");
+            }
+         
             ProprietarioDAO.excluirProprietario(idProprietario);
         } catch (SQLException ex) {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);

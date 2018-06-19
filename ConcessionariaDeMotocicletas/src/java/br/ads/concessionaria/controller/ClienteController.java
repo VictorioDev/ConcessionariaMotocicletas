@@ -53,11 +53,11 @@ public class ClienteController {
 
     @RequestMapping(value = "/clientes/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar(Cliente c) {
-        
-        if( c.getTipo() == null ) {
+
+        if (c.getTipo() == null) {
             c.setTipo("Pessoa Física");
         }
-        
+
         return new ModelAndView("clientes/CadastrarViewClientes", "cliente", c);
     }
 
@@ -65,10 +65,10 @@ public class ClienteController {
     public String adicionarCliente(@ModelAttribute("cliente") @Valid Cliente c,
             BindingResult bindingResult,
             RedirectAttributes attrs,
-            HttpServletRequest request ) {
-        
+            HttpServletRequest request) {
+
         bindingResult.getFieldErrors().forEach((t) -> {
-            System.out.println( t.getField() );
+            System.out.println(t.getField());
         });
 
         if (bindingResult.hasErrors()) {
@@ -127,10 +127,14 @@ public class ClienteController {
     public String remover(@PathVariable("id") int id) {
 
         Cliente c = new Cliente();
-        c.setIdCliente(id);
-
         try {
-            ClienteDAO.removerCliente(c);
+            c = ClienteDAO.retornarClientePorId(id);
+            if(c.getStatus().equals("Ativo")){
+                c.setStatus("Desativo");
+            }else {
+                c.setStatus("Ativo");
+            }
+            ClienteDAO.alterarCliente(c);
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -154,7 +158,8 @@ public class ClienteController {
     @RequestMapping(value = "clientes/editar", method = RequestMethod.POST)
     public ModelAndView alterarCliente(@ModelAttribute("cliente") @Valid Cliente c,
             BindingResult bindingResult,
-            RedirectAttributes attrs) {
+            RedirectAttributes attrs,
+            HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("tipo")) {
                 attrs.addFlashAttribute("tipo", "is-invalid");
@@ -197,6 +202,15 @@ public class ClienteController {
             return new ModelAndView("redirect:/clientes/editar/" + c.getIdCliente());
         } else {
             try {
+
+                System.out.println("Status: " + request.getParameter("status"));
+                String status = request.getParameter("status");
+                if (status == null) {
+                    c.setStatus("Ativo");
+                } else {
+                    c.setStatus("Desativo");
+                }
+
                 ClienteDAO.alterarCliente(c);
             } catch (SQLException ex) {
                 Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);

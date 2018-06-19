@@ -1,12 +1,14 @@
 package br.ads.concessionaria.controller;
 
 import br.ads.concessionaria.dao.UsuarioDAO;
+import br.ads.concessionaria.dao.VendaDAO;
 import br.ads.concessionaria.domain.Usuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,9 +35,11 @@ public class UsuarioController {
      * @return
      */
     @RequestMapping("usuarios")
-    public ModelAndView usuarios(Model m, HttpServletRequest request) {
+    public ModelAndView usuarios(Model m, HttpServletRequest request, HttpSession session) {
         String query = request.getParameter("search");
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+
+        Usuario loggedUser = (Usuario) session.getAttribute("usuarioSession");
 
         try {
             listaUsuarios = UsuarioDAO.listarUsuario(query);
@@ -44,6 +48,11 @@ public class UsuarioController {
         }
 
         m.addAttribute("usuarios", listaUsuarios);
+        if (loggedUser.getTipo().equalsIgnoreCase("Gerente")) {
+            m.addAttribute("permissao", true);
+        } else {
+            m.addAttribute("permissao", false);
+        }
 
         return new ModelAndView("usuarios/IndexViewUsuarios");
     }
@@ -89,7 +98,7 @@ public class UsuarioController {
             BindingResult bindingResult,
             RedirectAttributes attrs) {
         if (bindingResult.hasErrors()) {
-            
+
             if (bindingResult.hasFieldErrors("nome")) {
                 attrs.addFlashAttribute("nome", "is-invalid");
             } else {
@@ -252,13 +261,20 @@ public class UsuarioController {
      * @return
      */
     @RequestMapping(value = "usuarios/remover/{id}", method = RequestMethod.GET)
-    public String remover(@PathVariable("id") int id) {
-
+    public String remover(@PathVariable("id") int id, HttpSession session, RedirectAttributes attrs) {
         Usuario u = new Usuario();
-        u.setIdUsuario(id);
+        
+        //u.setIdUsuario(id);
 
         try {
-            UsuarioDAO.removerUsuario(u);
+            u = UsuarioDAO.retornarUsuarioPorId(id);
+            int qtdVendasUsuario = VendaDAO.contaVendasPorUsuario(id);
+            if(qtdVendasUsuario == 0) {
+                UsuarioDAO.removerUsuario(u);
+            }else {
+                attrs.addFlashAttribute("hasMsg", true);
+                attrs.addFlashAttribute("msg", "O usuário " + u.getNome() + " possui vendas vinculadas a ele e não poderá ser excluído");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -61,8 +61,8 @@ public class MotocicletaDAO extends BaseDAO {
         }
         return total;
     }
-    
-    public static void alterarSituacaoMotocicleta(String situacao, int idMotocicleta) throws SQLException{
+
+    public static void alterarSituacaoMotocicleta(String situacao, int idMotocicleta) throws SQLException {
         openConnection();
         String SQL = "UPDATE motocicletas SET situacaoMotocicleta = ? where idMotocicleta = ?";
         PreparedStatement stm = connection.prepareCall(SQL);
@@ -71,14 +71,26 @@ public class MotocicletaDAO extends BaseDAO {
         stm.execute();
     }
 
+    public static int contaMotocicletasPorProprietario(int idProprietario) throws SQLException {
+        openConnection();
+        int total = 0;
+        String SQL = "SELECT COUNT(motocicletas.idMotocicleta) as Total FROM motocicletas WHERE motocicletas.idProprietario = ? GROUP BY motocicletas.idProprietario";
+        PreparedStatement stm = connection.prepareCall(SQL);
+        stm.setInt(1, idProprietario);
+        ResultSet rs = stm.executeQuery();
+        rs.first();
+        total = rs.getInt("Total");
+        return total;
+    }
+
     public static ArrayList<Motocicleta> listarMotocicletas(String busca) throws SQLException {
         openConnection();
         PreparedStatement stm;
-        
+
         ArrayList<Motocicleta> motocicletas = new ArrayList<>();
 
-        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
-  
+        busca = (busca == null || busca.isEmpty()) ? "" : busca;
+
         String SQL = "SELECT * FROM motocicletas WHERE ano LIKE '%" + busca + "%' "
                 + "OR chassi LIKE '%" + busca + "%' "
                 + "OR cor LIKE '%" + busca + "%' "
@@ -176,10 +188,11 @@ public class MotocicletaDAO extends BaseDAO {
         stm.setInt(16, m.getIdMotocicleta());
         stm.execute();
     }
-    
+
     public static void main(String[] args) {
         try {
-            MotocicletaDAO.alterarSituacaoMotocicleta("Vendida", 1);
+            int result = MotocicletaDAO.contaMotocicletasPorProprietario(20);
+            System.err.println(result);
         } catch (SQLException ex) {
             Logger.getLogger(MotocicletaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

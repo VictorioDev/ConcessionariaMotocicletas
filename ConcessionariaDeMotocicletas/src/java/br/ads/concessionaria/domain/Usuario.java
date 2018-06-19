@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.br.CPF;
  * @author Victorio Zansavio
  */
 public class Usuario {
+
     private int idUsuario;
     
     @NotBlank
@@ -39,6 +40,23 @@ public class Usuario {
     @NotBlank
     private String tipo;
 
+    private boolean estaAtivo;
+    
+    
+     /**
+     * @return the estaAtivo
+     */
+    public boolean isEstaAtivo() {
+        return estaAtivo;
+    }
+
+    /**
+     * @param estaAtivo the estaAtivo to set
+     */
+    public void setEstaAtivo(boolean estaAtivo) {
+        this.estaAtivo = estaAtivo;
+    }
+    
     public int getIdUsuario() {
         return idUsuario;
     }

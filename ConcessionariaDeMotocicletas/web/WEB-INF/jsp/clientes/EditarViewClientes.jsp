@@ -94,6 +94,15 @@
             <form:input path="dataNascimento" class="form-control" type="date"/>
         </div>
     </div> 
+        
+    <div class="form-group row">
+        <div class="col-sm-2 bold">Status:</div>
+        <div class="col-sm-10">
+            <label>
+                <input type="checkbox" name="status" <t:if test="${cliente.status == 'Desativo'}">checked</t:if>/>
+            Sim, desativar.</label>
+        </div>
+    </div> 
     
     <button type="submit" class="btn btn-primary">Salvar</button>
 </form:form>

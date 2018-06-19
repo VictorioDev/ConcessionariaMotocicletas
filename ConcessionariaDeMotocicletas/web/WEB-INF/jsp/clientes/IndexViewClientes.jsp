@@ -58,14 +58,29 @@
                 <a href="<t:url value="/clientes/editar/${cliente.idCliente}"/>" class="btn btn-sm btn-secondary">
                     <span class="oi" data-glyph="pencil" title="Editar" aria-hidden="true"></span> Editar
                 </a>
-                <a href="<t:url value="/clientes/remover/${cliente.idCliente}"/>" class="btn btn-sm btn-red">
-                    <span class="oi" data-glyph="x" title="Remover" aria-hidden="true"></span> Remover
-                </a>
+                <t:if test="${cliente.status.equals('Ativo')}">
+                    <a href="<t:url value="/clientes/remover/${cliente.idCliente}"/>" class="btn btn-sm btn-red">
+                        <span class="oi" data-glyph="x" title="Desativar" aria-hidden="true"></span> Desativar
+                    </a>
+                </t:if>
+                <t:if test="${cliente.status.equals('Desativo')}">
+                    <a href="<t:url value="/clientes/remover/${cliente.idCliente}"/>" class="btn btn-sm btn-green">
+                        <span class="oi" data-glyph="x" title="Ativar" aria-hidden="true"></span> Ativar
+                    </a>
+                </t:if>
             </td>
         </tr>
     </t:forEach>
 </tbody>
 </table>
+
+<style type="text/css">
+
+    .btn-green {
+        background-color: #30af40;
+        color: #fff;
+    }
+</style>
 
 <p><b>Total:</b> ${clientes.size()} registros.</p>
 

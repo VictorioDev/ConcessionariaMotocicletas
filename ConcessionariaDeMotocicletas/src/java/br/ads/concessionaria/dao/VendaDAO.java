@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * DAO da tabela de vendas.
@@ -147,4 +149,18 @@ public class VendaDAO extends BaseDAO {
         
         return rs.getInt("contador");
     }
+    
+    public static int contaVendasPorUsuario(int idUsuario) throws SQLException{
+        openConnection();
+        String SQL = "SELECT COUNT(vendas.idVenda) AS Total FROM vendas WHERE vendas.idUsuario = ? GROUP BY idUsuario; ";
+        PreparedStatement stm = connection.prepareCall(SQL);
+        stm.setInt(1, idUsuario);
+        ResultSet rs = stm.executeQuery();
+        rs.first();
+        int resultado = rs.getInt("Total");
+        System.err.println("Total: " + resultado);
+        return resultado;
+    }
+
 }
+

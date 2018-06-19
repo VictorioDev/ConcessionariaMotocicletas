@@ -36,14 +36,14 @@ public class ClienteDAO {
         stm.setString(9, c.getRG());
         stm.setDate(10, c.getDataNascimento());
         stm.setString(11, "2018-03-01");
-        stm.setString(12, "1");
+        stm.setString(12, "Ativo");
 
         stm.execute();
     }
 
     public static void alterarCliente(Cliente c) throws SQLException {
         openConnection();
-        String SQl = "UPDATE clientes SET tipo=?, nome = ?, razaoSocial= ?, CPF=?,CNPJ=?,endereco=?,telefone=?,email=?,RG=?,dataNascimento=? WHERE idCliente = ?";
+        String SQl = "UPDATE clientes SET tipo=?, nome = ?, razaoSocial= ?, CPF=?,CNPJ=?,endereco=?,telefone=?,email=?,RG=?,dataNascimento=?,status=? WHERE idCliente = ?";
         PreparedStatement smt = connection.prepareStatement(SQl);
         smt.setString(1, c.getTipo());
         smt.setString(2, c.getNome());
@@ -55,8 +55,8 @@ public class ClienteDAO {
         smt.setString(8, c.getEmail());
         smt.setString(9, c.getRG());
         smt.setDate(10, c.getDataNascimento());
-        smt.setInt(11, c.getIdCliente());
-        //smt.setString(11, c.getStatus());
+        smt.setString(11, c.getStatus());
+         smt.setInt(12, c.getIdCliente());
         smt.execute();
         //closeConnection();
     }
@@ -80,7 +80,7 @@ public class ClienteDAO {
             c.setEmail(rs.getString("email"));
             c.setRG(rs.getString("RG"));
             c.setDataNascimento(rs.getDate("dataNascimento"));
-            //c.setStatus(rs.getString("status"));
+            c.setStatus(rs.getString("status"));
         }
         //closeConnection();
         return c;

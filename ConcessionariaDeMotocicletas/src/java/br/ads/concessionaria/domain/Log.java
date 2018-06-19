@@ -14,6 +14,11 @@ public class Log {
     private String acao;
     private String data;
     private Usuario usuario;
+    
+    public Log(String acao, Usuario usuario){
+        this.acao = acao;
+        this.usuario = usuario;
+    }
 
     public int getIdLog() {
         return idLog;

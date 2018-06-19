@@ -16,6 +16,9 @@
 
 <form method="GET">
     <div class="container-fluid mt-2">
+        <t:if test="${hasMsg}">
+            <div class="alert alert-danger">${msg}</div>
+        </t:if>
         <div class="row">
             <div class="col-md-5">
                 <div class="row">
@@ -55,9 +58,14 @@
                     <a href="<t:url value="/usuarios/editar/${usuario.idUsuario}"/>" class="btn btn-sm btn-secondary">
                         <span class="oi" data-glyph="pencil" title="Editar" aria-hidden="true"></span> Editar
                     </a>
-                    <a href="<t:url value="/usuarios/remover/${usuario.idUsuario}"/>" class="btn btn-sm btn-red">
-                        <span class="oi" data-glyph="x" title="Remover" aria-hidden="true"></span> Remover
-                    </a>
+                
+                            
+                    <t:if test="${permissao}">
+                        <a href="<t:url value="/usuarios/remover/${usuario.idUsuario}"/>" class="btn btn-sm btn-red">
+                            <span class="oi" data-glyph="x" title="Remover" aria-hidden="true"></span> Remover
+                        </a>
+                    </t:if>
+                    
                 </td>
             </tr>
         </t:forEach>
