@@ -57,13 +57,63 @@ public class FaturaDAO extends BaseDAO {
             f.setDataVencimento( rs.getDate("dataVencimento") );
             f.setValorParcela( rs.getDouble("valorParcela") );
             f.setStatus( rs.getString("status") );
+            f.setDataPagamento( rs.getString("dataPagamento") );
             f.setTipoPagamento( rs.getString("tipoPagamento") );
+            f.setValorPago( rs.getDouble("valorPago") );
+            f.setUsuarioBaixa( UsuarioDAO.retornarUsuarioPorId( rs.getInt("idUsuarioBaixa") ) );
             f.setVenda( VendaDAO.retornarVendaPorId( rs.getInt("idVenda") ) );
             
             listaFaturas.add( f );
         }
                 
         return listaFaturas;
+    }
+    
+    /**
+     * Método para listar todas as faturas que já foram pagas.
+     * @param busca
+     * @return
+     * @throws SQLException 
+     */
+    public static ArrayList<Fatura> listarPagamentos( String dataInicio, String dataFinal ) throws SQLException {
+        openConnection();
+
+        ArrayList<Fatura> listaPagamentos = new ArrayList<>();
+                
+        String SQL = "SELECT * FROM faturas WHERE status = 'Paga'";
+        
+        if( ! dataInicio.isEmpty() ) {
+            SQL += " AND dataPagamento >= '" + dataInicio + "'";
+        }
+        
+        if( ! dataFinal.isEmpty() ) {
+            SQL += " AND dataPagamento <= '" + dataFinal + "'";
+        }
+        
+        PreparedStatement smt = connection.prepareStatement( SQL );
+        
+        ResultSet rs = smt.executeQuery();
+        
+        while( rs.next() ) {
+            
+            Fatura f = new Fatura();
+            
+            f.setIdFatura( rs.getInt("idFatura") );
+            f.setNumeroParcela( rs.getInt("numeroParcela") );
+            f.setDataEmissao( rs.getDate("dataEmissao") );
+            f.setDataVencimento( rs.getDate("dataVencimento") );
+            f.setValorParcela( rs.getDouble("valorParcela") );
+            f.setStatus( rs.getString("status") );
+            f.setDataPagamento( rs.getString("dataPagamento") );
+            f.setTipoPagamento( rs.getString("tipoPagamento") );
+            f.setValorPago( rs.getDouble("valorPago") );
+            f.setUsuarioBaixa( UsuarioDAO.retornarUsuarioPorId( rs.getInt("idUsuarioBaixa") ) );
+            f.setVenda( VendaDAO.retornarVendaPorId( rs.getInt("idVenda") ) );
+            
+            listaPagamentos.add( f );
+        }
+                
+        return listaPagamentos;
     }
     
     /**
@@ -118,7 +168,10 @@ public class FaturaDAO extends BaseDAO {
             f.setDataVencimento( rs.getDate("dataVencimento") );
             f.setValorParcela( rs.getDouble("valorParcela") );
             f.setStatus( rs.getString("status") );
+            f.setDataPagamento( rs.getString("dataPagamento") );
             f.setTipoPagamento( rs.getString("tipoPagamento") );
+            f.setValorPago( rs.getDouble("valorPago") );
+            f.setUsuarioBaixa( UsuarioDAO.retornarUsuarioPorId( rs.getInt("idUsuarioBaixa") ) );
             f.setVenda( VendaDAO.retornarVendaPorId( rs.getInt("idVenda") ) );
         }
         
@@ -130,16 +183,19 @@ public class FaturaDAO extends BaseDAO {
      * @param id
      * @return 
      */
-    public static boolean baixarFatura( int id ) throws SQLException {
+    public static boolean baixarFatura( int idFatura, String tipoPagamento, double valorPago, int idUsuario ) throws SQLException {
         openConnection();
         
         boolean result;
         
-        String SQL = "UPDATE faturas SET status = 'Paga' WHERE idFatura = ?";
+        String SQL = "UPDATE faturas SET status = 'Paga', dataPagamento = NOW(), tipoPagamento = ?, valorPago = ?, idUsuarioBaixa = ? WHERE idFatura = ?";
         
         PreparedStatement smt = connection.prepareStatement( SQL );
         
-        smt.setInt( 1, id );
+        smt.setString( 1, tipoPagamento );
+        smt.setDouble( 2, valorPago );
+        smt.setInt( 3, idUsuario );
+        smt.setInt( 4, idFatura );
        
         result = smt.execute();
         

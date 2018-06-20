@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * DAO da tabela de vendas.
@@ -55,14 +53,23 @@ public class VendaDAO extends BaseDAO {
      * @return
      * @throws SQLException 
      */
-    public static ArrayList<Venda> listarVenda( String busca ) throws SQLException {
+    public static ArrayList<Venda> listarVenda( String busca, String dataInicio, String dataFinal ) throws SQLException {
         openConnection();
 
         ArrayList<Venda> listaVendas = new ArrayList<>();
         
         busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
         
-        String SQL = "SELECT * FROM vendas WHERE idVenda LIKE '%" + busca + "%' OR valor LIKE '%" + busca + "%' OR diaPreferencial LIKE '%" + busca + "%' OR status LIKE '%" + busca + "%'";
+        String SQL = "SELECT * FROM vendas WHERE ( idVenda LIKE '%" + busca + "%' OR valor LIKE '%" + busca + "%' OR diaPreferencial LIKE '%" + busca + "%' OR status LIKE '%" + busca + "%' )";
+        
+        if( ! dataInicio.isEmpty() ) {
+            SQL += " AND dataVenda >= '" + dataInicio + "'";
+        }
+        
+        if( ! dataFinal.isEmpty() ) {
+            SQL += " AND dataVenda <= '" + dataFinal + "'";
+        }
+                
         PreparedStatement smt = connection.prepareStatement( SQL );
         
         ResultSet rs = smt.executeQuery();
@@ -149,7 +156,7 @@ public class VendaDAO extends BaseDAO {
         
         return rs.getInt("contador");
     }
-    
+
     public static int contaVendasPorUsuario(int idUsuario) throws SQLException{
         openConnection();
         String SQL = "SELECT COUNT(vendas.idVenda) AS Total FROM vendas WHERE vendas.idUsuario = ? GROUP BY idUsuario; ";
@@ -161,6 +168,4 @@ public class VendaDAO extends BaseDAO {
         System.err.println("Total: " + resultado);
         return resultado;
     }
-
 }
-

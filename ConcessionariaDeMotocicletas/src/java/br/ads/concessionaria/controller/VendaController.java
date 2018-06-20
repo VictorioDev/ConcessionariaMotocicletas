@@ -47,7 +47,7 @@ public class VendaController {
         ArrayList<Venda> listaVendas = new ArrayList<>();
 
         try {
-            listaVendas = VendaDAO.listarVenda( query );
+            listaVendas = VendaDAO.listarVenda( query, "", "" );
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }

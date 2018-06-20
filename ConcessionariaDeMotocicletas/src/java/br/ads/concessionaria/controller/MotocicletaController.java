@@ -5,9 +5,13 @@
  */
 package br.ads.concessionaria.controller;
 
+import br.ads.concessionaria.dao.AcessorioDAO;
+import br.ads.concessionaria.dao.CategoriaDAO;
 import br.ads.concessionaria.dao.ModeloDAO;
 import br.ads.concessionaria.dao.MotocicletaDAO;
 import br.ads.concessionaria.dao.ProprietarioDAO;
+import br.ads.concessionaria.domain.Acessorio;
+import br.ads.concessionaria.domain.Categoria;
 import br.ads.concessionaria.domain.Modelo;
 import br.ads.concessionaria.domain.Motocicleta;
 import br.ads.concessionaria.domain.Proprietario;
@@ -57,18 +61,25 @@ public class MotocicletaController {
 
     @RequestMapping(value = "motocicletas/cadastrar", method = RequestMethod.GET)
     public ModelAndView cadastrar(Model m, Motocicleta motocicleta) {
+        
         ArrayList<Proprietario> listaProprietarios = new ArrayList<>();
         ArrayList<Modelo> listaModelos = new ArrayList<>();
-
+        ArrayList<Categoria> listaCategorias = new ArrayList<>();
+        ArrayList<Acessorio> listaAcessorios = new ArrayList<>();
+        
         try {
             listaProprietarios = ProprietarioDAO.listarProprietarios("");
             listaModelos = ModeloDAO.listarModelos("");
+            listaCategorias = CategoriaDAO.listarCategorias("");
+            listaAcessorios = AcessorioDAO.listarAcessorios("");
         } catch (SQLException ex) {
             Logger.getLogger(MotocicletaController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         m.addAttribute("proprietarios", listaProprietarios);
         m.addAttribute("modelos", listaModelos);
+        m.addAttribute("categorias", listaCategorias);
+        m.addAttribute("acessorios", listaAcessorios);
         return new ModelAndView("motocicletas/CadastrarViewMotocicletas", "motocicleta", motocicleta);
     }
 
@@ -78,7 +89,7 @@ public class MotocicletaController {
             BindingResult bindingResult,
             HttpServletRequest request,
             RedirectAttributes attrs) {
-
+        
         if (bindingResult.hasErrors()) {
             attrs.addFlashAttribute("ano", bindingResult.hasFieldErrors("ano") ? "is-invalid" : "is-valid");
             attrs.addFlashAttribute("chassi", bindingResult.hasFieldErrors("chassi") ? "is-invalid" : "is-valid");
@@ -90,7 +101,6 @@ public class MotocicletaController {
             attrs.addFlashAttribute("placa", bindingResult.hasFieldErrors("placa") ? "is-invalid" : "is-valid");
             attrs.addFlashAttribute("motor", bindingResult.hasFieldErrors("motor") ? "is-invalid" : "is-valid");
             attrs.addFlashAttribute("valorIPVA", bindingResult.hasFieldErrors("valorIPVA") ? "is-invalid" : "is-valid");
-
             attrs.addFlashAttribute("motocicleta", m);
             return "redirect:/motocicletas/cadastrar";
         } else {

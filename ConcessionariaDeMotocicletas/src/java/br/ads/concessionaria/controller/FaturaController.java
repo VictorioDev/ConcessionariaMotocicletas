@@ -2,11 +2,13 @@ package br.ads.concessionaria.controller;
 
 import br.ads.concessionaria.dao.FaturaDAO;
 import br.ads.concessionaria.domain.Fatura;
+import br.ads.concessionaria.domain.Usuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,15 +66,29 @@ public class FaturaController {
      * @return 
      */
     @RequestMapping( value = "faturas/baixar/{id}", method = RequestMethod.GET )
-    public String baixar( @PathVariable("id") int id ) {
+    public ModelAndView baixar( @PathVariable("id") int id ) {
                 
+        Fatura f = new Fatura();
+        
         try {
-            FaturaDAO.baixarFatura( id );
+            f = FaturaDAO.retornarFaturaPorId(id);
         } catch( SQLException ex ) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return "redirect:/faturas";
+        return new ModelAndView("faturas/BaixarViewFaturas", "fatura", f );
     }
 
+    @RequestMapping( value = "faturas/baixar/{id}", method = RequestMethod.POST )
+    public String baixar( HttpServletRequest request, HttpSession session ) throws SQLException {
+        
+        Usuario u               = (Usuario) session.getAttribute("usuarioSession");
+        int idFatura            = Integer.parseInt( request.getParameter("idFatura") );
+        String tipoPagamento    = request.getParameter("tipoPagamento");
+        double valorPago        = Double.parseDouble( request.getParameter("juros") );
+                
+        FaturaDAO.baixarFatura( idFatura, tipoPagamento, valorPago, u.getIdUsuario() );
+        
+        return "redirect:/faturas";
+    }
 }

@@ -56,23 +56,47 @@
                 </td>
                 <td>
                     <small>
-                        <a href="<t:url value="/vendas/visualizar/${fatura.venda.idVenda}"/>">
+                        <a href="<t:url value="/vendas/visualizar/${fatura.venda.idVenda}"/>" data-toggle="tooltip" title="Visualizar Venda">
                             Nº <t:out value="${fatura.venda.idVenda}"/> (<t:out value="${fatura.venda.motocicleta.modelo.marca.nome} ${fatura.venda.motocicleta.modelo.nome}"/>)
                         </a>
                     </small>
                 </td>
                 <td>
                     <small>
-                        <a href="<t:url value="/clientes/visualizar/${fatura.venda.cliente.idCliente}"/>">
+                        <a href="<t:url value="/clientes/visualizar/${fatura.venda.cliente.idCliente}"/>" data-toggle="tooltip" title="Visualizar Cliente">
                             <t:out value="${fatura.venda.cliente.nome}"/>
                         </a>
                     </small>
                 </td>
                 <td>
-                    <t:set var="badge" value="${ fatura.status.equals('Paga') ? 'badge-success' : 'badge-info' }"/>
-                    <span class="badge ${badge}">
-                        <t:out value="${fatura.status}" />
-                    </span>
+                    <t:choose>
+                        <t:when test="${ fatura.status.equals('Paga') }">
+                            
+                            <!-- Filtros -->
+                            <fmt:parseDate value="${ fatura.dataPagamento }" type="both" pattern="yyyy-MM-dd HH:mm:ss" var="parsed"/>
+                            <fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${parsed}" var="data" />                            
+                            <fmt:formatNumber type="currency" maxFractionDigits="2" value="${fatura.valorPago}" var="valor" />
+                            
+                            <span class="badge badge-success" data-toggle="tooltip" title="Realizado por ${fatura.usuarioBaixa.nome} no valor de ${valor} em ${data}.">
+                                <t:out value="${fatura.status}" />
+                            </span>
+                        </t:when>
+                        <t:otherwise>                            
+                            <jsp:useBean id="now" class="java.util.Date"/>            
+                            
+                            <t:set var="atrasada" value="${ fatura.dataVencimento lt now }"/>
+                            <t:choose>
+                                <t:when test="${ atrasada }">
+                                    <span class="badge badge-danger">${ fatura.status } (Atrasada)</span>
+                                </t:when>
+                                <t:otherwise>
+                                    <span class="badge badge-info">
+                                        <t:out value="${fatura.status}" />
+                                    </span>
+                                </t:otherwise>
+                            </t:choose>
+                        </t:otherwise>
+                    </t:choose>
                 </td>
                 <td>
                     <a href="<t:url value="/faturas/visualizar/${fatura.idFatura}" />" class="btn btn-sm btn-primary">

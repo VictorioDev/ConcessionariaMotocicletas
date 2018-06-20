@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -34,11 +35,11 @@
         <th>#</th>
         <th>Ano</th>
         <th>Cor</th>
-        <th>Tipo de Combustível</th>
+        <th>Combustível</th>
         <th>Valor de Venda</th>
-        <th>Situação Motocicleta</th>
         <th>Proprietário</th>
         <th>Modelo</th>
+        <th>Situação</th>
         <th>Ações</th>
     </thead>
     <tbody>
@@ -48,10 +49,25 @@
                 <td><t:out value="${motocicleta.ano}"/></td>
                 <td><t:out value="${motocicleta.cor}"/></td>
                 <td><t:out value="${motocicleta.tipoCombustivel}"/></td>
-                <td><t:out value="${motocicleta.valorVenda}"/></td>
-                <td><t:out value="${motocicleta.situacaoMotocicleta}"/></td>
-                <td><t:out value="${motocicleta.proprietario.nome}"/></td>
-                <td><t:out value="${motocicleta.modelo.nome}"/></td>
+                <td>
+                    <fmt:formatNumber type="currency" maxFractionDigits="2" value="${motocicleta.valorVenda}" />
+                </td>
+                <td>
+                    <a href="<t:url value="/proprietarios/visualizar/${motocicleta.proprietario.idProprietario}"/>" data-toggle="tooltip" title="Visualizar Proprietário">
+                        <t:out value="${motocicleta.proprietario.nome}"/>
+                    </a>
+                </td>
+                <td>
+                    <a href="<t:url value="/modelos/visualizar/${motocicleta.modelo.idModelo}"/>" data-toggle="tooltip" title="Visualizar Modelo">
+                        <t:out value="${motocicleta.modelo.nome}"/>
+                    </a>
+                </td>
+                <td>
+                    <t:set var="badge" value="${ motocicleta.situacaoMotocicleta.equals('Disponível') ? 'badge-success' : 'badge-danger' }"/>
+                    <span class="badge ${badge}">
+                        <t:out value="${motocicleta.situacaoMotocicleta}" />
+                    </span>
+                </td>
                 <td>
                     <a href="<t:url value="/motocicletas/visualizar/${motocicleta.idMotocicleta}"/>" class="btn btn-sm btn-primary">
                         <span class="oi" data-glyph="eye" title="Visualizar" aria-hidden="true"></span> Visualizar

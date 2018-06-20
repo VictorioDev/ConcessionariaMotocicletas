@@ -52,6 +52,33 @@
             </span>
         </td>
     </tr>
+    <t:if test="${ fatura.status.equals('Paga') }">
+        <tr>
+            <td class="bold">Data do Pagamento:</td>
+            <td>
+                <fmt:parseDate value="${ fatura.dataPagamento }" type="both" pattern="yyyy-MM-dd HH:mm:ss" var="parsed"/>
+                <fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${parsed}" />
+            </td>                
+        </tr>
+        <tr>
+            <td class="bold">Tipo do Pagamento:</td>
+            <td><t:out value="${ fatura.tipoPagamento }"/></td>                
+        </tr>
+        <tr>
+            <td class="bold">Valor Pago:</td>
+            <td>
+                <fmt:formatNumber type="currency" maxFractionDigits="2" value="${fatura.valorPago}" />
+            </td>                
+        </tr>
+        <tr>
+            <td class="bold">Baixa realizada por:</td>
+            <td>
+                <a href="<t:url value="/usuarios/visualizar/${ fatura.usuarioBaixa.idUsuario }" />" data-toggle="tooltip" title="Visualizar Usuário">
+                    <t:out value="${ fatura.usuarioBaixa.nome }"/>
+                </a>
+            </td>                
+        </tr>
+    </t:if>
     <tr>
         <td class="bold">Venda:</td>
         <td>

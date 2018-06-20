@@ -18,7 +18,10 @@ public class Fatura {
     private Date dataVencimento;
     private double valorParcela;
     private String status;
+    private String dataPagamento;
     private String tipoPagamento;
+    private double valorPago;
+    private Usuario usuarioBaixa;
     private Venda venda; 
 
     public int getIdFatura() {
@@ -69,6 +72,14 @@ public class Fatura {
         this.status = status;
     }
 
+    public String getDataPagamento() {
+        return dataPagamento;
+    }
+    
+    public void setDataPagamento(String dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
+    
     public String getTipoPagamento() {
         return tipoPagamento;
     }
@@ -76,7 +87,23 @@ public class Fatura {
     public void setTipoPagamento(String tipoPagamento) {
         this.tipoPagamento = tipoPagamento;
     }
+    
+    public double getValorPago() {
+        return this.valorPago;
+    }
+    
+    public void setValorPago( double valorPago ) {
+        this.valorPago = valorPago;
+    }
 
+    public Usuario getUsuarioBaixa() {
+        return this.usuarioBaixa;
+    }
+    
+    public void setUsuarioBaixa( Usuario usuarioBaixa ) {
+        this.usuarioBaixa = usuarioBaixa;
+    }
+    
     public Venda getVenda() {
         return venda;
     }

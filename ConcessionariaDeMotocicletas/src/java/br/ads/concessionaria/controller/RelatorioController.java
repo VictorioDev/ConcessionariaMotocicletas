@@ -5,10 +5,14 @@
  */
 package br.ads.concessionaria.controller;
 
+import br.ads.concessionaria.dao.FaturaDAO;
 import br.ads.concessionaria.dao.MarcaDAO;
 import br.ads.concessionaria.dao.ModeloDAO;
+import br.ads.concessionaria.dao.VendaDAO;
+import br.ads.concessionaria.domain.Fatura;
 import br.ads.concessionaria.domain.Marca;
 import br.ads.concessionaria.domain.Modelo;
+import br.ads.concessionaria.domain.Venda;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -35,5 +39,51 @@ public class RelatorioController {
     @RequestMapping(value = "relatorios", method = RequestMethod.GET)
     public ModelAndView index(Model m) {
         return new ModelAndView("relatorios/IndexViewRelatorios");
+    }
+       
+    @RequestMapping(value = "relatorios", method = RequestMethod.POST)
+    public ModelAndView visualizar( HttpServletRequest request, Model m ) throws SQLException {
+        
+        // Pegamos o tipo do relatório que o usuário selecionou.
+        String tipo = request.getParameter("tipo");
+                
+        String[] splitInicio = request.getParameter("dataInicio").split("-");
+        String[] splitFinal = request.getParameter("dataFinal").split("-");
+                
+        String dataInicio = ( splitInicio.length > 1 ) ? splitInicio[2] + "/" + splitInicio[1] + "/" + splitInicio[0] : "Desde o início";
+        String dataFinal = ( splitFinal.length > 1 ) ? splitFinal[2] + "/" + splitFinal[1] + "/" + splitFinal[0] : "o final";
+        
+        m.addAttribute("dataInicio", dataInicio );
+        m.addAttribute("dataFinal", dataFinal );
+                
+        // Relatório de vendas.
+        if( tipo.equals("vendas") ) {
+            ArrayList<Venda> listaVendas = new ArrayList<>();
+            listaVendas = VendaDAO.listarVenda("", request.getParameter("dataInicio"), request.getParameter("dataFinal") );
+            m.addAttribute("vendas", listaVendas );
+            return new ModelAndView("relatorios/RelatorioVendas");
+        }
+        
+        // Relatório de pagamentos.
+        if( tipo.equals("pagamentos") ) {
+            ArrayList<Fatura> listaPagamentos = new ArrayList<>();
+            listaPagamentos = FaturaDAO.listarPagamentos( request.getParameter("dataInicio"), request.getParameter("dataFinal") );
+            m.addAttribute("pagamentos", listaPagamentos );
+            return new ModelAndView("relatorios/RelatorioPagamentos");
+        }
+        
+        if( tipo.equals("itens-mais-vendidos") ) {
+            return new ModelAndView("relatorios/RelatorioVendas");
+        }
+        
+        if( tipo.equals("estoque") ) {
+            return new ModelAndView("relatorios/RelatorioVendas");
+        }
+        
+        if( tipo.equals("logs") ) {
+            return new ModelAndView("relatorios/RelatorioVendas");
+        }
+        
+        return null;
     }
 }
