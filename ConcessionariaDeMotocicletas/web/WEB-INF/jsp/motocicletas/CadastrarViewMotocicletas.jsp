@@ -11,13 +11,29 @@
     <span class="oi" data-glyph="wrench" title="Motocicletas" aria-hidden="true"></span> Cadastrar Motocicleta
 </h3>
 
-<form:form method="POST" modelAttribute="motocicleta" acceptCharset="UTF-8">
+<form:form method="POST" modelAttribute="motocicleta" acceptCharset="UTF-8" id="form">
     <div class="form-group row">
         <div class="col-1 bold">Tipo:</div>
         <div class="col-11">
-            <label class="mb-0"><input type="radio" name="tipo" value="nova" checked> Motocicleta nova</label>
-            <label class="mb-0"><input type="radio" name="tipo" value="usada"> Motocicleta usada</label>
+            <label class="mb-0"><input id="nova" type="radio" name="tipo" value="nova" <t:if test="${!nova && !usada}">checked</t:if> <t:if test="${nova}">checked</t:if> > Motocicleta nova</label>
+            <label class="mb-0"><input id="usada" type="radio" name="tipo" value="usada" <t:if test="${usada}">checked</t:if>> Motocicleta usada</label>
         </div><!-- col-9 -->
+    <script>
+    $(document).ready(function () {
+           //$('#form').attr('action', 'cadastrarnova');  
+           $('#nova').change(function () {
+                $('#form').attr('action', 'cadastrarnova');  
+            });
+           $('#usada').change(function () {
+                $('#form').attr('action', 'cadastrarusada');
+                console.log("cadastrarusada");   
+           });
+       });
+       
+       
+      
+   
+</script>
     </div><!-- row -->
     
     <hr>
@@ -146,7 +162,7 @@
             </div>            
         </div>
                     
-        <div id="options-usage" style="display:none;">
+        <div id="options-usage" style="<t:if test="${!nova && !usada}">display:none;</t:if> <t:if test="${nova}">display:none;</t:if>">
             <hr>
             <div class="row">
                 <div class="col-md-6">

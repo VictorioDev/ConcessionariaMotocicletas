@@ -15,6 +15,8 @@ import br.ads.concessionaria.domain.Categoria;
 import br.ads.concessionaria.domain.Modelo;
 import br.ads.concessionaria.domain.Motocicleta;
 import br.ads.concessionaria.domain.Proprietario;
+import br.ads.concessionaria.interfaces.MotocicletaNova;
+import br.ads.concessionaria.interfaces.MotocicletaUsada;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -80,12 +83,94 @@ public class MotocicletaController {
         m.addAttribute("modelos", listaModelos);
         m.addAttribute("categorias", listaCategorias);
         m.addAttribute("acessorios", listaAcessorios);
+        
         return new ModelAndView("motocicletas/CadastrarViewMotocicletas", "motocicleta", motocicleta);
     }
 
-    @RequestMapping(value = "motocicletas/cadastrar", method = RequestMethod.POST)
+    @RequestMapping(value = "motocicletas/cadastrarusada", method = RequestMethod.POST)
+    public String adicionarMotocicleta(@ModelAttribute("motocicleta") @Validated(MotocicletaUsada.class) Motocicleta m,
+            BindingResult bindingResult,
+            HttpServletRequest request,
+            RedirectAttributes attrs) {
+        
+        if (bindingResult.hasErrors()) {
+            attrs.addFlashAttribute("ano", bindingResult.hasFieldErrors("ano") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("chassi", bindingResult.hasFieldErrors("chassi") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("cor", bindingResult.hasFieldErrors("cor") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("tipoCombustivel", bindingResult.hasFieldErrors("tipoCombustivel") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("valorCompra", bindingResult.hasFieldErrors("valorCompra") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("valorVenda", bindingResult.hasFieldErrors("valorVenda") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("renavam", bindingResult.hasFieldErrors("renavam") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("placa", bindingResult.hasFieldErrors("placa") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("motor", bindingResult.hasFieldErrors("motor") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("valorIPVA", bindingResult.hasFieldErrors("valorIPVA") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("motocicleta", m);
+            attrs.addFlashAttribute("usada", true);
+            return "redirect:/motocicletas/cadastrar";
+        } else {
+            int idProprietario = Integer.parseInt(request.getParameter("idProprietario"));
+            int idModelo = Integer.parseInt(request.getParameter("idModelo"));
+            Proprietario proprietario = new Proprietario();
+            Modelo modelo = new Modelo();
+            try {
+                proprietario = ProprietarioDAO.retornaProprietarioPorId(idProprietario);
+                modelo = ModeloDAO.retornaModeloPorId(idModelo);
+                m.setProprietario(proprietario);
+                m.setModelo(modelo);
+                MotocicletaDAO.incluirMotocicleta(m);
+            } catch (SQLException ex) {
+                Logger.getLogger(MotocicletaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return "redirect:/motocicletas";
+        }
 
-    public String adicionarMotocicleta(@ModelAttribute("motocicleta") @Valid Motocicleta m,
+    }
+    
+    
+    @RequestMapping(value = "motocicletas/cadastrarnova", method = RequestMethod.POST)
+    public String adicionarMotocicletaNova(@ModelAttribute("motocicleta") @Validated(MotocicletaNova.class) Motocicleta m,
+            BindingResult bindingResult,
+            HttpServletRequest request,
+            RedirectAttributes attrs) {
+        
+        if (bindingResult.hasErrors()) {
+            attrs.addFlashAttribute("ano", bindingResult.hasFieldErrors("ano") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("chassi", bindingResult.hasFieldErrors("chassi") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("cor", bindingResult.hasFieldErrors("cor") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("tipoCombustivel", bindingResult.hasFieldErrors("tipoCombustivel") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("valorCompra", bindingResult.hasFieldErrors("valorCompra") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("valorVenda", bindingResult.hasFieldErrors("valorVenda") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("motor", bindingResult.hasFieldErrors("motor") ? "is-invalid" : "is-valid");
+            attrs.addFlashAttribute("motocicleta", m);
+            attrs.addFlashAttribute("nova", true);
+            return "redirect:/motocicletas/cadastrar";
+        } else {
+            int idProprietario = Integer.parseInt(request.getParameter("idProprietario"));
+            int idModelo = Integer.parseInt(request.getParameter("idModelo"));
+            Proprietario proprietario = new Proprietario();
+            Modelo modelo = new Modelo();
+            try {
+                proprietario = ProprietarioDAO.retornaProprietarioPorId(idProprietario);
+                modelo = ModeloDAO.retornaModeloPorId(idModelo);
+                m.setProprietario(proprietario);
+                m.setModelo(modelo);
+                MotocicletaDAO.incluirMotocicleta(m);
+            } catch (SQLException ex) {
+                Logger.getLogger(MotocicletaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return "redirect:/motocicletas";
+        }
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    /*@RequestMapping(value = "motocicletas/cadastrar", method = RequestMethod.POST)
+    public String adicionarMotocicletaNova(@ModelAttribute("motocicleta") @Valid Motocicleta m,
             BindingResult bindingResult,
             HttpServletRequest request,
             RedirectAttributes attrs) {
@@ -120,8 +205,9 @@ public class MotocicletaController {
             return "redirect:/motocicletas";
         }
 
-    }
-
+    }*/
+    
+   
     @RequestMapping(value = "motocicletas/editar/{id}", method = RequestMethod.GET)
     public ModelAndView alterar(@PathVariable("id") int idMototicleta, Model model) {
         Motocicleta motocicleta = new Motocicleta();

@@ -7,6 +7,8 @@
  */
 package br.ads.concessionaria.domain;
 
+import br.ads.concessionaria.interfaces.MotocicletaNova;
+import br.ads.concessionaria.interfaces.MotocicletaUsada;
 import java.sql.Date;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -18,38 +20,39 @@ import javax.validation.constraints.NotBlank;
 public class Motocicleta {
     private int idMotocicleta;
     
-    @Min(value = 1)
+    @Min(value = 1, groups = {MotocicletaUsada.class, MotocicletaNova.class})
     private int ano;
     
-    @NotBlank
+    @NotBlank(groups = {MotocicletaUsada.class, MotocicletaNova.class})
     private String chassi;
     
-    @NotBlank
+    @NotBlank(groups = {MotocicletaUsada.class, MotocicletaNova.class})
     private String cor;
     
-    @NotBlank
+    @NotBlank(groups = {MotocicletaUsada.class, MotocicletaNova.class})
     private String tipoCombustivel;
     
-    @Min(value = 1)
+    @Min(value = 1, groups = {MotocicletaUsada.class, MotocicletaNova.class})
     private double valorCompra;
     
-    @Min(value = 1)
+    @Min(value = 1, groups = {MotocicletaUsada.class, MotocicletaNova.class})
     private double valorVenda;
     
     
     private String situacaoMotocicleta;
     
-    @Min(value = 0)
+    @Min(value = 0, groups = {MotocicletaUsada.class})
     private int renavam;
     
-    @NotBlank
+    @NotBlank(groups = {MotocicletaUsada.class})
     private String placa;
     
-    @NotBlank
+    @NotBlank(groups = {MotocicletaUsada.class, MotocicletaNova.class})
     private String motor;
+    
     private Date dataVistoria;
     
-    @Min(value = 1)
+    @Min(value = 1, groups = {MotocicletaUsada.class})
     private double valorIPVA;
     
     
