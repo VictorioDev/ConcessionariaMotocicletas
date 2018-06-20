@@ -38,7 +38,7 @@
         <th>Cor</th>
         <th>Combustível</th>
         <th>Valor de Venda</th>
-        <th>Proprietário</th>
+        <th>Tipo</th>
         <th>Situação</th>
         <th>Ações</th>
     </thead>
@@ -58,9 +58,12 @@
                     <fmt:formatNumber type="currency" maxFractionDigits="2" value="${motocicleta.valorVenda}" />
                 </td>
                 <td>
-                    <a href="<t:url value="/proprietarios/visualizar/${motocicleta.proprietario.idProprietario}"/>" data-toggle="tooltip" title="Visualizar Proprietário">
-                        <t:out value="${motocicleta.proprietario.nome}"/>
-                    </a>
+                    <t:if test="${ motocicleta.proprietario.nome == null }">
+                        <b>Nova</b>
+                    </t:if>
+                    <t:if test="${ motocicleta.proprietario.nome != null }">
+                        <b>Usada</b>
+                    </t:if>
                 </td>
                 <td>
                     <t:set var="badge" value="${ motocicleta.situacaoMotocicleta.equals('Disponível') ? 'badge-success' : 'badge-danger' }"/>
@@ -73,6 +76,7 @@
                         <span class="oi" data-glyph="eye" title="Visualizar" aria-hidden="true"></span> Visualizar
                     </a>
                     
+                    <t:if test="${ motocicleta.situacaoMotocicleta.equals('Disponível') }">
                     <a href="<t:url value="/motocicletas/editar/${motocicleta.idMotocicleta}"/>" class="btn btn-sm btn-secondary">
                         <span class="oi" data-glyph="pencil" title="Editar" aria-hidden="true"></span> Editar
                     </a>
@@ -80,6 +84,7 @@
                     <a href="<t:url value="/motocicletas/remover/${motocicleta.idMotocicleta}"/>" class="btn btn-sm btn-red">
                         <span class="oi" data-glyph="x" title="Remover" aria-hidden="true"></span> Remover
                     </a>
+                    </t:if>
                 </td>
             </tr>
         </t:forEach>

@@ -23,7 +23,7 @@ public class MotocicletaDAO extends BaseDAO {
 
     public static void incluirMotocicleta(Motocicleta m) throws SQLException {
         openConnection();
-        String SQl = "INSERT INTO motocicletas (ano,chassi,cor,tipoCombustivel,valorCompra,valorVenda,situacaoMotocicleta,renavam,placa,motor,dataVistoria,valorIPVA,situacaoIPVA,idProprietario, idModelo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String SQl = "INSERT INTO motocicletas (ano,chassi,cor,tipoCombustivel,valorCompra,valorVenda,situacaoMotocicleta,renavam,placa,motor,valorIPVA,situacaoIPVA,idProprietario, idModelo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement stm = connection.prepareStatement(SQl);
         stm.setInt(1, m.getAno());
         stm.setString(2, m.getChassi());
@@ -35,21 +35,25 @@ public class MotocicletaDAO extends BaseDAO {
         stm.setInt(8, m.getRenavam());
         stm.setString(9, m.getPlaca());
         stm.setString(10, m.getMotor());
-        stm.setDate(11, m.getDataVistoria());
-        stm.setDouble(12, m.getValorIPVA());
-        stm.setString(13, m.getSituacaoIPVA());
-        stm.setInt(14, m.getProprietario().getIdProprietario());
-        stm.setInt(15, m.getModelo().getIdModelo());
+        stm.setDouble(11, m.getValorIPVA());
+        stm.setString(12, m.getSituacaoIPVA());
+        
+        if( m.getProprietario() == null ) {
+            stm.setNull(13, java.sql.Types.INTEGER );
+        } else {
+            stm.setInt(13, m.getProprietario().getIdProprietario() );
+        }
+        
+        stm.setInt(14, m.getModelo().getIdModelo());
         stm.execute();
     }
 
     public static void removerMotocicleta(int idMotocicleta) throws SQLException {
         openConnection();
-        String SQL = "DELETE FROM motocicletas where idMotocicleta = ?";
+        String SQL = "DELETE FROM motocicletas WHERE idMotocicleta = ?";
         PreparedStatement stm = connection.prepareCall(SQL);
         stm.setInt(1, idMotocicleta);
         stm.execute();
-
     }
 
     public static int contarMotocicletas() throws SQLException {
@@ -82,7 +86,7 @@ public class MotocicletaDAO extends BaseDAO {
 
     public static void alterarSituacaoMotocicleta(String situacao, int idMotocicleta) throws SQLException {
         openConnection();
-        String SQL = "UPDATE motocicletas SET situacaoMotocicleta = ? where idMotocicleta = ?";
+        String SQL = "UPDATE motocicletas SET situacaoMotocicleta = ? WHERE idMotocicleta = ?";
         PreparedStatement stm = connection.prepareCall(SQL);
         stm.setString(1, situacao);
         stm.setInt(2, idMotocicleta);
@@ -101,6 +105,39 @@ public class MotocicletaDAO extends BaseDAO {
         return total;
     }
 
+    public static ArrayList<Motocicleta> listarMotocicletasDisponiveis() throws SQLException {
+        openConnection();
+        PreparedStatement stm;
+
+        ArrayList<Motocicleta> motocicletas = new ArrayList<>();
+        
+        String SQL = "SELECT * FROM motocicletas WHERE situacaoMotocicleta = 'Disponível'";
+
+        stm = connection.prepareCall(SQL);
+        ResultSet rs = stm.executeQuery();
+        while (rs.next()) {
+            Motocicleta m = new Motocicleta();
+            m.setIdMotocicleta(rs.getInt("idMotocicleta"));
+            m.setAno(rs.getInt("ano"));
+            m.setChassi(rs.getString("chassi"));
+            m.setCor(rs.getString("cor"));
+            m.setTipoCombustivel(rs.getString("tipoCombustivel"));
+            m.setValorCompra(rs.getDouble("valorCompra"));
+            m.setValorVenda(rs.getDouble("valorVenda"));
+            m.setSituacaoMotocicleta(rs.getString("situacaoMotocicleta"));
+            m.setRenavam(rs.getInt("renavam"));
+            m.setPlaca(rs.getString("placa"));
+            m.setMotor(rs.getString("motor"));
+            m.setValorIPVA(rs.getDouble("valorIPVA"));
+            m.setSituacaoIPVA(rs.getString("situacaoIPVA"));
+            m.setProprietario(ProprietarioDAO.retornaProprietarioPorId(rs.getInt("idProprietario")));
+            m.setModelo(ModeloDAO.retornaModeloPorId(rs.getInt("idModelo")));
+            motocicletas.add(m);
+        }
+
+        return motocicletas;
+     }
+    
     public static ArrayList<Motocicleta> listarMotocicletas(String busca) throws SQLException {
         openConnection();
         PreparedStatement stm;
@@ -139,7 +176,6 @@ public class MotocicletaDAO extends BaseDAO {
             m.setRenavam(rs.getInt("renavam"));
             m.setPlaca(rs.getString("placa"));
             m.setMotor(rs.getString("motor"));
-            m.setDataVistoria(rs.getDate("dataVistoria"));
             m.setValorIPVA(rs.getDouble("valorIPVA"));
             m.setSituacaoIPVA(rs.getString("situacaoIPVA"));
             m.setProprietario(ProprietarioDAO.retornaProprietarioPorId(rs.getInt("idProprietario")));
@@ -170,7 +206,6 @@ public class MotocicletaDAO extends BaseDAO {
             m.setRenavam(rs.getInt("renavam"));
             m.setPlaca(rs.getString("placa"));
             m.setMotor(rs.getString("motor"));
-            m.setDataVistoria(rs.getDate("dataVistoria"));
             m.setValorIPVA(rs.getDouble("valorIPVA"));
             m.setSituacaoIPVA(rs.getString("situacaoIPVA"));
             m.setProprietario(ProprietarioDAO.retornaProprietarioPorId(rs.getInt("idProprietario")));
@@ -182,7 +217,7 @@ public class MotocicletaDAO extends BaseDAO {
     public static void alterarMotocicleta(Motocicleta m) throws SQLException {
         openConnection();
         String SQL = "UPDATE motocicletas set ano = ?, chassi = ?, cor = ?, tipoCombustivel = ?, valorCompra = ?,"
-                + " valorVenda = ?, situacaoMotocicleta = ?, renavam = ?, placa = ?, motor = ?, dataVistoria = ?,"
+                + " valorVenda = ?, situacaoMotocicleta = ?, renavam = ?, placa = ?, motor = ?, "
                 + " valorIPVA = ?, situacaoIPVA = ?, idProprietario = ?, idModelo = ? WHERE idMotocicleta = ?";
         PreparedStatement stm = connection.prepareCall(SQL);
         stm.setInt(1, m.getAno());
@@ -195,15 +230,11 @@ public class MotocicletaDAO extends BaseDAO {
         stm.setInt(8, m.getRenavam());
         stm.setString(9, m.getPlaca());
         stm.setString(10, m.getMotor());
-        stm.setDate(11, m.getDataVistoria());
-        stm.setDouble(12, m.getValorIPVA());
-        stm.setString(13, m.getSituacaoIPVA());
-        System.err.println("Prop Moto Dao: " + m.getProprietario().getIdProprietario());
-        System.err.println("Modelo Moto Dao: " + m.getModelo().getIdModelo());
-        System.err.println("Moto : " + m.getIdMotocicleta());
-        stm.setInt(14, m.getProprietario().getIdProprietario());
-        stm.setInt(15, m.getModelo().getIdModelo());
-        stm.setInt(16, m.getIdMotocicleta());
+        stm.setDouble(11, m.getValorIPVA());
+        stm.setString(12, m.getSituacaoIPVA());       
+        stm.setInt(13, m.getProprietario().getIdProprietario());
+        stm.setInt(14, m.getModelo().getIdModelo());
+        stm.setInt(15, m.getIdMotocicleta());
         stm.execute();
     }
 
@@ -263,7 +294,6 @@ public class MotocicletaDAO extends BaseDAO {
             m.setRenavam(rs.getInt("renavam"));
             m.setPlaca(rs.getString("placa"));
             m.setMotor(rs.getString("motor"));
-            m.setDataVistoria(rs.getDate("dataVistoria"));
             m.setValorIPVA(rs.getDouble("valorIPVA"));
             m.setSituacaoIPVA(rs.getString("situacaoIPVA"));
             m.setProprietario(ProprietarioDAO.retornaProprietarioPorId(rs.getInt("idProprietario")));
@@ -272,6 +302,19 @@ public class MotocicletaDAO extends BaseDAO {
         }
         
         return estoque;
+    }
+    
+    public static int retornarUltimoId() throws SQLException {
+        openConnection();
+        int ultimoId;
+        
+        String SQL = "SELECT MAX( motocicletas.idMotocicleta ) AS maximo FROM motocicletas";
+        PreparedStatement smt = connection.prepareStatement( SQL );
+        ResultSet rs = smt.executeQuery();
+        rs.first();
+        
+        ultimoId = rs.getInt("maximo");
+        return ultimoId;
     }
     
     public static void main(String[] args) {

@@ -24,7 +24,7 @@
         </div><!-- col-md-6 -->
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3" id="filtroData">
         <div class="col-md-2">
             <label class="bold">Filtro:</label>
         </div>
@@ -41,5 +41,17 @@
         </div>
     </div>
 </form>
+
+<script type="text/javascript">
+$(document).on('change', 'input[name="tipo"]', function() {
+    var array = ['vendas', 'pagamentos', 'logs'];
+    
+    if ( array.indexOf( this.value) !== -1) {
+        $('#filtroData').slideDown();
+    } else {
+        $('#filtroData').slideUp();
+    }
+});
+</script>
 
 <t:import url="../templates/footer.jsp"/>

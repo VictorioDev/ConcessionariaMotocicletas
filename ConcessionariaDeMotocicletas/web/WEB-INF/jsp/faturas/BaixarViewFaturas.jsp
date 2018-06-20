@@ -67,9 +67,9 @@
     </div>
 
     <div class="form-group row">
-        <div class="col-2 bold"><label for="juros" class="col-form-label">Juros:</label></div>
+        <div class="col-2 bold"><label for="juros" class="col-form-label">Valor pago:</label></div>
         <div class="col-10">
-            <input type="number" class="form-control" name="juros" placeholder="Preencha os juros, caso tenha...">
+            <input type="number" class="form-control" name="juros" placeholder="Preencha o valor pago..." value="${ fatura.valorParcela }">
         </div>
     </div>
     

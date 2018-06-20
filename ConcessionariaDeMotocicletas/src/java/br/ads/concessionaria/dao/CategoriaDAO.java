@@ -81,7 +81,7 @@ public class CategoriaDAO extends BaseDAO {
     
     public static int contarCategorias() throws SQLException{
         int total = 0;
-        String SQL = "SELECT COUNT(*) as total FROM CATEGORIAS";
+        String SQL = "SELECT COUNT(*) as total FROM categorias";
         PreparedStatement stm = connection.prepareCall(SQL);
         ResultSet rs = stm.executeQuery();
         if(rs.first()){
@@ -90,4 +90,13 @@ public class CategoriaDAO extends BaseDAO {
         
         return total;
     }
-}//fim da classe
+    
+    public static void inserirMotocicletaCategoria( int idMotocicleta, int idCategoria ) throws SQLException {
+        openConnection();
+        String SQL = "INSERT INTO categoriasmotocicletas VALUES (?,?)";
+        PreparedStatement stm = connection.prepareStatement(SQL);
+        stm.setInt(1, idMotocicleta );
+        stm.setInt(2, idCategoria );
+        stm.execute();
+    }
+}

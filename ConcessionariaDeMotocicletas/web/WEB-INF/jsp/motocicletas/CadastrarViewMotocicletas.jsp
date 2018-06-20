@@ -11,29 +11,13 @@
     <span class="oi" data-glyph="wrench" title="Motocicletas" aria-hidden="true"></span> Cadastrar Motocicleta
 </h3>
 
-<form:form method="POST" modelAttribute="motocicleta" acceptCharset="UTF-8" id="form">
+<form:form method="POST" modelAttribute="motocicleta" acceptCharset="UTF-8" id="form" action="/ConcessionariaDeMotocicletas/motocicletas/cadastrarNova">
     <div class="form-group row">
         <div class="col-1 bold">Tipo:</div>
         <div class="col-11">
             <label class="mb-0"><input id="nova" type="radio" name="tipo" value="nova" <t:if test="${!nova && !usada}">checked</t:if> <t:if test="${nova}">checked</t:if> > Motocicleta nova</label>
             <label class="mb-0"><input id="usada" type="radio" name="tipo" value="usada" <t:if test="${usada}">checked</t:if>> Motocicleta usada</label>
         </div><!-- col-9 -->
-    <script>
-    $(document).ready(function () {
-           //$('#form').attr('action', 'cadastrarnova');  
-           $('#nova').change(function () {
-                $('#form').attr('action', 'cadastrarnova');  
-            });
-           $('#usada').change(function () {
-                $('#form').attr('action', 'cadastrarusada');
-                console.log("cadastrarusada");   
-           });
-       });
-       
-       
-      
-   
-</script>
     </div><!-- row -->
     
     <hr>
@@ -44,7 +28,7 @@
                 
                 <div class="form-group row">
                     <div class="col-4">
-                        <label class="scol-sm-2 col-form-label bold">Modelo/Marca:</label>
+                        <label class="scol-sm-2 col-form-label bold">Modelo/Marca: <span class="required">*</span></label>
                     </div>
 
                     <div class="col-8">
@@ -58,7 +42,7 @@
                 
                 <div class="form-group row">
                     <div class="col-4">
-                        <form:label path="motor" cssClass="scol-sm-2 col-form-label bold">Motor:</form:label>
+                        <form:label path="motor" cssClass="scol-sm-2 col-form-label bold">Motor: <span class="required">*</span></form:label>
                     </div>
 
                     <div class="col-8">
@@ -69,7 +53,7 @@
                 
                 <div class="form-group row">
                     <div class="col-4">
-                        <form:label path="ano" cssClass="scol-sm-2 col-form-label bold">Ano:</form:label>
+                        <form:label path="ano" cssClass="scol-sm-2 col-form-label bold">Ano: <span class="required">*</span></form:label>
                     </div>
 
                     <div class="col-8">
@@ -80,7 +64,7 @@
                 
                 <div class="form-group row">
                     <div class="col-4">
-                        <form:label path="chassi" cssClass="scol-sm-2 col-form-label bold">Chassi:</form:label>
+                        <form:label path="chassi" cssClass="scol-sm-2 col-form-label bold">Chassi: <span class="required">*</span></form:label>
                     </div>
 
                     <div class="col-8">
@@ -91,7 +75,7 @@
                 
                 <div class="form-group row">
                     <div class="col-4">
-                        <form:label path="cor" cssClass="scol-sm-2 col-form-label bold">Cor:</form:label>
+                        <form:label path="cor" cssClass="scol-sm-2 col-form-label bold">Cor: <span class="required">*</span></form:label>
                     </div>
 
                     <div class="col-8">
@@ -102,7 +86,7 @@
                 
                 <div class="form-group row mb-0">
                     <div class="col-4">
-                        <form:label path="tipoCombustivel" cssClass="scol-sm-2 col-form-label bold">Combustível:</form:label>
+                        <form:label path="tipoCombustivel" cssClass="scol-sm-2 col-form-label bold">Combustível: <span class="required">*</span></form:label>
                     </div>
 
                     <div class="col-8">
@@ -116,7 +100,7 @@
             <div class="col-md-6">
                 <div class="form-group row">
                     <div class="col-4">
-                        <form:label path="valorCompra" cssClass="scol-sm-2 col-form-label bold">Valor de Compra:</form:label>
+                        <form:label path="valorCompra" cssClass="scol-sm-2 col-form-label bold">Valor de Compra: <span class="required">*</span></form:label>
                     </div>
 
                     <div class="col-8">
@@ -127,7 +111,7 @@
                 
                 <div class="form-group row">
                     <div class="col-4">
-                        <form:label path="valorVenda" cssClass="scol-sm-2 col-form-label bold">Valor de Venda:</form:label>
+                        <form:label path="valorVenda" cssClass="scol-sm-2 col-form-label bold">Valor de Venda: <span class="required">*</span></form:label>
                     </div>
 
                     <div class="col-8">
@@ -180,7 +164,7 @@
 
                    <div class="form-group row">
                         <div class="col-4">
-                            <form:label path="placa" cssClass="scol-sm-2 col-form-label bold">Placa:</form:label>
+                            <form:label path="placa" cssClass="scol-sm-2 col-form-label bold">Placa: <span class="required">*</span></form:label>
                         </div>
 
                         <div class="col-8">
@@ -188,34 +172,21 @@
                             <div class="invalid-feedback">Preencha a placa</div>
                         </div>
                     </div>
-
+                            
                     <div class="form-group row">
                         <div class="col-4">
-                            <form:label path="dataVistoria" cssClass="scol-sm-2 col-form-label bold">Data da Vistoria:</form:label>
+                            <form:label path="valorIPVA" cssClass="scol-sm-2 col-form-label bold">Valor do IPVA: <span class="required">*</span></form:label>
                         </div>
-
-                        <div class="col-8">
-                            <form:input path="dataVistoria" type="date" cssClass="form-control" placeholder="Digite a data da vistoria..."/>
-                        </div>
-                    </div>
-
-                </div><!-- col-md-6 -->
-                <div class="col-md-6">
-
-                    <div class="form-group row">
-                        <div class="col-4">
-                            <form:label path="valorIPVA" cssClass="scol-sm-2 col-form-label bold">Valor do IPVA:</form:label>
-                        </div>
-
                         <div class="col-8">
                             <form:input path="valorIPVA" cssClass="form-control ${valorIPVA}" placeholder="Digite o valor do IPVA..."/>
                             <div class="invalid-feedback">Preencha o valor do IPVA</div>
                         </div>
                     </div>
-
+                </div><!-- col-md-6 -->
+                <div class="col-md-6">
                     <div class="form-group row">
                         <div class="col-4">
-                            <form:label path="situacaoIPVA" cssClass="scol-sm-2 col-form-label bold">Situação IPVA:</form:label>
+                            <form:label path="situacaoIPVA" cssClass="scol-sm-2 col-form-label bold">Situação IPVA: <span class="required">*</span></form:label>
                         </div>
 
                         <div class="col-8">
@@ -228,7 +199,7 @@
 
                     <div class="form-group row">
                         <div class="col-4">
-                            <label class="scol-sm-2 col-form-label bold">Proprietario:</label>
+                            <label class="scol-sm-2 col-form-label bold">Proprietario: <span class="required">*</span></label>
                         </div>
 
                         <div class="col-8">
@@ -244,7 +215,7 @@
                 
         </div><!-- options-usage -->
 
-        <form:input path="situacaoMotocicleta"  type="hidden" cssClass="form-control" value="Disponível"/>
+        <form:input path="situacaoMotocicleta" type="hidden" cssClass="form-control" value="Disponível"/>
             
         <div class="form-group row">
             <div class="col-sm-10">
@@ -266,11 +237,13 @@
         $('#options-group').slideDown("fast");
         
         if( this.value === 'nova') {
+            $('#form').attr('action', '/ConcessionariaDeMotocicletas/motocicletas/cadastrarNova');
             $('#options-usage').slideUp("fast");
         } else if( this.value === 'usada' ) {
+            $('#form').attr('action', '/ConcessionariaDeMotocicletas/motocicletas/cadastrarUsada');
             $('#options-usage').slideDown("fast");    
         }
     });
 </script>
-
+   
 <t:import url="../templates/footer.jsp"/>

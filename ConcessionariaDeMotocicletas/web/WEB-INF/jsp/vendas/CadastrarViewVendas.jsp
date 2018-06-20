@@ -20,7 +20,7 @@
             <select class="form-control" name="idMotocicleta">
                 <option value="0">Selecionar...</option>
                 <t:forEach items="${motocicletas}" var="motocicleta">
-                    <t:set var="value" value="${ motocicleta.modelo.marca.nome} ${ motocicleta.modelo.nome } (${motocicleta.ano}, ${motocicleta.cor}, ${motocicleta.placa})"/>
+                    <t:set var="value" value="(${ motocicleta.idMotocicleta }) - ${ motocicleta.modelo.marca.nome} ${ motocicleta.modelo.nome } (${motocicleta.ano}, ${motocicleta.cor})"/>
                     <option value="${motocicleta.idMotocicleta}">
                         ${value} - <fmt:formatNumber type="currency" maxFractionDigits="2" value="${motocicleta.valorVenda}" />
                     </option>

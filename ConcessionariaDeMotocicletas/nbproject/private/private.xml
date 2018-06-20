@@ -3,9 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/OneDrive%20-%20Centro%20Paula%20Souza%20-%20FATEC/FATEC/5Semestre/LabEngSoft/Projeto/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/src/java/br/ads/concessionaria/domain/Motocicleta.java</file>
-            <file>file:/E:/OneDrive%20-%20Centro%20Paula%20Souza%20-%20FATEC/FATEC/5Semestre/LabEngSoft/Projeto/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/motocicletas/CadastrarViewMotocicletas.jsp</file>
-            <file>file:/E:/OneDrive%20-%20Centro%20Paula%20Souza%20-%20FATEC/FATEC/5Semestre/LabEngSoft/Projeto/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/src/java/br/ads/concessionaria/controller/MotocicletaController.java</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/src/java/br/ads/concessionaria/controller/RelatorioController.java</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/relatorios/IndexViewRelatorios.jsp</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/src/java/br/ads/concessionaria/controller/VendaController.java</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/faturas/BaixarViewFaturas.jsp</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/motocicletas/IndexViewMotocicletas.jsp</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/resources/style.css</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/src/java/br/ads/concessionaria/controller/UsuarioController.java</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/motocicletas/VisualizarViewMotocicletas.jsp</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/web/WEB-INF/jsp/vendas/CadastrarViewVendas.jsp</file>
+            <file>file:/C:/Projects/ConcessionariaMotocicletas/ConcessionariaDeMotocicletas/src/java/br/ads/concessionaria/dao/MotocicletaDAO.java</file>
         </group>
     </open-files>
 </project-private>

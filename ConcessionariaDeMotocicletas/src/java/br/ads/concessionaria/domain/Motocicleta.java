@@ -12,6 +12,8 @@ import br.ads.concessionaria.interfaces.MotocicletaUsada;
 import java.sql.Date;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -38,7 +40,6 @@ public class Motocicleta {
     @Min(value = 1, groups = {MotocicletaUsada.class, MotocicletaNova.class})
     private double valorVenda;
     
-    
     private String situacaoMotocicleta;
     
     @Min(value = 0, groups = {MotocicletaUsada.class})
@@ -49,16 +50,15 @@ public class Motocicleta {
     
     @NotBlank(groups = {MotocicletaUsada.class, MotocicletaNova.class})
     private String motor;
-    
-    private Date dataVistoria;
-    
+       
     @Min(value = 1, groups = {MotocicletaUsada.class})
     private double valorIPVA;
     
-    
+    @NotBlank(groups = {MotocicletaUsada.class})
     private String situacaoIPVA;
     
     private Proprietario proprietario;
+    
     private Modelo modelo;
 
     /**
@@ -213,20 +213,6 @@ public class Motocicleta {
      */
     public void setMotor(String motor) {
         this.motor = motor;
-    }
-
-    /**
-     * @return the dataVistoria
-     */
-    public Date getDataVistoria() {
-        return dataVistoria;
-    }
-
-    /**
-     * @param dataVistoria the dataVistoria to set
-     */
-    public void setDataVistoria(Date dataVistoria) {
-        this.dataVistoria = dataVistoria;
     }
 
     /**

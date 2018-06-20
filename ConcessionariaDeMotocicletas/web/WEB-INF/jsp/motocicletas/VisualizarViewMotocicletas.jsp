@@ -53,25 +53,16 @@
         <td class="bold">Situação Motocicleta:</td>
         <td>${motocicleta.situacaoMotocicleta}</td>
     </tr>
-     <tr>
+    <t:if test="${ motocicleta.proprietario.nome != null }">
+    <tr>
         <td class="bold">Renavam:</td>
         <td>${motocicleta.renavam}</td>
     </tr>
-     <tr>
+    <tr>
         <td class="bold">Placa:</td>
         <td>${motocicleta.placa}</td>
     </tr>
-     <tr>
-        <td class="bold">Motor:</td>
-        <td>${motocicleta.motor}</td>
-    </tr>
     <tr>
-        <td class="bold">Data Vistoria:</td>
-        <td>
-            <fmt:formatDate pattern="dd/MM/yyyy" value="${motocicleta.dataVistoria}" />
-        </td>
-    </tr>
-     <tr>
         <td class="bold">Valor IPVA:</td>
         <td>${motocicleta.valorIPVA}</td>
     </tr>
@@ -87,7 +78,12 @@
             </a>
         </td>
     </tr>
-    
+    </t:if>
+    <tr>
+        <td class="bold">Motor:</td>
+        <td>${motocicleta.motor}</td>
+    </tr>
+
     <tr>
         <td class="bold">Modelo:</td>
         <td>

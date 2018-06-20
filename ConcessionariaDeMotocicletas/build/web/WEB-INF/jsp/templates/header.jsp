@@ -20,7 +20,9 @@
     <body>
         <div class="sidebar">
             <div class="sidebar-inner">
-                <div class="title">Sistema de Concessionária de Motocicletas</div>
+                <div class="title">
+                    <img src="<t:url value="/resources/logo.png"/>" name="Sistema de Concessionária" alt="Sistema de Concessionária"/>
+                </div>                
                 <ul class="sidebar-menu">
    
                     <li class="<%= Utils.activeMenu("painel", request.getRequestURL().toString()) %>">

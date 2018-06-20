@@ -89,7 +89,7 @@ public class VendaController {
         ArrayList<Cliente> listaClientes = new ArrayList<>();
 
         try {
-            listaMotocicletas = MotocicletaDAO.listarMotocicletas("");
+            listaMotocicletas = MotocicletaDAO.listarMotocicletasDisponiveis();
             listaClientes = ClienteDAO.listarCliente("");
         } catch (SQLException ex) {
             Logger.getLogger(MotocicletaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -122,9 +122,7 @@ public class VendaController {
             } else {
                 attrs.addFlashAttribute("quantidadeParcelas", "is-valid");
             }
-
-          
-
+            
             if (bindingResult.hasFieldErrors("diaPreferencial")) {
                 attrs.addFlashAttribute("diaPreferencial", "is-invalid");
             } else {
@@ -161,6 +159,9 @@ public class VendaController {
                 v.setStatus("Concluída");
 
                 int idVenda = VendaDAO.incluirVenda(v);
+                
+                // Removemos a motocicleta do estoque.
+                MotocicletaDAO.alterarSituacaoMotocicleta("Vendida", idMotocicleta );
 
                 // TO DO: Dar baixa na motocicleta.
                 // Adicionamos um mês na data atual para a geração das faturas.
@@ -201,7 +202,7 @@ public class VendaController {
 
                     i++;
                 }
-
+                
             } catch (SQLException ex) {
                 Logger.getLogger(MotocicletaController.class.getName()).log(Level.SEVERE, null, ex);
             }

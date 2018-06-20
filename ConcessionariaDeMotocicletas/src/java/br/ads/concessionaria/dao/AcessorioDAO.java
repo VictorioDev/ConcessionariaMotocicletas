@@ -86,24 +86,13 @@ public class AcessorioDAO extends BaseDAO {
         }
         return total;
     }
-//    public static void main(String[] args) {
-//        Acessorio a = new Acessorio();
-//        c.setNome("Esportiva");
-//        c.setDescricao("outra categoria da hora");
-//        c.setIdCategoria(1);
-//
-//        try {
-//            CategoriaDAO.alterarCategoria(c);
-//            ArrayList<Categoria> categorias = new ArrayList();
-//            categorias = CategoriaDAO.listarCategorias();
-//            for (Categoria cat : categorias) {
-//                System.out.println("ID da categoria: " + cat.getIdCategoria());
-//                System.out.println("Nome: " + cat.getNome());
-//                System.out.println("Descrção: " + cat.getDescricao());
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
     
+    public static void inserirMotocicletaAcessorio( int idMotocicleta, int idAcessorio ) throws SQLException {
+        openConnection();
+        String SQL = "INSERT INTO motocicletasacessorios VALUES (?,?);";
+        PreparedStatement stm = connection.prepareStatement(SQL);
+        stm.setInt(1, idMotocicleta );
+        stm.setInt(2, idAcessorio );
+        stm.execute();
+    }    
 }
