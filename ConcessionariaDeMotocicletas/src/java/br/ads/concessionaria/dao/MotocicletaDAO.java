@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -205,6 +207,73 @@ public class MotocicletaDAO extends BaseDAO {
         stm.execute();
     }
 
+    public static ArrayList<Map> listarMaisVendidos() throws SQLException {
+        
+        openConnection();
+        
+        String SQL = "SELECT marcas.idMarca, marcas.nome AS nomeMarca, modelos.idModelo, modelos.nome AS nomeModelo, COUNT( vendas.idVenda ) AS contador, SUM( vendas.valor ) AS total " +
+                    "FROM vendas " +
+                    "JOIN motocicletas ON vendas.idMotocicleta = motocicletas.idMotocicleta " +
+                    "JOIN modelos ON motocicletas.idModelo = modelos.idModelo " +
+                    "JOIN marcas ON modelos.idMarca = marcas.idMarca " +
+                    "GROUP BY motocicletas.idModelo " +
+                    "ORDER BY contador DESC";
+        
+        PreparedStatement stm = connection.prepareCall(SQL);
+        ResultSet rs = stm.executeQuery();
+        
+        ArrayList<Map> lista = new ArrayList<Map>();
+        
+        while ( rs.next() ) {
+            
+            Map<String,String> item = new HashMap<String,String>();
+        
+            item.put("idMarca", rs.getString("idMarca") );
+            item.put("nomeMarca", rs.getString("nomeMarca") );
+            item.put("idModelo", rs.getString("idModelo") );
+            item.put("nomeModelo", rs.getString("nomeModelo") );
+            item.put("contador", rs.getString("contador") );
+            item.put("total", rs.getString("total") );
+            
+            lista.add( item );
+        }
+        
+        return lista;        
+    }
+    
+    public static ArrayList<Motocicleta> listarEstoque() throws SQLException {
+        openConnection();
+        
+        String SQL = "SELECT * FROM motocicletas WHERE situacaoMotocicleta = 'Disponível'";
+        PreparedStatement stm = connection.prepareCall(SQL);
+        ResultSet rs = stm.executeQuery();
+        
+        ArrayList<Motocicleta> estoque = new ArrayList<Motocicleta>();
+        
+        while (rs.next()) {
+            Motocicleta m = new Motocicleta();
+            m.setIdMotocicleta(rs.getInt("idMotocicleta"));
+            m.setAno(rs.getInt("ano"));
+            m.setChassi(rs.getString("chassi"));
+            m.setCor(rs.getString("cor"));
+            m.setTipoCombustivel(rs.getString("tipoCombustivel"));
+            m.setValorCompra(rs.getDouble("valorCompra"));
+            m.setValorVenda(rs.getDouble("valorVenda"));
+            m.setSituacaoMotocicleta(rs.getString("situacaoMotocicleta"));
+            m.setRenavam(rs.getInt("renavam"));
+            m.setPlaca(rs.getString("placa"));
+            m.setMotor(rs.getString("motor"));
+            m.setDataVistoria(rs.getDate("dataVistoria"));
+            m.setValorIPVA(rs.getDouble("valorIPVA"));
+            m.setSituacaoIPVA(rs.getString("situacaoIPVA"));
+            m.setProprietario(ProprietarioDAO.retornaProprietarioPorId(rs.getInt("idProprietario")));
+            m.setModelo(ModeloDAO.retornaModeloPorId(rs.getInt("idModelo")));
+            estoque.add(m);
+        }
+        
+        return estoque;
+    }
+    
     public static void main(String[] args) {
         try {
             int result = MotocicletaDAO.contaMotocicletasPorProprietario(20);

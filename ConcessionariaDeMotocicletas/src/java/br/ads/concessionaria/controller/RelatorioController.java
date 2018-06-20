@@ -6,15 +6,20 @@
 package br.ads.concessionaria.controller;
 
 import br.ads.concessionaria.dao.FaturaDAO;
+import br.ads.concessionaria.dao.LogDAO;
 import br.ads.concessionaria.dao.MarcaDAO;
 import br.ads.concessionaria.dao.ModeloDAO;
+import br.ads.concessionaria.dao.MotocicletaDAO;
 import br.ads.concessionaria.dao.VendaDAO;
 import br.ads.concessionaria.domain.Fatura;
+import br.ads.concessionaria.domain.Log;
 import br.ads.concessionaria.domain.Marca;
 import br.ads.concessionaria.domain.Modelo;
+import br.ads.concessionaria.domain.Motocicleta;
 import br.ads.concessionaria.domain.Venda;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -72,16 +77,25 @@ public class RelatorioController {
             return new ModelAndView("relatorios/RelatorioPagamentos");
         }
         
+        // Relatório de itens mais vendidos.
         if( tipo.equals("itens-mais-vendidos") ) {
-            return new ModelAndView("relatorios/RelatorioVendas");
+            ArrayList<Map> itens = MotocicletaDAO.listarMaisVendidos();
+            m.addAttribute("itens", itens );
+            return new ModelAndView("relatorios/RelatorioItensMaisVendidos");
         }
         
+        // Relatório de estoque.
         if( tipo.equals("estoque") ) {
-            return new ModelAndView("relatorios/RelatorioVendas");
+            ArrayList<Motocicleta> estoque = MotocicletaDAO.listarEstoque();
+            m.addAttribute("estoques", estoque );
+            return new ModelAndView("relatorios/RelatorioConsultasEstoque");
         }
         
+        // Relatório de logs.
         if( tipo.equals("logs") ) {
-            return new ModelAndView("relatorios/RelatorioVendas");
+            ArrayList<Log> logs = LogDAO.listarLogs();
+            m.addAttribute("logs", logs );
+            return new ModelAndView("relatorios/RelatorioLogs");
         }
         
         return null;

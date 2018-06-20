@@ -33,12 +33,12 @@
 <table class="table table-hover mt-2">
     <thead>
         <th>#</th>
+        <th>Modelo</th>
         <th>Ano</th>
         <th>Cor</th>
         <th>Combustível</th>
         <th>Valor de Venda</th>
         <th>Proprietário</th>
-        <th>Modelo</th>
         <th>Situação</th>
         <th>Ações</th>
     </thead>
@@ -46,6 +46,11 @@
         <t:forEach items="${motocicletas}" var="motocicleta">
             <tr>
                 <td><t:out value="${motocicleta.idMotocicleta}"/></td>
+                <td>
+                    <a href="<t:url value="/modelos/visualizar/${motocicleta.modelo.idModelo}"/>" data-toggle="tooltip" title="Visualizar Modelo">
+                        <t:out value="${motocicleta.modelo.nome}"/>
+                    </a>
+                </td>
                 <td><t:out value="${motocicleta.ano}"/></td>
                 <td><t:out value="${motocicleta.cor}"/></td>
                 <td><t:out value="${motocicleta.tipoCombustivel}"/></td>
@@ -55,11 +60,6 @@
                 <td>
                     <a href="<t:url value="/proprietarios/visualizar/${motocicleta.proprietario.idProprietario}"/>" data-toggle="tooltip" title="Visualizar Proprietário">
                         <t:out value="${motocicleta.proprietario.nome}"/>
-                    </a>
-                </td>
-                <td>
-                    <a href="<t:url value="/modelos/visualizar/${motocicleta.modelo.idModelo}"/>" data-toggle="tooltip" title="Visualizar Modelo">
-                        <t:out value="${motocicleta.modelo.nome}"/>
                     </a>
                 </td>
                 <td>

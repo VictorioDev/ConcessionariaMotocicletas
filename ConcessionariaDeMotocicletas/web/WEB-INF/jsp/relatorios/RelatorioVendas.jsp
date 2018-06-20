@@ -27,7 +27,9 @@
         <th>Status</th>
     </thead>
     <tbody>
+        <t:set var="total" value="0" />
         <t:forEach items="${vendas}" var="venda">
+            <t:set var="total" value="${ total + venda.valor }"/>
             <tr>
                 <td>${venda.idVenda}</td>
                 <td>
@@ -35,17 +37,28 @@
                     <fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${parsed}" />
                 </td>
                 <td>${venda.motocicleta.modelo.marca.nome} ${venda.motocicleta.modelo.nome}</td>
-                <td>${venda.cliente.nome}</td>
+                <td>${venda.cliente.nome} (#${venda.cliente.idCliente})</td>
                 <td><fmt:formatNumber type="currency" maxFractionDigits="2" value="${venda.valor}" /></td>
                 <td>
                     ${venda.quantidadeParcelas}x de <fmt:formatNumber type="currency" maxFractionDigits="2" value="${venda.valor / venda.quantidadeParcelas }" />
                 </td>
                 <td>Dia ${venda.diaPreferencial}</td>
-                <td>${venda.usuario.nome}</td>
+                <td>${venda.usuario.nome} (#${venda.usuario.idUsuario})</td>
                 <td>${venda.status}</td>
             </tr>
         </t:forEach>
     </tbody>
+    <tfoot class="bold">
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td><fmt:formatNumber type="currency" maxFractionDigits="2" value="${total}" /></td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+    </tfoot>
 </table>
 
 <button class="btn btn-sm btn-primary mb-2" onclick="javascript:window.print();">
