@@ -5,15 +5,20 @@
  */
 package br.ads.concessionaria.controller;
 
+import br.ads.concessionaria.dao.LogDAO;
 import br.ads.concessionaria.dao.MarcaDAO;
 import br.ads.concessionaria.dao.ModeloDAO;
+import br.ads.concessionaria.dao.MotocicletaDAO;
+import br.ads.concessionaria.domain.Log;
 import br.ads.concessionaria.domain.Marca;
 import br.ads.concessionaria.domain.Modelo;
+import br.ads.concessionaria.domain.Usuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,7 +68,8 @@ public class ModeloController {
     public String adicionarModelo(@ModelAttribute("modelo") @Valid Modelo m,
             BindingResult bindingResult,
             HttpServletRequest request,
-            RedirectAttributes attrs) {
+            RedirectAttributes attrs,
+            HttpSession session) {
         if (bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("nome")) {
                 attrs.addFlashAttribute("nome", "is-invalid");
@@ -87,7 +93,22 @@ public class ModeloController {
                 marca = MarcaDAO.retornarMarcaPorId(idMarca);
                 m.setMarca(marca);
                 ModeloDAO.incluirModelo(m);
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                Log log = new Log();
+                log.setAcao("O modelo " + m.getNome() + " foi cadastrado");
+                log.setUsuario(u);
+                LogDAO.novoLog(log);
             } catch (SQLException ex) {
+                try {
+                    Modelo mod = ModeloDAO.retornaModeloPorId(m.getIdModelo());
+                    Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                    Log log = new Log();
+                    log.setAcao("Erro ao cadastrar o modelo " + mod.getNome());
+                    log.setUsuario(u);
+                    LogDAO.novoLog(log);
+                } catch (SQLException ex1) {
+                    Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex1);
+                }
                 Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return "redirect:/modelos";
@@ -114,7 +135,8 @@ public class ModeloController {
     public ModelAndView alterarModelo(@ModelAttribute("modelo") @Valid Modelo m,
             BindingResult bindingResult,
             HttpServletRequest request,
-            RedirectAttributes attrs) {
+            RedirectAttributes attrs,
+            HttpSession session) {
         if (bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("nome")) {
                 attrs.addFlashAttribute("nome", "is-invalid");
@@ -138,8 +160,24 @@ public class ModeloController {
             try {
                 marca = MarcaDAO.retornarMarcaPorId(idMarca);
                 m.setMarca(marca);
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                Modelo oldModelo = ModeloDAO.retornaModeloPorId(m.getIdModelo());
                 ModeloDAO.alterarModelo(m);
+                Log log = new Log();
+                log.setAcao("O modelo " + oldModelo.getNome() + " foi alterado para " + m.getNome());
+                log.setUsuario(u);
+                LogDAO.novoLog(log);
             } catch (SQLException ex) {
+                try {
+                    Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                    Log log = new Log();
+                    log.setAcao("Erro ao alterar o modelo" + m.getNome());
+                    log.setUsuario(u);
+                    LogDAO.novoLog(log);
+                } catch (SQLException ex1) {
+                    Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+
                 Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return new ModelAndView("redirect:/modelos");
@@ -148,10 +186,24 @@ public class ModeloController {
     }
 
     @RequestMapping(value = "modelos/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerModelo(@PathVariable("id") int idModelo) {
-
+    public ModelAndView removerModelo(@PathVariable("id") int idModelo,
+            HttpSession session,
+            RedirectAttributes attrs) {
         try {
-            ModeloDAO.excluirModelo(idModelo);
+            int total = MotocicletaDAO.contaMotocicletasPorModelo(idModelo);
+            Modelo m = ModeloDAO.retornaModeloPorId(idModelo);
+            if (total == 0) {
+                ModeloDAO.excluirModelo(idModelo);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setAcao("O modelo " + m.getNome() + " foi removido ");
+                log.setUsuario(u);
+                LogDAO.novoLog(log);
+            } else {
+                attrs.addFlashAttribute("hasMsg", true);
+                attrs.addFlashAttribute("msg", "O modelo " + m.getNome() + " possui motocicletas vinculadas a ele e não poderá ser excluído");
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(ModeloController.class.getName()).log(Level.SEVERE, null, ex);
         }

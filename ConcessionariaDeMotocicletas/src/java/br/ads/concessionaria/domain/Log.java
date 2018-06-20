@@ -19,6 +19,9 @@ public class Log {
         this.acao = acao;
         this.usuario = usuario;
     }
+    
+    public Log(){
+    }
 
     public int getIdLog() {
         return idLog;

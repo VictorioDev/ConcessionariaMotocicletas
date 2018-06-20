@@ -1,12 +1,15 @@
 package br.ads.concessionaria.controller;
-
 import br.ads.concessionaria.dao.CategoriaDAO;
+import br.ads.concessionaria.dao.LogDAO;
 import br.ads.concessionaria.domain.Categoria;
+import br.ads.concessionaria.domain.Log;
+import br.ads.concessionaria.domain.Usuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,7 +60,8 @@ public class CategoriaController {
     @RequestMapping(value = "categorias/cadastrar", method = RequestMethod.POST)
     public String adicionarCategoria(@ModelAttribute("categoria") @Valid Categoria c,
             BindingResult bindingResult,
-            RedirectAttributes attrs) {
+            RedirectAttributes attrs,
+            HttpSession session) {
 
         if (bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("nome")) {
@@ -77,7 +81,21 @@ public class CategoriaController {
         } else {
             try {
                 CategoriaDAO.incluirCategoria(c);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setAcao("O acessorio " + c.getNome() + " foi cadastrado");
+                log.setUsuario(u);
+                LogDAO.novoLog(log);
             } catch (SQLException ex) {
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setAcao("Erro ao cadastrar o acessorio " + c.getNome());
+                log.setUsuario(u);
+                try {
+                    LogDAO.novoLog(log);
+                } catch (SQLException ex1) {
+                    Logger.getLogger(CategoriaController.class.getName()).log(Level.SEVERE, null, ex1);
+                }
                 Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return "redirect:/categorias";
@@ -100,7 +118,8 @@ public class CategoriaController {
     @RequestMapping(value = "categorias/editar", method = RequestMethod.POST)
     public ModelAndView editarCategoria(@ModelAttribute("categoria") @Valid Categoria c,
             BindingResult bindingResult,
-            RedirectAttributes attrs) {
+            RedirectAttributes attrs,
+            HttpSession session) {
         System.out.println("Categoria id " + c.getIdCategoria());
         if (bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("nome")) {
@@ -120,7 +139,25 @@ public class CategoriaController {
         } else {
             try {
                 CategoriaDAO.alterarCategoria(c);
+                Categoria cat = CategoriaDAO.retornarCategoriaPorId(c.getIdCategoria());
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setAcao("A categoria " + c.getNome() + " foi alterada para " + cat.getNome());
+                log.setUsuario(u);
+                LogDAO.novoLog(log);
             } catch (SQLException ex) {
+
+                try {
+                    Categoria cat = CategoriaDAO.retornarCategoriaPorId(c.getIdCategoria());
+                    Log log = new Log();
+                    Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                    log.setAcao("Erro ao mudar a categoria " + c.getNome() + "para " + cat.getNome());
+                    log.setUsuario(u);
+                    LogDAO.novoLog(log);
+                } catch (SQLException ex1) {
+                    
+                    Logger.getLogger(CategoriaController.class.getName()).log(Level.SEVERE, null, ex1);
+                }
                 Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return new ModelAndView("redirect:/categorias");
@@ -129,10 +166,28 @@ public class CategoriaController {
     }
 
     @RequestMapping(value = "categorias/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerCategoria(@PathVariable("id") int idCategoria) {
+    public ModelAndView removerCategoria(@PathVariable("id") int idCategoria,
+            HttpSession session) {
         try {
+            Categoria c = CategoriaDAO.retornarCategoriaPorId(idCategoria);
             CategoriaDAO.removerCategoria(idCategoria);
+            Log log = new Log();
+            Usuario u = (Usuario) session.getAttribute("usuarioSession");
+            log.setAcao("A categoria " + c.getNome() + " foi removida");
+            log.setUsuario(u);
+            LogDAO.novoLog(log);
         } catch (SQLException ex) {
+            try {
+                Categoria c = CategoriaDAO.retornarCategoriaPorId(idCategoria);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setAcao("Erro ao remover a categoria " + c.getNome());
+                log.setUsuario(u);
+                LogDAO.novoLog(log);
+            } catch (SQLException e) {
+                Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ModelAndView("redirect:/categorias");

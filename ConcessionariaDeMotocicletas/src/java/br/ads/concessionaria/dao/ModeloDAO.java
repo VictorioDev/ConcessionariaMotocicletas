@@ -16,8 +16,9 @@ import java.util.ArrayList;
 /**
  *
  * @author Ivens Mathias
- */ 
-public class ModeloDAO extends BaseDAO  {
+ */
+public class ModeloDAO extends BaseDAO {
+
     public static void incluirModelo(Modelo m) throws SQLException {
         openConnection();
         String SQl = "INSERT INTO modelos (nome,descricao,idMarca) VALUES (?,?,?)";
@@ -25,10 +26,22 @@ public class ModeloDAO extends BaseDAO  {
         stm.setString(1, m.getNome());
         stm.setString(2, m.getDescricao());
         stm.setInt(3, m.getMarca().getIdMarca());
-        stm.execute(); 
+        stm.execute();
         //closeConnection();
     }
-    
+
+    public static int contaModelosPorMarca(int idMarca) throws SQLException {
+        openConnection();
+        String SQL = "SELECT COUNT(idModelo) as Total FROM modelos WHERE modelos.idMarca = ? GROUP BY modelos.idMarca";
+        PreparedStatement stm  = connection.prepareCall(SQL);
+        stm.setInt(1, idMarca);
+        ResultSet rs = stm.executeQuery();
+        int result = 0;
+        if(rs.first())
+            result = rs.getInt("Total");
+        return result;
+    }
+
     public static void alterarModelo(Modelo m) throws SQLException {
         openConnection();
         String SQl = "UPDATE modelos SET nome = ?, descricao = ?, IdMarca = ? WHERE idModelo = ?";
@@ -47,12 +60,12 @@ public class ModeloDAO extends BaseDAO  {
 
         ArrayList<Modelo> listaModelos = new ArrayList<>();
         PreparedStatement smt;
-        
-        busca = ( busca == null || busca.isEmpty() ) ? "" : busca;
-        
+
+        busca = (busca == null || busca.isEmpty()) ? "" : busca;
+
         String SQL = "SELECT * FROM modelos WHERE nome LIKE '%" + busca + "%'";
         smt = connection.prepareStatement(SQL);
-       
+
         ResultSet rs = smt.executeQuery();
         while (rs.next()) {
             Modelo m = new Modelo();
@@ -84,18 +97,18 @@ public class ModeloDAO extends BaseDAO  {
         return m;
     }
 
-     public static int contarModelos() throws SQLException{
+    public static int contarModelos() throws SQLException {
         int total = 0;
         openConnection();
         String SQL = "SELECT COUNT(*) as total FROM modelos";
         PreparedStatement stm = connection.prepareCall(SQL);
         ResultSet rs = stm.executeQuery();
-        if(rs.first()){
+        if (rs.first()) {
             total = rs.getInt("total");
         }
         return total;
     }
-    
+
     public static void excluirModelo(int idModelo) throws SQLException {
         openConnection();
         String SQl = "DELETE FROM modelos WHERE idModelo = ?";
@@ -105,8 +118,4 @@ public class ModeloDAO extends BaseDAO  {
         //closeConnection();
     }
 
-    
 }
-
-    
-

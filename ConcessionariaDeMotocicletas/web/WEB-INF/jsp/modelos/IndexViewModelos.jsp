@@ -17,6 +17,9 @@
 <form method="GET">
     <div class="container-fluid mt-2">
         <div class="row">
+            <t:if test="${hasMsg}">
+                <div class="alert alert-danger">${msg}</div>
+            </t:if>
             <div class="col-md-5">
                 <div class="row">
                     <input type="text" id="search" name="search" class="form-control col-md-10" placeholder="Digite a sua busca...">

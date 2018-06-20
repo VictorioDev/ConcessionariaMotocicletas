@@ -6,12 +6,16 @@
 package br.ads.concessionaria.controller;
 
 import br.ads.concessionaria.dao.AcessorioDAO;
+import br.ads.concessionaria.dao.LogDAO;
 import br.ads.concessionaria.domain.Acessorio;
+import br.ads.concessionaria.domain.Log;
+import br.ads.concessionaria.domain.Usuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,9 +66,10 @@ public class AcessorioController {
     @RequestMapping(value = "acessorios/cadastrar", method = RequestMethod.POST)
     public String adicionarAcessorio(@ModelAttribute("acessorio") @Valid Acessorio a,
             BindingResult bindingResult,
-            RedirectAttributes attrs) {
+            RedirectAttributes attrs,
+            HttpSession session) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             if (bindingResult.hasFieldErrors("descricao")) {
                 attrs.addFlashAttribute("descricao", "is-invalid");
             } else {
@@ -77,7 +82,21 @@ public class AcessorioController {
         } else {
             try {
                 AcessorioDAO.incluirAcessorio(a);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setUsuario(u);
+                log.setAcao("Acessorio " + a.getDescricao() + " foi cadastrado");
+                LogDAO.novoLog(log);
             } catch (SQLException ex) {
+                try {
+                    Log log = new Log();
+                    Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                    log.setUsuario(u);
+                    log.setAcao("Erro ao cadastrar o acessorio " + a.getDescricao());
+                    LogDAO.novoLog(log);
+                } catch (SQLException ex1) {
+                    Logger.getLogger(AcessorioController.class.getName()).log(Level.SEVERE, null, ex1);
+                }
                 Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return "redirect:/acessorios";
@@ -100,23 +119,39 @@ public class AcessorioController {
     @RequestMapping(value = "acessorios/editar", method = RequestMethod.POST)
     public ModelAndView editarAcessorio(@ModelAttribute("acessorio") @Valid Acessorio a,
             BindingResult bindingResult,
-            RedirectAttributes attrs) {
+            RedirectAttributes attrs,
+            HttpSession session) {
 
         if (bindingResult.hasErrors()) {
-            if(bindingResult.hasFieldErrors("descricao")){
+            if (bindingResult.hasFieldErrors("descricao")) {
                 attrs.addFlashAttribute("descricao", "is-invalid");
-            }else {
+            } else {
                 attrs.addFlashAttribute("descricao", "is-valid");
             }
-            
+
             attrs.addFlashAttribute("acessorio", a);
-            
+
             return new ModelAndView("redirect:/acessorios/editar/" + a.getIdAcessorio());
         } else {
-            System.out.println("Acessorio id " + a.getIdAcessorio());
+
             try {
                 AcessorioDAO.alterarAcessorio(a);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setUsuario(u);
+                Acessorio ac = AcessorioDAO.retornarAcessorioPorId(a.getIdAcessorio());
+                log.setAcao("Acessorio " + a.getDescricao() + " foi alterado para " + ac.getDescricao());
+                LogDAO.novoLog(log);
             } catch (SQLException ex) {
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setUsuario(u);
+                log.setAcao("Erro ao alterar o acessório " + a.getDescricao());
+                try {
+                    LogDAO.novoLog(log);
+                } catch (SQLException ex1) {
+                    Logger.getLogger(AcessorioController.class.getName()).log(Level.SEVERE, null, ex1);
+                }
                 Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return new ModelAndView("redirect:/acessorios");
@@ -125,10 +160,28 @@ public class AcessorioController {
     }
 
     @RequestMapping(value = "acessorios/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerAcessorio(@PathVariable("id") int idAcessorio) {
+    public ModelAndView removerAcessorio(@PathVariable("id") int idAcessorio,
+            HttpSession session) {
         try {
+            Acessorio a = AcessorioDAO.retornarAcessorioPorId(idAcessorio);
             AcessorioDAO.removerAcessorio(idAcessorio);
+            Log log = new Log();
+            Usuario u = (Usuario) session.getAttribute("usuarioSession");
+            log.setAcao("Acessorio " + a.getDescricao() + " foi excluído");
+            log.setUsuario(u);
+            LogDAO.novoLog(log);
         } catch (SQLException ex) {
+            try {
+                Acessorio ac = AcessorioDAO.retornarAcessorioPorId(idAcessorio);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setAcao("Erro ao excluir o acessorio " + ac.getDescricao());
+                log.setUsuario(u);
+                LogDAO.novoLog(log);
+            } catch (SQLException ex1) {
+                Logger.getLogger(AcessorioController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ModelAndView("redirect:/acessorios");

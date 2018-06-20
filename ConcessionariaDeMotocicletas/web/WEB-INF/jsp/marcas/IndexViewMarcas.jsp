@@ -16,6 +16,9 @@
 
 <form method="GET">
     <div class="container-fluid mt-2">
+        <t:if test="${hasMsg}">
+            <div class="alert alert-danger">${msg}</div>
+        </t:if>
         <div class="row">
             <div class="col-md-5">
                 <div class="row">

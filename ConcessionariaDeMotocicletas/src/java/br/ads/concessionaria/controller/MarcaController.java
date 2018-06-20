@@ -5,9 +5,13 @@
  */
 package br.ads.concessionaria.controller;
 
+import br.ads.concessionaria.dao.LogDAO;
 import br.ads.concessionaria.dao.MarcaDAO;
+import br.ads.concessionaria.dao.ModeloDAO;
+import br.ads.concessionaria.domain.Log;
 
 import br.ads.concessionaria.domain.Marca;
+import br.ads.concessionaria.domain.Usuario;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,7 +61,8 @@ public class MarcaController {
     @RequestMapping(value = "marcas/cadastrar", method = RequestMethod.POST)
     public ModelAndView adicionarMarca(@ModelAttribute("marca") @Valid Marca m,
             BindingResult result,
-            RedirectAttributes attrs
+            RedirectAttributes attrs,
+            HttpSession session
     ) {
         if (result.hasErrors()) {
             if (result.hasFieldErrors("nome")) {
@@ -80,7 +85,21 @@ public class MarcaController {
         } else {
             try {
                 MarcaDAO.incluirMarca(m);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setUsuario(u);
+                log.setAcao("A marca " + m.getNome() + " foi cadastrada");
+                LogDAO.novoLog(log);
             } catch (SQLException ex) {
+                try {
+                    Log log = new Log();
+                    Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                    log.setUsuario(u);
+                    log.setAcao("Erro ao cadastrar a marca " + m.getNome());
+                    LogDAO.novoLog(log);
+                } catch (SQLException ex1) {
+                    Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex1);
+                }
                 Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return new ModelAndView("redirect:/marcas");
@@ -103,30 +122,46 @@ public class MarcaController {
     @RequestMapping(value = "marcas/editar", method = RequestMethod.POST)
     public ModelAndView alterarProprietario(@ModelAttribute("marca") @Valid Marca m,
             BindingResult bindingResult,
-            RedirectAttributes attrs) {
+            RedirectAttributes attrs,
+            HttpSession session) {
         if (bindingResult.hasErrors()) {
-            if(bindingResult.hasFieldErrors("nome")){
+            if (bindingResult.hasFieldErrors("nome")) {
                 attrs.addFlashAttribute("nome", "is-invalid");
-            }else {
+            } else {
                 attrs.addFlashAttribute("nome", "is-valid");
             }
-            
-            if(bindingResult.hasFieldErrors("descricao")){
+
+            if (bindingResult.hasFieldErrors("descricao")) {
                 attrs.addFlashAttribute("descricao", "is-invalid");
-            }else {
+            } else {
                 attrs.addFlashAttribute("descricao", "is-valid");
             }
-            
-            
+
             attrs.addFlashAttribute("marca", m);
-            return new ModelAndView("redirect:/marcas/editar/"+ m.getIdMarca());
-            
+            return new ModelAndView("redirect:/marcas/editar/" + m.getIdMarca());
+
         } else {
 
             System.out.println("Marca id " + m.getIdMarca());
             try {
+                Marca mar = MarcaDAO.retornarMarcaPorId(m.getIdMarca());
                 MarcaDAO.alterarMarca(m);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setUsuario(u);
+                log.setAcao("A marca " + mar.getNome() + " foi alterada para " + m.getNome());
+                LogDAO.novoLog(log);
             } catch (SQLException ex) {
+                try {
+                    Marca mar = MarcaDAO.retornarMarcaPorId(m.getIdMarca());
+                    Log log = new Log();
+                    Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                    log.setUsuario(u);
+                    log.setAcao("Erro ao alterar a marca " + m.getNome());
+                    LogDAO.novoLog(log);
+                } catch (SQLException ex1) {
+                    Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex1);
+                }
                 Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return new ModelAndView("redirect:/marcas");
@@ -135,11 +170,36 @@ public class MarcaController {
     }
 
     @RequestMapping(value = "marcas/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerMarca(@PathVariable("id") int idMarca) {
+    public ModelAndView removerMarca(@PathVariable("id") int idMarca,
+            HttpSession session,
+            RedirectAttributes attrs) {
 
         try {
-            MarcaDAO.excluirMarca(idMarca);
+            int total = ModeloDAO.contaModelosPorMarca(idMarca);
+            if (total == 0) {
+                Marca mar = MarcaDAO.retornarMarcaPorId(idMarca);
+                MarcaDAO.excluirMarca(idMarca);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setUsuario(u);
+                log.setAcao("A marca " + mar.getNome() + " foi removida");
+                LogDAO.novoLog(log);
+            } else {
+                Marca m = MarcaDAO.retornarMarcaPorId(idMarca);
+                attrs.addFlashAttribute("hasMsg", true);
+                attrs.addFlashAttribute("msg", "A marca " + m.getNome() + " possui modelos vinculados a ela e não poderá ser excluída");
+            }
         } catch (SQLException ex) {
+            try {
+                Marca mar = MarcaDAO.retornarMarcaPorId(idMarca);
+                Log log = new Log();
+                Usuario u = (Usuario) session.getAttribute("usuarioSession");
+                log.setUsuario(u);
+                log.setAcao("Erro ao remover a marca " + mar.getNome());
+                LogDAO.novoLog(log);
+            } catch (SQLException ex1) {
+                Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             Logger.getLogger(MarcaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ModelAndView("redirect:/marcas");

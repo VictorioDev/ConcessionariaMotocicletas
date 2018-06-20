@@ -61,6 +61,22 @@ public class MotocicletaDAO extends BaseDAO {
         }
         return total;
     }
+    
+    public static int contaMotocicletasPorModelo(int idModelo){
+        openConnection();
+        String SQL = "SELECT COUNT(motocicletas.idMotocicleta) AS Total FROM Motocicletas WHERE motocicletas.idModelo = ? GROUP BY motocicletas.idModelo";
+        int resultado = 0;
+        try {
+            PreparedStatement stm = connection.prepareCall(SQL);
+            stm.setInt(1, idModelo);
+            ResultSet rs = stm.executeQuery();
+            if (rs.first())
+                resultado = rs.getInt("Total");
+        } catch (SQLException ex) {
+            Logger.getLogger(MotocicletaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultado;
+    }
 
     public static void alterarSituacaoMotocicleta(String situacao, int idMotocicleta) throws SQLException {
         openConnection();
