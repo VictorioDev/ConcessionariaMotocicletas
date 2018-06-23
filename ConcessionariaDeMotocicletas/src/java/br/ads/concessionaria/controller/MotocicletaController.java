@@ -7,8 +7,10 @@ package br.ads.concessionaria.controller;
 
 import br.ads.concessionaria.dao.AcessorioDAO;
 import br.ads.concessionaria.dao.CategoriaDAO;
+import br.ads.concessionaria.dao.CategoriasMotocicletasDAO;
 import br.ads.concessionaria.dao.ModeloDAO;
 import br.ads.concessionaria.dao.MotocicletaDAO;
+import br.ads.concessionaria.dao.MotocicletasAcessoriosDAO;
 import br.ads.concessionaria.dao.ProprietarioDAO;
 import br.ads.concessionaria.domain.Acessorio;
 import br.ads.concessionaria.domain.Categoria;
@@ -366,8 +368,25 @@ public class MotocicletaController {
                 System.err.println("Novo Prop: " + proprietario.getNome());
                 motocicleta.setProprietario(proprietario);
                 motocicleta.setModelo(modelo);
-
                 MotocicletaDAO.alterarMotocicleta(motocicleta);
+                int ultimoId = motocicleta.getIdMotocicleta();
+                MotocicletasAcessoriosDAO.removerMotocicletasAcessorios(ultimoId);
+                CategoriasMotocicletasDAO.removerCategoriasMotocicletas(ultimoId);
+                int i = 0;
+                // Acessórios
+                while (i < acessorios.length) {
+                    AcessorioDAO.inserirMotocicletaAcessorio(ultimoId, Integer.parseInt(acessorios[i]));
+                    i++;
+                }
+
+                i = 0;
+
+                // Categorias
+                while (i < categorias.length) {
+                    CategoriaDAO.inserirMotocicletaCategoria(ultimoId, Integer.parseInt(categorias[i]));
+                    i++;
+                }
+
             } catch (SQLException ex) {
                 Logger.getLogger(MotocicletaController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -393,6 +412,8 @@ public class MotocicletaController {
             attrs.addFlashAttribute("motocicleta", motocicleta);
             return new ModelAndView("redirect:/motocicletas/editar/" + motocicleta.getIdMotocicleta());
         } else {
+            String[] acessorios = request.getParameterValues("acessorios[]");
+            String[] categorias = request.getParameterValues("categorias[]");
             int idProprietario = Integer.parseInt(request.getParameter("idProprietario"));
             int idModelo = Integer.parseInt(request.getParameter("idModelo"));
             System.err.println("Id modelo alterar: " + idModelo);
@@ -406,6 +427,24 @@ public class MotocicletaController {
                 motocicleta.setProprietario(proprietario);
                 motocicleta.setModelo(modelo);
                 MotocicletaDAO.alterarMotocicleta(motocicleta);
+
+                int ultimoId = motocicleta.getIdMotocicleta();
+                MotocicletasAcessoriosDAO.removerMotocicletasAcessorios(ultimoId);
+                CategoriasMotocicletasDAO.removerCategoriasMotocicletas(ultimoId);
+                int i = 0;
+                // Acessórios
+                while (i < acessorios.length) {
+                    AcessorioDAO.inserirMotocicletaAcessorio(ultimoId, Integer.parseInt(acessorios[i]));
+                    i++;
+                }
+
+                i = 0;
+
+                // Categorias
+                while (i < categorias.length) {
+                    CategoriaDAO.inserirMotocicletaCategoria(ultimoId, Integer.parseInt(categorias[i]));
+                    i++;
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(MotocicletaController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -415,10 +454,16 @@ public class MotocicletaController {
     }
 
     @RequestMapping(value = "motocicletas/remover/{id}", method = RequestMethod.GET)
-    public ModelAndView removerMotocicleta(@PathVariable("id") int idMotocicleta) {
+    public ModelAndView removerMotocicleta(@PathVariable("id") int idMotocicleta, 
+            RedirectAttributes attrs) {
 
         try {
             MotocicletaDAO.removerMotocicleta(idMotocicleta);
+        
+        }catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ec){
+            attrs.addAttribute("hasMsg", true);
+            attrs.addAttribute("msg", "Existem itens veiculadoss a esta motocicleta");
+            return new ModelAndView("redirect:/motocicletas");
         } catch (SQLException ex) {
             Logger.getLogger(ProprietarioController.class.getName()).log(Level.SEVERE, null, ex);
         }

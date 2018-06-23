@@ -169,7 +169,7 @@
             </div>            
         </div>
 
-        <div id="options-usage" style="<t:if test="${!nova && !usada}">display:none;</t:if> <t:if test="${nova}">display:none;</t:if>">
+        <div id="options-usage" style="<t:if test="${motocicleta.proprietario.idProprietario == null}">display:none;</t:if>">
                 <hr>
                 <div class="row">
                     <div class="col-md-6">
@@ -227,8 +227,13 @@
                       
                         <div class="col-8">
                             <select class="form-control" name="idProprietario">
-                                <t:forEach items="${proprietarios}" var="proprietario">          
-                                    <option value="${proprietario.idProprietario}" label="${proprietario.nome}"/>
+                                <t:forEach items="${proprietarios}" var="proprietario">
+                                    <t:if test="${proprietario.idProprietario == motocicleta.proprietario.idProprietario}">
+                                        <option selected value="${proprietario.idProprietario}" label="${proprietario.nome}"/>
+                                    </t:if>
+                                    <t:if test="${proprietario.idProprietario != motocicleta.proprietario.idProprietario}">
+                                        <option value="${proprietario.idProprietario}" label="${proprietario.nome}"/>
+                                    </t:if>
                                 </t:forEach>
                             </select> 
                         </div>
