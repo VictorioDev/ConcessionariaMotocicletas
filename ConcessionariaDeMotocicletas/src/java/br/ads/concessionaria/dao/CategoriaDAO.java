@@ -2,6 +2,7 @@ package br.ads.concessionaria.dao;
 
 import static br.ads.concessionaria.dao.BaseDAO.connection;
 import static br.ads.concessionaria.dao.BaseDAO.openConnection;
+import br.ads.concessionaria.domain.Acessorio;
 import br.ads.concessionaria.domain.Categoria;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +19,28 @@ public class CategoriaDAO extends BaseDAO {
         stm.setString(2, c.getDescricao());
         stm.execute();
     }
+    
+    
+    public static ArrayList<Categoria> retornaCategoriasDaMotocicleta(int idMotocicleta) throws SQLException {
+        openConnection();
+        ArrayList<Categoria> listaCategorias = new ArrayList<>();
+        String SQL = "SELECT categorias.* FROM categoriasmotocicletas\n" +
+"JOIN categorias ON categorias.idCategoria = categoriasmotocicletas.idCategoria\n" +
+"WHERE idMotocicleta = ? ";
+        PreparedStatement stm = connection.prepareStatement(SQL);
+        stm.setInt(1, idMotocicleta );
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            Categoria cat = new Categoria();
+            cat.setNome(rs.getString("nome"));
+            cat.setDescricao(rs.getString("descricao"));
+            cat.setIdCategoria(rs.getInt("idCategoria"));
+            
+            listaCategorias.add(cat);
+        }
+        return listaCategorias;
+    }
+
 
     public static void alterarCategoria(Categoria c) throws SQLException {
         openConnection();

@@ -225,7 +225,9 @@
     </div>
 </form:form>
 
+ 
 <script type="text/javascript">
+    
     $(document).on('change', 'input[name="tipo"]', function() {
         
         if( this.value === 0 ) {

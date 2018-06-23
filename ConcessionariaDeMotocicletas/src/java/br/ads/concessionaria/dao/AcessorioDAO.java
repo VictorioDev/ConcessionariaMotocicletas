@@ -94,5 +94,24 @@ public class AcessorioDAO extends BaseDAO {
         stm.setInt(1, idMotocicleta );
         stm.setInt(2, idAcessorio );
         stm.execute();
-    }    
+    }
+
+    public static ArrayList<Acessorio> retornaAcessoriosDaMotocicleta(int idMotocicleta) throws SQLException {
+        openConnection();
+        ArrayList<Acessorio> listaAcessorios = new ArrayList<>();
+        String SQL = "SELECT acessorios.* FROM motocicletasacessorios\n" +
+"JOIN acessorios ON acessorios.idAcessorio = motocicletasacessorios.idAcessorio\n" +
+"WHERE idMotocicleta = ? ";
+        PreparedStatement stm = connection.prepareStatement(SQL);
+        stm.setInt(1, idMotocicleta );
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            Acessorio ac = new Acessorio();
+            ac.setDescricao(rs.getString("descricao"));
+            ac.setIdAcessorio(rs.getInt("idAcessorio"));
+            listaAcessorios.add(ac);
+        }
+        return listaAcessorios;
+    }
+
 }
